@@ -5,7 +5,7 @@
 | Repo | Commit | Used for |
 |---|---|---|
 | [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) (private) | `bd9a894`, master, 2026-11-16 | the vault system, exit desk, bot, harness, docs, audit |
-| [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) (private) | `6ecd9ad`, 2026-11-12 | the Euler cluster, EulerSwap v2 deployment, ushMON build artifact |
+| [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) (private) | local `6ecd9ad`, 2026-11-12; the remote lacks the cited projects, which are copied in this repo under [`sources/ag-euler/`](sources/ag-euler/) | the Euler cluster, EulerSwap v2 deployment, ushMON build artifact |
 | [rootdraws/ushMON](https://github.com/rootdraws/ushMON) (public) | [`a7f4788`](https://github.com/rootdraws/ushMON/tree/a7f478847134a5ff5afdb672ddd97398b3eae713) (v1); v2 in the working tree on 2026-11-16 | the unstaking shMON vault |
 | [euler-xyz/ethereum-vault-connector](https://github.com/euler-xyz/ethereum-vault-connector) | v1.0.1 | EVC, account status checks |
 | [euler-xyz/euler-vault-kit](https://github.com/euler-xyz/euler-vault-kit) | vendored in ag-euler | the cluster's vaults; `maxRedeem` rule at `src/EVault/modules/Vault.sol:234-248` |

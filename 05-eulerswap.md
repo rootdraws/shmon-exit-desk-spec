@@ -1,6 +1,6 @@
 # 5. EulerSwap: the public shMON buyer
 
-Source: `ag-euler/contracts/eulerswap-mm-monad/src/` at `6ecd9ad`, Euler Labs' EulerSwap v2 (`EulerSwap.sol:16`
+Source: [`sources/ag-euler/contracts/eulerswap-mm-monad/src/`](sources/ag-euler/contracts/eulerswap-mm-monad/src/) (copied from the local ag-euler tree at `6ecd9ad`), Euler Labs' EulerSwap v2 (`EulerSwap.sol:16`
 `curve = "EulerSwap v2"`, BUSL-1.1, upstream [euler-xyz/euler-swap](https://github.com/euler-xyz/euler-swap)). Euler had
 not deployed it on Monad, so the team did (`deploy-mm.sh:4`). Deployed on Monad (`deployed-143.env`):
 

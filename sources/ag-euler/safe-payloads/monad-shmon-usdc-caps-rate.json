@@ -1,0 +1,201 @@
+{
+  "version": "1.0",
+  "chainId": "143",
+  "createdAt": 1794013718990,
+  "meta": {
+    "name": "shMON/USDC market: shMON cap, USDC rate curve, and the WMON vault for the shMON vaults' market maker (Monad)",
+    "description": "1) eshMON-4 0x2f22C096651BBc97e63B459a561f2416b2F33e81 supply cap to 200,000,000 shMON (raw 12826); borrow cap stays raw 1, no borrowing. 2) eUSDC-24 0xdE5870224123d974258Ce4501c8b045375d2054a to the IRMLinearKinky curve 0xe743F06a8A2Dcc9565926a9b11513e957e1897c6: at 80% use borrowers pay 8.5%, at 90% they pay 9.6% and lenders earn 7.7% after the 10% fee. 3) The router 0x52d30dbf4e3209F2666982A47e216e0aA3D9518e prices WMON with the same RedStone MON feed already inside shMON's price, 0x03e574FAD8b74FE9DA7F32d709bD881A6e8eF2dE. 4) The router prices the new WMON vault eWMON-14 0xfE26b4EE9e7000e06B7Cb2fc614A4526e845e702 by its shares (deployed and set by the AlphaGrowth deployer, governor already this Safe: 116M WMON supply cap, 104M borrow cap, 20% rate at no use and 30% at the 90% kink, lends 97/98 against eshMON-4 and against each unstaking shMON vault, 79/80 against eUSDC-24, 10% fee, 15% liquidation discount). 5) eUSDC-24 lends 79/80 against eWMON-14, as it does against eshMON-4. 6) and 7) The router prices the two unstaking shMON vaults by their shares (shMON held plus MON on its way back from shMonad's unstake): 0x59f7f897322D5FdEFCa38beB78137559eD985F80 for the shmon-neverland-usdc-hl vault's exit desk and 0xc0CA1086131046766956bBD030fe9595Cc8204a1 for shmon-neverland-usdt0-hl's. Rehearsed as the Safe on a Monad fork with a 500,000 gas limit per transaction; automatic estimates come up short.",
+    "txBuilderVersion": "1.18.0",
+    "createdFromSafeAddress": "0x4f894Bfc9481110278C356adE1473eBe2127Fd3C",
+    "createdFromOwnerAddress": ""
+  },
+  "transactions": [
+    {
+      "to": "0x2f22C096651BBc97e63B459a561f2416b2F33e81",
+      "value": "0",
+      "data": "0xd87f780f000000000000000000000000000000000000000000000000000000000000321a0000000000000000000000000000000000000000000000000000000000000001",
+      "contractMethod": {
+        "inputs": [
+          {
+            "name": "supplyCap",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "borrowCap",
+            "type": "uint16",
+            "internalType": "uint16"
+          }
+        ],
+        "name": "setCaps",
+        "payable": false
+      },
+      "contractInputsValues": {
+        "supplyCap": "12826",
+        "borrowCap": "1"
+      }
+    },
+    {
+      "to": "0xdE5870224123d974258Ce4501c8b045375d2054a",
+      "value": "0",
+      "data": "0x8bcd4016000000000000000000000000e743f06a8a2dcc9565926a9b11513e957e1897c6",
+      "contractMethod": {
+        "inputs": [
+          {
+            "name": "newModel",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "name": "setInterestRateModel",
+        "payable": false
+      },
+      "contractInputsValues": {
+        "newModel": "0xe743F06a8A2Dcc9565926a9b11513e957e1897c6"
+      }
+    },
+    {
+      "to": "0x52d30dbf4e3209F2666982A47e216e0aA3D9518e",
+      "value": "0",
+      "data": "0x06c570c10000000000000000000000003bd359c1119da7da1d913d1c4d2b7c461115433a000000000000000000000000000000000000000000000000000000000000034800000000000000000000000003e574fad8b74fe9da7f32d709bd881a6e8ef2de",
+      "contractMethod": {
+        "inputs": [
+          {
+            "name": "base",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "quote",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "oracle",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "name": "govSetConfig",
+        "payable": false
+      },
+      "contractInputsValues": {
+        "base": "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+        "quote": "0x0000000000000000000000000000000000000348",
+        "oracle": "0x03e574FAD8b74FE9DA7F32d709bD881A6e8eF2dE"
+      }
+    },
+    {
+      "to": "0x52d30dbf4e3209F2666982A47e216e0aA3D9518e",
+      "value": "0",
+      "data": "0xd6c02926000000000000000000000000fe26b4ee9e7000e06b7cb2fc614a4526e845e7020000000000000000000000000000000000000000000000000000000000000001",
+      "contractMethod": {
+        "inputs": [
+          {
+            "name": "vault",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "set",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "name": "govSetResolvedVault",
+        "payable": false
+      },
+      "contractInputsValues": {
+        "vault": "0xfE26b4EE9e7000e06B7Cb2fc614A4526e845e702",
+        "set": "true"
+      }
+    },
+    {
+      "to": "0xdE5870224123d974258Ce4501c8b045375d2054a",
+      "value": "0",
+      "data": "0x4bca3d5b000000000000000000000000fe26b4ee9e7000e06b7cb2fc614a4526e845e7020000000000000000000000000000000000000000000000000000000000001edc0000000000000000000000000000000000000000000000000000000000001f400000000000000000000000000000000000000000000000000000000000000000",
+      "contractMethod": {
+        "inputs": [
+          {
+            "name": "collateral",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "borrowLTV",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "liquidationLTV",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "rampDuration",
+            "type": "uint32",
+            "internalType": "uint32"
+          }
+        ],
+        "name": "setLTV",
+        "payable": false
+      },
+      "contractInputsValues": {
+        "collateral": "0xfE26b4EE9e7000e06B7Cb2fc614A4526e845e702",
+        "borrowLTV": "7900",
+        "liquidationLTV": "8000",
+        "rampDuration": "0"
+      }
+    },
+    {
+      "to": "0x52d30dbf4e3209F2666982A47e216e0aA3D9518e",
+      "value": "0",
+      "data": "0xd6c0292600000000000000000000000059f7f897322d5fdefca38beb78137559ed985f800000000000000000000000000000000000000000000000000000000000000001",
+      "contractMethod": {
+        "inputs": [
+          {
+            "name": "vault",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "set",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "name": "govSetResolvedVault",
+        "payable": false
+      },
+      "contractInputsValues": {
+        "vault": "0x59f7f897322D5FdEFCa38beB78137559eD985F80",
+        "set": "true"
+      }
+    },
+    {
+      "to": "0x52d30dbf4e3209F2666982A47e216e0aA3D9518e",
+      "value": "0",
+      "data": "0xd6c02926000000000000000000000000c0ca1086131046766956bbd030fe9595cc8204a10000000000000000000000000000000000000000000000000000000000000001",
+      "contractMethod": {
+        "inputs": [
+          {
+            "name": "vault",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "set",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "name": "govSetResolvedVault",
+        "payable": false
+      },
+      "contractInputsValues": {
+        "vault": "0xc0CA1086131046766956bBD030fe9595Cc8204a1",
+        "set": "true"
+      }
+    }
+  ]
+}

@@ -28,7 +28,7 @@ disagree, the spec says so and says which one was checked on chain.
 | Repo | What it holds | Commit used | Access |
 |---|---|---|---|
 | [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) | The vault system: contracts, bot, oracle, keeper, docs, fork harness | `bd9a894` (master, 2026-11-16) | private |
-| [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) | The Euler cluster on Monad, the EulerSwap v2 deployment, the deploy scripts | `6ecd9ad` (2026-11-12) | private |
+| [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) | The Euler cluster on Monad, the EulerSwap v2 deployment, the deploy scripts | local `6ecd9ad` (2026-11-12); the remote is behind it, so the cited files are copied under [`sources/ag-euler/`](sources/ag-euler/) | private |
 | [rootdraws/ushMON](https://github.com/rootdraws/ushMON) | The unstaking shMON vault, its tests, its issues | `a7f4788` (v1); v2 in the working tree, see [04-ushmon.md](04-ushmon.md) | public |
 | [rootdraws/shmon-exit-desk-spec](https://github.com/rootdraws/shmon-exit-desk-spec) | This spec and its evidence | this repo | private |
 
@@ -61,4 +61,4 @@ the eleven GitHub issues open on the vault, the research data under `data/`, and
 
 Clone the three repos at the commits above, read this spec in order, then the files it cites. The system's own guides
 are `alphastructures/AGENTS.md` and `alphastructures/docs/*.md`; the Euler cluster's is
-`ag-euler/contracts/shmon-cluster-monad/deploy.sh` (its header comment); the vault's is `ushMON/README.md`.
+`sources/ag-euler/contracts/shmon-cluster-monad/deploy.sh` here (its header comment); the vault's is `ushMON/README.md`.

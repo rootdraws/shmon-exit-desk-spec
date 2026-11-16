@@ -4,7 +4,7 @@ Repo: [rootdraws/ushMON](https://github.com/rootdraws/ushMON) (public). Source
 [`src/UnstakingShMonVault.sol`](https://github.com/rootdraws/ushMON/blob/a7f478847134a5ff5afdb672ddd97398b3eae713/src/UnstakingShMonVault.sol)
 at `a7f4788` is v1, the code live on Monad. v2 is in the working tree on 2026-11-16 and ships as new vaults; see
 [09-current-state-and-next.md](09-current-state-and-next.md). The same file is vendored at
-`ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol`, whose build artifact every deploy script reads.
+`ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol` (copy in [`sources/ag-euler/`](sources/ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol)), whose build artifact every deploy script reads.
 
 ## What it is
 

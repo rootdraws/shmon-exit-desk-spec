@@ -2,8 +2,8 @@
 
 ## The Euler cluster
 
-Repo: [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) at `6ecd9ad`, `contracts/shmon-cluster-monad/deploy.sh`
-and `deployed-143.env`. Built with the Euler Vault Kit factory `0xba4D…3f1E`, the Euler router factory `0xdDA3…A902`
+Files: [`sources/ag-euler/contracts/shmon-cluster-monad/deploy.sh`](sources/ag-euler/contracts/shmon-cluster-monad/deploy.sh)
+and [`deployed-143.env`](sources/ag-euler/contracts/shmon-cluster-monad/deployed-143.env) (copied from the local ag-euler tree at `6ecd9ad`; the GitHub remote is behind). Built with the Euler Vault Kit factory `0xba4D…3f1E`, the Euler router factory `0xdDA3…A902`
 and the Ethereum Vault Connector `0x7a9324E8f270413fa2E458f5831226d99C7477CD` (`deploy.sh:28-30`). Deployed
 2026-11-09 as the second cluster, after the first was handed to the AlphaGrowth Safe and rejected
 (`alphastructures/docs/shmon-exit-desk-plan.md:183-190`). The deployer key `0x501107fe590c8F9b81c00b81867fD19e0d9c0253`
