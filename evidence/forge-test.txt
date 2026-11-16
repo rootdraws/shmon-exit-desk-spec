@@ -1,14 +1,29 @@
 No files changed, compilation skipped
-Ran 10 tests for test/UnstakingShMonVault.t.sol:UnstakingShMonVaultTest
-[PASS] test_completeUnstakeWrapsStrayMon() (gas: 245654)
-[PASS] test_depositByNonOperatorReverts() (gas: 18621)
-[PASS] test_happyPath() (gas: 252863)
-[PASS] test_issue1AttackRevertsAtDeposit() (gas: 254815)
-[PASS] test_maxRedeemForWmonMatchesPayable() (gas: 427197)
-[PASS] test_maxViewsZeroWithController() (gas: 195332)
-[PASS] test_maxWithdrawRedeemEqualClaimWhenHeld() (gas: 271805)
-[PASS] test_maxWithdrawRedeemZeroWhileInUnstake() (gas: 229362)
-[PASS] test_poolStyleDepositToOperatorFromAnotherCaller() (gas: 123789)
-[PASS] test_startUnstakeOnlyOperator() (gas: 115552)
-Suite result: ok. 10 passed; 0 failed; 0 skipped; finished in 5.40ms (7.72ms CPU time)
-Ran 1 test suite in 128.73ms (5.40ms CPU time): 10 tests passed, 0 failed, 0 skipped (10 total tests)
+
+Ran 2 tests for test/UnstakingShMonVault.fork.t.sol:UnstakingShMonVaultForkTest
+[PASS] test_completeUnstakeWithNothingMaturedIsSwallowed() (gas: 2344)
+[PASS] test_cycleAgainstLiveShMonad() (gas: 2322)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 835.58µs (48.79µs CPU time)
+
+Ran 12 tests for test/UnstakingShMonVault.t.sol:UnstakingShMonVaultTest
+[PASS] test_completeUnstakeNothingToDoIsNoOp() (gas: 195027)
+[PASS] test_completeUnstakeWrapsStrayMon() (gas: 220669)
+[PASS] test_depositByNonOperatorReverts() (gas: 18603)
+[PASS] test_happyPath() (gas: 239781)
+[PASS] test_issue1AttackRevertsAtDeposit() (gas: 239117)
+[PASS] test_maxRedeemForWmonMatchesPayable() (gas: 413600)
+[PASS] test_maxViewsZeroWithController() (gas: 193030)
+[PASS] test_maxWithdrawRedeemEqualClaimWhenHeld() (gas: 250987)
+[PASS] test_maxWithdrawRedeemZeroWhileInUnstake() (gas: 207930)
+[PASS] test_poolStyleDepositToOperatorFromAnotherCaller() (gas: 121491)
+[PASS] test_startUnstakeClampsToHeld() (gas: 191618)
+[PASS] test_startUnstakeOnlyOperator() (gas: 113211)
+Suite result: ok. 12 passed; 0 failed; 0 skipped; finished in 4.51ms (5.58ms CPU time)
+
+Ran 3 tests for test/UnstakingShMonVault.donation.t.sol:UnstakingShMonVaultDonationTest
+[PASS] testFuzz_donationIsCountedOnceAndNeverMintsOrLowersPrice(uint8,uint96,uint8) (runs: 64, μ: 180523, ~: 178322)
+[PASS] testFuzz_firstDepositAfterDonationKeepsItsValue(uint96,uint96) (runs: 65, μ: 131984, ~: 134519)
+[PASS] test_donationGrid() (gas: 21477006)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 26.66ms (39.43ms CPU time)
+
+Ran 3 test suites in 130.06ms (32.00ms CPU time): 17 tests passed, 0 failed, 0 skipped (17 total tests)

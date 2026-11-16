@@ -49,30 +49,33 @@ The audit's other findings stand as accepted: M1 a shMonad freeze strands the co
 chunk above shMonad's no-delay allowance waits two more epochs (the bot should split it); L3 a liquidator receives a
 share that pays out a day later.
 
-## Eight more issues, open and not yet decided
+## Eight more issues, worked through with Root on 2026-11-16
 
-Filed by ardey26 on 2026-11-16 at 17:58Z, after the v2 work started (`evidence/issues/issue-4.md` to `issue-11.md`).
-None is addressed by v2 except that v2 adds the tests issue 4 asks for. Each needs a call from Root.
+Filed by ardey26 on 2026-11-16 at 17:58Z (`evidence/issues/issue-4.md` to `issue-11.md`). Each was taken one at a time
+with Root; the calls below are his.
 
-| Issue | Finding |
-|---|---|
-| [#4](https://github.com/rootdraws/ushMON/issues/4) Medium | No tests in the repo, and the fork stand-in behaves differently from live shMonad |
-| [#5](https://github.com/rootdraws/ushMON/issues/5) Low | The operator is a single immutable address with no rotation |
-| [#6](https://github.com/rootdraws/ushMON/issues/6) Medium | A 98% liquidation LTV leaves about 2% for an exit that takes a day or more |
-| [#7](https://github.com/rootdraws/ushMON/issues/7) Low | A 1-wei withdrawal makes an exact-balance `startUnstake` revert |
-| [#8](https://github.com/rootdraws/ushMON/issues/8) Low | `completeUnstake` reverts when nothing is matured, so a settle batch can be griefed (desk v1.6.0 already wraps its call in try/catch) |
-| [#9](https://github.com/rootdraws/ushMON/issues/9) Low | Assets in the unstake earn nothing, and every holder shares that cost |
-| [#10](https://github.com/rootdraws/ushMON/issues/10) Low | `totalAssets` reads raw balances, so a transfer to the vault moves the share price |
-| [#11](https://github.com/rootdraws/ushMON/issues/11) Low | `redeemForWmon` emits no Withdraw event (the audit's I3) |
+| Issue | Finding | Call |
+|---|---|---|
+| [#4](https://github.com/rootdraws/ushMON/issues/4) Medium | No tests in the repo, and the fork stand-in behaves differently from live shMonad | Fixed in v2: the stand-in is deleted, the unit tests use a mock that burns shMON as shMonad does and refuses when nothing is matured, the constructor's approval to the unstaker is gone, and a fork test runs the cycle against live shMonad |
+| [#5](https://github.com/rootdraws/ushMON/issues/5) Low | The operator is a single immutable address with no rotation | Closed by design: the operator is the exit desk, an upgradeable contract under the admin Safe whose own keys rotate; a changeable operator would reopen the door issue 1 closed |
+| [#6](https://github.com/rootdraws/ushMON/issues/6) Medium | A 98% liquidation LTV leaves about 2% for an exit that takes a day or more | Studied in [11-ltv-study.md](11-ltv-study.md); the new vaults deploy at 93/95 ("move to 93/95 now. It's built for external lenders.") |
+| [#7](https://github.com/rootdraws/ushMON/issues/7) Low | A 1-wei withdrawal makes an exact-balance `startUnstake` revert | Fixed in v2: `startUnstake` sends what is held, up to the amount asked, and is a no-op with nothing to send |
+| [#8](https://github.com/rootdraws/ushMON/issues/8) Low | `completeUnstake` reverts when nothing is matured, so a settle batch can be griefed | Fixed in v2: shMonad's refusal is swallowed and the call returns what it wrapped; the desk's settle already guarded its own call since v1.6.0 |
+| [#9](https://github.com/rootdraws/ushMON/issues/9) Low | Assets in the unstake earn nothing, and every holder shares that cost | Closed by purpose: ushMON is the desk's collateral wrapper with one holder, so the day of lost yield is the exit's own cost; the audit's L3 covers a liquidator's day |
+| [#10](https://github.com/rootdraws/ushMON/issues/10) Low | `totalAssets` reads raw balances, so a transfer to the vault moves the share price | Closed after 189 test cases (`evidence/donation-tests.txt`, `evidence/UnstakingShMonVault.donation.t.sol`): a gift is counted once, mints nothing, never lowers the price, goes to the holders pro rata, and costs a later deposit at most one share's worth of rounding (gift / 1e6) |
+| [#11](https://github.com/rootdraws/ushMON/issues/11) Low | `redeemForWmon` emits no Withdraw event (the audit's I3) | Fixed in v2: `RedeemedForWmon(caller, receiver, owner, shares, wmon)`; wiring it into the Telegram announcements is item 12 of `alphastructures/audit/todo-before-launch.md` |
 
 ## Tests (v2, `test/UnstakingShMonVault.t.sol`, output in `evidence/forge-test.txt`)
 
-Ten unit tests against a mock shMON with a settable rate, a mock WMON, the real Ethereum Vault Connector from `lib/`, a
-mock controller and the fork stand-in for shMonad's unstake: non-operator deposit and mint revert; a pool-style deposit
+Seventeen tests in three files (output in `evidence/forge-test.txt`): twelve unit tests against a mock shMON that burns
+and refuses as live shMonad does, a mock WMON, the real Ethereum Vault Connector from `lib/` and a mock controller;
+two fork tests against live shMonad; three donation tests (a 60-case grid and two fuzz runs). The unit cases: non-operator deposit and mint revert; a pool-style deposit
 from another caller with the operator as receiver succeeds; the three-call attack of issue 1 stops at the deposit; the
 max views are 0 while shMON is in the unstake and equal the claim when held; the max views are 0 with a controller;
 `redeemForWmon(maxRedeemForWmon)` pays and five shares more reverts, at three rates; stray MON is wrapped and counted;
-the full cycle deposit, unstake, wait, complete, redeem for WMON; `startUnstake` by a non-operator reverts. All ten pass.
+the full cycle deposit, unstake, wait, complete, redeem for WMON; `startUnstake` by a non-operator reverts; an exact
+request after a wei left still goes through (issue 7); a completion with nothing matured is a no-op (issue 8); the
+redemption event fires (issue 11). All pass.
 
 ```sh
 git clone --recurse-submodules https://github.com/rootdraws/ushMON && cd ushMON && forge test -vv
