@@ -10,7 +10,7 @@
 | [euler-xyz/ethereum-vault-connector](https://github.com/euler-xyz/ethereum-vault-connector) | v1.0.1 | EVC, account status checks |
 | [euler-xyz/euler-vault-kit](https://github.com/euler-xyz/euler-vault-kit) | vendored in ag-euler | the cluster's vaults; `maxRedeem` rule at `src/EVault/modules/Vault.sol:234-248` |
 | [euler-xyz/euler-price-oracle](https://github.com/euler-xyz/euler-price-oracle) | `63f20a4` | the Chainlink SVR adapters and the router |
-| [euler-xyz/euler-swap](https://github.com/euler-xyz/euler-swap) | EulerSwap v2 source as vendored in `ag-euler/contracts/eulerswap-mm-monad/src/` | the public buyer |
+| [euler-xyz/euler-swap](https://github.com/euler-xyz/euler-swap) | [`a8493f8`](https://github.com/euler-xyz/euler-swap/tree/a8493f89764ce69a05915559d9061781b9a96f24), 2026-10-25; the vendored copy in `ag-euler/contracts/eulerswap-mm-monad/src/` matches it byte for byte (28 files) | the public buyer |
 | [OpenZeppelin/openzeppelin-contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) | 5.2.0 | ERC4626 base of ushMON |
 | [OpenZeppelin/uniswap-hooks](https://github.com/OpenZeppelin/uniswap-hooks) | 1.3.0 | the digester's LimitOrderHook |
 | [Uniswap/v4-core](https://github.com/Uniswap/v4-core), [Uniswap/v4-periphery](https://github.com/Uniswap/v4-periphery) | 1.0.1 | the PoolManager and hook base |
@@ -97,8 +97,9 @@ with aTokens shMON 0xC64d73Bb8748C6fA7487ace2D0d945B6fBb2EcDe, USDC 0x3864895883
 - Research data: `services/rebalancingBot/test/sim/{instantExits,instantExitHistory,shmonadHistory,unstakeTiming,backfill,replay}.ts`,
   `exitMm.sim.ts`, with outputs under this repo's `evidence/data/`.
 - Euler cluster and EulerSwap: `ag-euler/contracts/shmon-cluster-monad/deploy.sh`, `deployed-143.env`,
-  `ag-euler/contracts/eulerswap-mm-monad/deploy-mm.sh`, `deployed-143.env`, `src/EulerSwap.sol`, `src/EulerSwapFactory.sol`,
+  `ag-euler/contracts/eulerswap-mm-monad/deploy-mm.sh`, `deployed-143.env`, `src/exitmm/UnstakingShMonVault.sol` (copies
+  under `sources/ag-euler/`); EulerSwap itself at upstream `a8493f8`: `src/EulerSwap.sol`, `src/EulerSwapFactory.sol`,
   `src/EulerSwapManagement.sol`, `src/EulerSwapPeriphery.sol`, `src/UniswapHook.sol`, `src/libraries/FundsLib.sol`,
-  `src/libraries/QuoteLib.sol`, `src/libraries/SwapLib.sol`, `src/interfaces/*.sol`, `src/exitmm/UnstakingShMonVault.sol`.
+  `src/libraries/QuoteLib.sol`, `src/libraries/SwapLib.sol`, `src/interfaces/*.sol`.
 - ushMON: `ushMON/src/UnstakingShMonVault.sol`, `test/UnstakingShMonVault.t.sol`, `test/UnstakeStandIn.sol`,
   `script/Deploy.s.sol`, `README.md`, issues 1 to 3.

@@ -1,7 +1,12 @@
 # 5. EulerSwap: the public shMON buyer
 
-Source: [`sources/ag-euler/contracts/eulerswap-mm-monad/src/`](sources/ag-euler/contracts/eulerswap-mm-monad/src/) (copied from the local ag-euler tree at `6ecd9ad`), Euler Labs' EulerSwap v2 (`EulerSwap.sol:16`
-`curve = "EulerSwap v2"`, BUSL-1.1, upstream [euler-xyz/euler-swap](https://github.com/euler-xyz/euler-swap)). Euler had
+Source: [euler-xyz/euler-swap](https://github.com/euler-xyz/euler-swap) at
+[`a8493f8`](https://github.com/euler-xyz/euler-swap/tree/a8493f89764ce69a05915559d9061781b9a96f24) (2026-10-25), Euler Labs'
+EulerSwap v2 (`EulerSwap.sol:16` `curve = "EulerSwap v2"`, BUSL-1.1). The copy under
+`ag-euler/contracts/eulerswap-mm-monad/src/` matches that commit byte for byte in all 28 files (checked by blob hash
+on 2026-11-16), so every `src/...` line number below is an upstream line number: for example
+[`libraries/FundsLib.sol`](https://github.com/euler-xyz/euler-swap/blob/a8493f89764ce69a05915559d9061781b9a96f24/src/libraries/FundsLib.sol), [`libraries/QuoteLib.sol`](https://github.com/euler-xyz/euler-swap/blob/a8493f89764ce69a05915559d9061781b9a96f24/src/libraries/QuoteLib.sol),
+[`EulerSwapFactory.sol`](https://github.com/euler-xyz/euler-swap/blob/a8493f89764ce69a05915559d9061781b9a96f24/src/EulerSwapFactory.sol), [`interfaces/IEulerSwapHookTarget.sol`](https://github.com/euler-xyz/euler-swap/blob/a8493f89764ce69a05915559d9061781b9a96f24/src/interfaces/IEulerSwapHookTarget.sol). Euler had
 not deployed it on Monad, so the team did (`deploy-mm.sh:4`). Deployed on Monad (`deployed-143.env`):
 
 | Contract | Address |

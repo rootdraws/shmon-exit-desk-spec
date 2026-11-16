@@ -34,7 +34,7 @@ disagree, the spec says so and says which one was checked on chain.
 
 Upstream code the system is built on: [euler-xyz/ethereum-vault-connector](https://github.com/euler-xyz/ethereum-vault-connector),
 [euler-xyz/euler-vault-kit](https://github.com/euler-xyz/euler-vault-kit), [euler-xyz/euler-price-oracle](https://github.com/euler-xyz/euler-price-oracle),
-[euler-xyz/euler-swap](https://github.com/euler-xyz/euler-swap) (EulerSwap v2, BUSL-1.1), [OpenZeppelin/openzeppelin-contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) 5.2.0,
+[euler-xyz/euler-swap](https://github.com/euler-xyz/euler-swap) at `a8493f8` (EulerSwap v2, BUSL-1.1; the deployed copy matches it byte for byte), [OpenZeppelin/openzeppelin-contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) 5.2.0,
 [OpenZeppelin/uniswap-hooks](https://github.com/OpenZeppelin/uniswap-hooks) (the LimitOrderHook), [Uniswap/v4-core](https://github.com/Uniswap/v4-core),
 [Uniswap/v4-periphery](https://github.com/Uniswap/v4-periphery), [foundry-rs/forge-std](https://github.com/foundry-rs/forge-std).
 shMonad is Fastlane's liquid staking token on Monad, contract `0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c`.
