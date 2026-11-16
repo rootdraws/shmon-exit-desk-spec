@@ -25,20 +25,20 @@ Approved by Root in the working session of 2026-11-16 ("plan it. test it. valida
 | Unit tests | Done, 10 of 10 pass. |
 | Bot: unstake the shMON the pool parks | Done in the working tree (`packages/shared/src/chain/exitDesk.ts`, `services/rebalancingBot/src/planner/exitDesk.ts`, one new unit test passing). Not yet committed. |
 | Exit desk v1.7.0 (the pool yields to the vault's leavers) | Done in the working tree; storage layout recorded; proven in the fork cycle test's step 9. Root, 2026-11-16: "build the priority rule into the desk". |
-| Release script `custody/release-ush2-143.ts` | Done, rehearsed on a fork end to end (before v1.7.0; it now also deploys and installs the desk implementation). |
+| Release script `custody/release-ush2-143.ts` | Done, rehearsed on a fork end to end at 93/95 with the v1.7.0 desk: vaults, upgrades, account moves, pools, 80 MON headroom per desk, 930 WMON float, and an outsider's sale. |
 | Fork cycle test | Done, 10 of 10 pass. |
 | Five-stage harness | Delta neutral passed with the v2 build. Delta one's stages 3 and 4 rerunning from its saved point. Both deltas relaunched on the final tree (v1.7.0 desk) as the holistic test. |
 | Mainnet: deploy two v2 vaults (`deploy.sh desks`), repoint the desks, open the pools, park headroom, lend the float | Pending the delta-one harness result. The 400 MON Root sent sits on the deployer key. |
 | ushMON repo: commit v2 and tests, update README, reply to and close issues 1 to 3 | Pending the mainnet addresses. |
-| Issues 4 to 11 (ardey26, 2026-11-16 17:58Z) | Open; not in the v2 scope. Each needs Root's call; see [04-ushmon.md](04-ushmon.md). |
+| Issues 4 to 11 (ardey26, 2026-11-16 17:58Z) | Issue 4 fixed in v2 (no approval, live-shaped mock, fork test); issue 5 closed by design (the operator is the upgradeable desk); issue 6 studied in [11-ltv-study.md](11-ltv-study.md), new vaults deploy at 93/95; 7 to 11 open, each needs Root's call. |
 | Bot release to the server | Pending; needs the planner change merged on the server and the bots restarted. |
 
 ## Open decisions
 
 - **The bot's $10 floor.** Every desk step is skipped under $10 of value (`DESK_DUST_USD`). With MON near $0.018 the
   400 MON float is about $7, so the bot would not drive the unstake, settle or restake of the pool's buys on its own.
-  Root sent 700 MON more on 2026-11-16 (1,100.53 MON on the deployer key), so the float will be about 1,060 WMON,
-  about $19. Nothing else blocks the release.
+  Root sent 700 MON more on 2026-11-16 (1,100.53 MON on the deployer key): 80 MON per desk is parked as headroom at
+  the 93% borrow LTV, 10 stays for gas, and about 930 WMON is lent as the float, about $17. Nothing else blocks the release.
 - **The WMON float's size.** 360 MON covers a typical shMonad instant exit (median 1.85 MON, 90th percentile 220 MON)
   once per cycle. Taking the whole public flow (about 160,000 MON a day lately) needs lenders of that order in the
   cluster's WMON vault.

@@ -40,16 +40,16 @@ cd alphastructures/contracts && FORK_MONAD=true MONAD_RPC_URL=<rpc> \
   npx hardhat test test/NeverlandMarketAdapter/ShMonadExitUsh2.fork.test.ts
 ```
 
-## 3. Release rehearsal on an anvil fork (`evidence/rehearsal-fork.log`)
+## 3. Release rehearsal on an anvil fork (`evidence/rehearsal-fork-9395.log`, final; earlier runs in `rehearsal-fork.log`)
 
-The exact mainnet release path on a fresh fork of Monad at head: `deploy.sh desks` deploys two v2 vaults and sets the
-router and WMON-vault settings (`govSetResolvedVault … OK`, `setLTV 9700 9800: OK` per vault; the first rehearsal's
+The exact mainnet release path on a fresh fork of Monad at head (final run at 93/95 with the v1.7.0 desk and the 80 MON
+headroom, 2026-11-16 22:45Z): `deploy.sh desks` deploys two v2 vaults and sets the router and WMON-vault settings (`govSetResolvedVault … OK`, `setLTV 9700 9800: OK` per vault; the first rehearsal's
 `verify` step in `evidence/rehearsal-fork-first.log` reads `ok` for both), then `custody/release-ush2-143.ts` moves both desks' accounts, opens
 both pools, parks 15 MON of headroom per desk, and lends 360 WMON into the WMON vault. Every step ran and read back OK. A
 seller's sale into the pool simulated correctly (`cast call --trace`, 0.30% under the rate, the desk's account check
-passing); the same sale sent through `cast send` returned `status 0 (failed)`; the log records only the status, and the
-writer's reading is anvil's gas estimate on nested EVC calls, to be checked at the mainnet release with an explicit gas
-limit.
+passing); an earlier run's sale sent through `cast send` with anvil's gas estimate returned `status 0 (failed)`; in the final
+run the same sale with an explicit gas limit of 1.5M succeeded: 121 shMON (199.98 MON of value) sold for 199.38 WMON,
+0.30% under, the desk's debt equal to the WMON paid, the shMON in the vault for the desk.
 
 ```sh
 anvil --fork-url <rpc> --port 8700 --chain-id 143

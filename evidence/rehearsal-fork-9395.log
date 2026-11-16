@@ -1,0 +1,78 @@
+anvil block 122859922 (code size limit raised, as the harness does; Monad allows the 60 KiB desk)
+deployer 0x501107fe590c8F9b81c00b81867fD19e0d9c0253 on chain 143-fork, 1100.534826074717754410 MON
+  USHMON_USDC_HL 0xC8f5023512c0618B754e03d675E3626a4A760092, operated by 0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770
+  govSetResolvedVault 0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c: OK
+  setLTV 9300 9500: OK
+  USHMON_USDC_HL_D0 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664, operated by 0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE
+  govSetResolvedVault 0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c: OK
+  setLTV 9300 9500: OK
+router 0x99f7105CAC565Ac830cf2d66527FBb06dD322C32
+  ok   router governor
+  ok   price feed for 0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c
+  ok   price feed for 0x754704Bc059F8C67012fEd69BC8A327a5aafb603
+  ok   price feed for 0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A
+  ok   price feed for 0xe7cd86e13AC4309349F30B3435a9d337750fC82D
+vault 0xD81D3E243760eD23Ac3DEf2b08d4989bA2790Dfe ("eshMON-6")
+  ok   governor
+  ok   open
+  ok   priced by the router
+  ok   fees to the Safe
+  1 share = $0.02515
+vault 0x5aB09A3EDbb0937Db454f54e6CF04Dd982c40948 ("eUSDC-26")
+  ok   governor
+  ok   open
+  ok   priced by the router
+  ok   fees to the Safe
+  1 share = $0.99978
+vault 0xE4522663752AC47516e39aD11d3780a116850eaf ("eWMON-16")
+  ok   governor
+  ok   open
+  ok   priced by the router
+  ok   fees to the Safe
+  1 share = $0.01521
+vault 0xD6645190976d456907c9807d08E4E4E220c96a3E ("eUSDT0-15")
+  ok   governor
+  ok   open
+  ok   priced by the router
+  ok   fees to the Safe
+  1 share = $0.99928
+  ok   shMON vault caps
+  ok   USDC vault caps
+  ok   USDC vault rate curve
+  ok   USDC lends 79/80 against shMON
+  ok   WMON vault caps
+  ok   WMON vault rate curve
+  ok   WMON lends 97/98 against shMON
+  ok   USDT0 vault caps
+  ok   USDC lends 95/96 against USDT0
+  ok   USDT0 lends 95/96 against USDC
+  ok   USHMON_USDC_HL resolved
+  ok   WMON lends 93/95 against USHMON_USDC_HL
+  ok   USHMON_USDC_HL_D0 resolved
+  ok   WMON lends 93/95 against USHMON_USDC_HL_D0
+verify: all OK
+FORK chain 143 block 122859928; deployer 0xB9851B5b387BA8cBAf21d8E3FB3e894F3ab6a902 29.705 MON, dev 0x501107fe590c8F9b81c00b81867fD19e0d9c0253 1100.163 MON, custody-admin 0xb9a86575182c0F0F07e8b7404612c8207c87681B 0.685 MON
+shmon-neverland-usdc-hl: desk 0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770, ushMON v2 0xC8f5023512c0618B754e03d675E3626a4A760092
+  exit desk implementation v10700 at 0xBE243F5e4215720080929eeCfe77047D2Fd2a410
+  shmon-neverland-usdc-hl exit desk v10600 -> v10700: ok 0x755b6cfb38ec5cfc5df3b2f1f660a336bbbbfcd66fd6e6fbc07e9a81a0630a96 gas 88631
+  shmon-neverland-usdc-hl exit desk account -> ushMON v2 0xC8f5023512c0618B754e03d675E3626a4A760092, WMON vault 0xE4522663752AC47516e39aD11d3780a116850eaf: ok 0xc8d31f471a91136f8999db1a59d601e335587e006532a189b587ae5f93e9add6 gas 236315
+  shmon-neverland-usdc-hl open the desk's EulerSwap pool 0x9028e8aF57Da3173B9136189A7E5f0c32d5eA8a8: ok 0x96fef3fc031dd68c226d7af9cf4a23b98348a7d6f6ca5ce470fd3f3c4c6f0591 gas 654611
+  OK: pool 0x9028e8aF57Da3173B9136189A7E5f0c32d5eA8a8 buys shMON into 0xC8f5023512c0618B754e03d675E3626a4A760092 at a fee of 2.254901864002176% under its ceiling, refuses WMON in; desk collateral 0xC8f5023512c0618B754e03d675E3626a4A760092, lender 0xE4522663752AC47516e39aD11d3780a116850eaf
+  shmon-neverland-usdc-hl stake 80.0 MON to the desk as shMON: ok 0x86e68505d0c64d81aecb60786fcb30882a2bd962b116597569319d2c2cc287de gas 93107
+  shmon-neverland-usdc-hl park 48.380820458199155631 shMON in 0xC8f5023512c0618B754e03d675E3626a4A760092 as headroom: ok 0xe23a78089f0a124df73d34d85e4d4b71ee92cbf9e61c18c528e03308a7315ade gas 222647
+  config shmon-neverland-usdc-hl.json unstakeVault -> 0xC8f5023512c0618B754e03d675E3626a4A760092 (fork: not written)
+shmon-neverland-usdc-hl-d0: desk 0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE, ushMON v2 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664
+  shmon-neverland-usdc-hl-d0 exit desk v10600 -> v10700: ok 0x1e78c790d806c38b7d76b0637f3717a641fa3e7a098b6c50dc2d69c22926a69f gas 88631
+  shmon-neverland-usdc-hl-d0 exit desk account -> ushMON v2 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664, WMON vault 0xE4522663752AC47516e39aD11d3780a116850eaf: ok 0xa86f2d72f483e9b6f0d7988c74651584b3bffbf52c0d3e79cb6deb3d973a3f60 gas 235979
+  shmon-neverland-usdc-hl-d0 open the desk's EulerSwap pool 0x748aD60aff8Fee5C552Cc7Cd480aE2D5226028a8: ok 0x95245ff38f2672aab087771e1e38327a123ea1790cf893d56206b779ec73055f gas 654623
+  OK: pool 0x748aD60aff8Fee5C552Cc7Cd480aE2D5226028a8 buys shMON into 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664 at a fee of 2.2549018640022% under its ceiling, refuses WMON in; desk collateral 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664, lender 0xE4522663752AC47516e39aD11d3780a116850eaf
+  shmon-neverland-usdc-hl-d0 stake 80.0 MON to the desk as shMON: ok 0x762525a051584ffa03c51c628be24f3e79c98a784198cc2013569ca3218c69fc gas 93107
+  shmon-neverland-usdc-hl-d0 park 48.380820458199155631 shMON in 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664 as headroom: ok 0xe1db71ad4b99a209636653b2427cd94e6f6f91f21c85db8037d62a482b910721 gas 222647
+  config shmon-neverland-usdc-hl-d0.json unstakeVault -> 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664 (fork: not written)
+  wrap 930.158798481735175259 MON: ok 0xe84091cecdddbd4f43743a487e3d4bfe4af31d82e9e39ab541daec083d382525 gas 44942
+  approve the WMON vault: ok 0x564376e7b75c134053308f21f4dc5a896ff7e97e9858ae4501bc0d16e2d62baf gas 46435
+  lend 930.158798481735175259 WMON to 0xE4522663752AC47516e39aD11d3780a116850eaf: ok 0x5bf31bc320171b977be5f316e447f4b2cd2c57490e061c87b2e632c14a0ddb28 gas 180641
+WMON vault 0xE4522663752AC47516e39aD11d3780a116850eaf cash 930.158798481735175259 WMON
+done; dev 9.997 MON, deployer 29.111 MON, custody-admin 0.626 MON
+status               1 (success)
+outsider sold 120952051145497889079 shMON (fair 199982958823433504929 MON) quoted 199383009946963204305 WMON, received 199383010144381723964 WMON; desk debt 199383010144381723964; shMON in vault 169332871603697044710

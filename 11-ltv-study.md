@@ -112,13 +112,20 @@ read back (`curve-proposal.md`, `curve-proposal-readback.txt`):
 Factory arguments: `deploy(1847694955732363770, 451674395, 5, 3865470565, 8319516250237539940)`. Cost: at the kink
 lenders earn 9.7% instead of 24.3%, and the desk keeps 90% of each sale's margin instead of 76%.
 
-## Recommendation on issue 6
+## Root's call on issue 6 (2026-11-16)
 
-Keep 97 / 98 while the only WMON lender is us, and lower to 93 / 95 the day an outside lender joins the vault. The
-first costs nothing today; the second costs the desk about 4.4 points more parked shMON per day of sales and buys the
-lender one more point of rate drop before it loses anything.
+**93 / 95 now.** "Move to 93/95 now. It's built for external lenders." The new ushMON vaults deploy at 93/95
+(`deploy.sh` `LTV_WMON_SH=(9300 9500)`), and the release parks 80 MON of headroom per desk, 7.2% of the first float.
 
-Both are one governor call on the WMON vault (`setLTV`, immediate when lowering), and neither changes a contract.
+**The curve stays at 20 / 30 / 50.** "I want it to be expensive, to use, and attract resting capital. and i want that
+capital to be available for exits to take place, and i want basically to become the dominant exit path from shMON to
+wMON, facilitated through these debt swaps." The lower curve in section 7 was proposed and dropped.
+
+**The target scale.** "We should assume that this thing will eventually be digesting like 50k to 150k every 20 hours."
+At that scale the vault needs about a day's flow in resting WMON, 50,000 to 150,000 WMON, and each desk needs 7.2% of
+its day's sales parked as shMON, 3,600 to 10,800 MON. The desk's margin is 0.30% per sale less 7.2 bps a day of
+interest at the kink, about 0.23% per turn, roughly 340 MON a day at 150,000 MON of sales. Where the parked shMON
+comes from at that scale (the vault's own collateral or new MON) is the next decision.
 
 ## The answer to post on issue 6
 
@@ -127,5 +134,4 @@ never reaches the line at any pair from 97/98 to 87/90. The collateral and the d
 MON/USD feed, so only the shMON/MON exchange-rate feed matters; it publishes shMonad's own rate once a day and sat at
 most 4.1 bps under it in the last 30 days, never over. A liquidator who seizes ushMON can complete the desk's unstake
 and redeem at the true rate, and on the fork it earned 3.1% at the first crossing. The exposure that remains is a fall
-in shMonad's rate of 2% or more in one day; the pair stays at 97/98 while the vault's only lender is its operator and
-moves to 93/95 when outside lenders join.
+in shMonad's rate of 3% or more in one day at the 93/95 pair now deployed, with the lender's first loss at a 5% fall.
