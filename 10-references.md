@@ -29,7 +29,7 @@ Links go to Monadscan.
 | StrategyControllerSettings | [0xdE30DFdC5107D52c1Dec101db4afDC6a7372adEC](https://monadscan.com/address/0xdE30DFdC5107D52c1Dec101db4afDC6a7372adEC) | [0xC62D354c3B8fbBEEA9Bee2D35Da38e015770F85a](https://monadscan.com/address/0xC62D354c3B8fbBEEA9Bee2D35Da38e015770F85a) |
 | WithdrawalHandler | [0xFb78583f6D8A9F6c2cCae6111e2817AC9824162a](https://monadscan.com/address/0xFb78583f6D8A9F6c2cCae6111e2817AC9824162a) | [0x4B821aFd90eF4F5a35Dec5e4AeeA7C00c7d90Af2](https://monadscan.com/address/0x4B821aFd90eF4F5a35Dec5e4AeeA7C00c7d90Af2) |
 | Exit desk proxy (`ShMonadExitAdapter`) | [0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770](https://monadscan.com/address/0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770) | [0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE](https://monadscan.com/address/0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE) |
-| Exit desk implementation (v1.6.0) | [0x623E3EC3E218FcA770eF4bb5Ce5c1399F86Ba467](https://monadscan.com/address/0x623E3EC3E218FcA770eF4bb5Ce5c1399F86Ba467) | same |
+| Exit desk implementation (v1.6.0 live; v1.7.0 ships with the ushMON v2 release) | [0x623E3EC3E218FcA770eF4bb5Ce5c1399F86Ba467](https://monadscan.com/address/0x623E3EC3E218FcA770eF4bb5Ce5c1399F86Ba467) | same |
 | ushMON (v1, in use) | [0xa44220Ee57Cb879bd842a24696Df06e398601d8F](https://monadscan.com/address/0xa44220Ee57Cb879bd842a24696Df06e398601d8F) | [0x066E1eb375369A00e324cF18Eb014B9AB0507690](https://monadscan.com/address/0x066E1eb375369A00e324cF18Eb014B9AB0507690) |
 | Admin Safe | [0xC94dd8e928D681bd85BeB94a8729709d189cCF9D](https://monadscan.com/address/0xC94dd8e928D681bd85BeB94a8729709d189cCF9D) | same |
 
