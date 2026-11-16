@@ -1,0 +1,26 @@
+{
+  "readAt": "2026-11-05T18:46:54.612Z",
+  "days": 30,
+  "instant": {
+    "exits": 9055,
+    "monOut": 6283894.49185215,
+    "feeMon": 34157.296375011065,
+    "avgFeeRate": 0.0054063020563805105,
+    "sizeMon": {
+      "median": 1.8496334187245138,
+      "p90": 220.10289814793487,
+      "largest": 547415.9690921144
+    },
+    "poolCapitalMon": {
+      "avgTarget": 6412154.804765225,
+      "avgLiquidity": 2862200.2513306313
+    },
+    "turnoverPerYear": 11.923300665487771,
+    "feeAprOnTarget": 0.06481135466668093,
+    "feeAprOnLiquidity": 0.14519614378347523
+  },
+  "slowUnstake": {
+    "requests": 119,
+    "monRequested": 69529268.91708045
+  }
+}

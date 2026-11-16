@@ -1,0 +1,14 @@
+No files changed, compilation skipped
+Ran 10 tests for test/UnstakingShMonVault.t.sol:UnstakingShMonVaultTest
+[PASS] test_completeUnstakeWrapsStrayMon() (gas: 245654)
+[PASS] test_depositByNonOperatorReverts() (gas: 18621)
+[PASS] test_happyPath() (gas: 252863)
+[PASS] test_issue1AttackRevertsAtDeposit() (gas: 254815)
+[PASS] test_maxRedeemForWmonMatchesPayable() (gas: 427197)
+[PASS] test_maxViewsZeroWithController() (gas: 195332)
+[PASS] test_maxWithdrawRedeemEqualClaimWhenHeld() (gas: 271805)
+[PASS] test_maxWithdrawRedeemZeroWhileInUnstake() (gas: 229362)
+[PASS] test_poolStyleDepositToOperatorFromAnotherCaller() (gas: 123789)
+[PASS] test_startUnstakeOnlyOperator() (gas: 115552)
+Suite result: ok. 10 passed; 0 failed; 0 skipped; finished in 5.40ms (7.72ms CPU time)
+Ran 1 test suite in 128.73ms (5.40ms CPU time): 10 tests passed, 0 failed, 0 skipped (10 total tests)

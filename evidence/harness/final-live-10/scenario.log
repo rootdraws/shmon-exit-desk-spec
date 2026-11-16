@@ -1,0 +1,66 @@
+  PASS  setup: Neverland's feeds and the Hyperliquid stand-in read the asked prices — {"shmonUsd":0.02543324,"monUsd":0.01539216,"nvShmonUsd":0.02543324,"nvMonUsd":0.01539216,"stubMark":0.01539216}
+== 0: the exit desk's unstaking shMON vault on the cluster ==
+  PASS  setup: the WMON vault holds the seed asked (FINAL_WMON_SEED) — {"asked":"3000000.0","cash":"3000000.0"}
+  unstaking vault 0x4E347C50e46870ACe9cb1268d733e723Cf6683AD; the desk's Euler account is on; bot and oracle restarted
+  pools moved to the oracle's MON price ($0.015392): tick -318066
+  PASS  setup: the live MON pool and both v3 pools moved to the asked price — {"targetTick":-318066,"poolTicks":[-318066,-318066,-318066]}
+  PASS  setup: a $1000 USDC buy of WMON through the route pool quotes inside the controller's 100 bps cap — {"side":"buy","usdIn":1000,"wmonOut":"64725.868056695362312252","impliedUsdPerWmon":0.015449773483517741,"oracleUsdPerWmon":0.01539216,"deviationBps":37,"bandBps":100}
+  PASS  setup: a $1000 WMON sale for USDC through the route pool quotes inside the controller's 100 bps cap — {"side":"sell","usdIn":1000,"wmonIn":"64968.13962432822881965","usdcOut":"996.26662","impliedUsdPerWmon":0.0153346952176992,"oracleUsdPerWmon":0.01539216,"deviationBps":-37,"bandBps":100}
+  depth at $15000 (a fact, not a gate): buy 139 bps over the oracle ($0.015607 vs $0.015392), sale -143 bps ($0.015172)
+  fill check: $1000 USDC -> WMON through 0xfE31F7 (fee 3000): quoter 64725.868056695362312252 WMON, fill 64725.868056695362312252 WMON, 0 bps
+  PASS  setup: a $1000 USDC buy of WMON through the bot's router fills within 10 bps of its quoter's answer — {"usdIn":1000,"quoteWmon":"64725.868056695362312252","fillWmon":"64725.868056695362312252","deviationBps":0,"bandBps":10,"router":"0xfE31F71C1b106EAc32F1A19239c9a9A72ddfb900","fee":3000,"deadlineRouter":false}
+  pool 0x659b: active liquidity 11066409161296750534 before the move, 10917201416311760395 now; 149207744984990139 minted back on [-318420, -317760], now 11066409161296750534
+== 1: growth from a $300000 deposit, through the exit desk ==
+  PASS  setup: the depositor's shMON went in as shares — {"shmon":"11795587.192194","sharesBefore":"0.0","sharesAfter":"11795587.192194","queued":false,"mintedAtPrice":null}
+  growth: borrowed $0, 0 buys resting ($0), desk USDC $0
+  growth: borrowed $100874, 0 buys resting ($0), desk USDC $0
+  growth: still driving after 5 min
+  [after growth] Neverland $300000/$100874 3362bps (USDC $100898, USDT0 $0)  Euler $0/$0 0bps  share price 0.99962
+  PASS  growth finished: borrowing settled within $500 and the resting buys are under it — {"minutes":"9","debtUsd":"100874","debtAfter":"100874","depositUsd":300000,"flatMin":5.03,"restingBuyUsd":0,"deskUsdc":0,"withinUsd":500}
+  the cluster's USDC vault has no cash to lend: the Euler leg was not tested (Neverland $100874)
+  PASS  growth cost the share price under 0.1% — 0.9996226456088734
+  saved the restart point after stage 1
+== 2: Neverland USDC past its kink; the stable desk moves debt to USDT0 ==
+  PASS  setup: Neverland USDC pushed to the stage's use (92%) — {"beforeBps":8326,"afterBps":9200,"targetBps":9200}
+  Neverland USDC 83.26% -> 92.00% used
+  debt move: still driving after 5 min
+  debt move: still driving after 10 min
+  debt move: still driving after 15 min
+  TIMEOUT debt move
+  [after the desk move] Neverland $300000/$100883 3362bps (USDC $34862, USDT0 $66068)  Euler $0/$0 0bps  share price 0.99963
+  PASS  the stable desk moved Neverland's USDC debt to USDT0 — {"afterGrowth":{"usdc":100897.909461,"usdt0":0},"after":{"usdc":34861.824053,"usdt0":66067.520052},"takersUsd":"66036"}
+  PASS  the debt move left the share price where growth left it — {"afterGrowth":0.9996226456088734,"after":0.9996310382647371,"valuePerShareFirst":0.025423410052740326,"valuePerShareLast":0.025423616061984327,"publishes":20}
+  saved the restart point after stage 2
+== 3: MON and shMON fall 35%, the bot running ==
+  PASS  setup: Neverland's feeds and the Hyperliquid stand-in read the asked prices — {"shmonUsd":0.016531606,"monUsd":0.010004904,"nvShmonUsd":0.01653161,"nvMonUsd":0.0100049,"stubMark":0.010004904}
+  pool 0x659b: active liquidity 11066409161296750534 before the move, 49951218603221500 now; 11016457942693529034 minted back on [-322680, -322020], now 11066409161296750534
+  pool 0x63e4: active liquidity 1130500514173559637 before the move, 57217235263920462 now; 1073283278909639175 minted back on [-322680, -322070], now 1130500514173559637
+  PASS  setup: the live MON pool and both v3 pools moved to the asked price — {"targetTick":-322374,"poolTicks":[-322374,-322374,-322374]}
+  PASS  setup: a $1000 USDC buy of WMON through the route pool quotes inside the controller's 100 bps cap — {"side":"buy","usdIn":1000,"wmonOut":"99561.502306548489069325","impliedUsdPerWmon":0.010044042896430128,"oracleUsdPerWmon":0.0100049,"deviationBps":39,"bandBps":100}
+  PASS  setup: a $1000 WMON sale for USDC through the route pool quotes inside the controller's 100 bps cap — {"side":"sell","usdIn":1000,"wmonIn":"99951.023998240852961317","usdcOut":"996.102487","impliedUsdPerWmon":0.009965905772186302,"oracleUsdPerWmon":0.0100049,"deviationBps":-39,"bandBps":100}
+  depth at $15000 (a fact, not a gate): buy 166 bps over the oracle ($0.010171 vs $0.010005), sale -163 bps ($0.009842)
+  live MON pool and both v3 pools moved to 0.65x the stage's start: tick -322374
+  [right after the fall] Neverland $195000/$100883 5173bps (USDC $34862, USDT0 $66068)  Euler $0/$0 0bps  share price 1.53784
+  [after the unwind] Neverland $195000/$100883 5173bps (USDC $34862, USDT0 $66068)  Euler $0/$0 0bps  share price 1.53784
+  PASS  after the fall both lenders came back under their own unwind lines — {"minutes":"2","before":[5173,0],"reached":[5173,0],"after":[5173,0],"lines":[5500,6285]}
+  PASS  Neverland could never liquidate the vault — {"lowestHealthFactor":"1.353"}
+  PASS  Euler could never liquidate the vault (under its 80% line) — 0
+  PASS  the fall moved the dollar value per share under 3% either way (delta 0) — {"move":"0.00000","publishedBefore":0.9996310382647371,"publishedAfter":1.537844412228359}
+  PASS  the short stayed with the book through the fall (within 10% of the debt's share) — {"shortBefore":"19490441","shortAfter":"19490441","debtShareKept":"1.000"}
+  saved the restart point after stage 3
+== 4: half the shares redeem; the bot winds down through the desks ==
+  PASS  setup: the share price is fresh before the redeem request — {"ageSec":20,"maxAgeSec":10800}
+  share price fresh: published 20s ago
+  PASS  setup: the redeem request took half the depositor's shares — {"shares":"5897793596097000000000000","before":"11795587192194000000000000","after":"5897793596097000000000000"}
+  pool 0x63e4: active liquidity 1145066818962954527 before the move, 1130500514173559637 now; 14566304789394890 minted back on [-322680, -322070], now 1145066818962954527
+  pool 0x63e4: active liquidity 1159633123752349417 before the move, 1145066818962954527 now; 14566304789394890 minted back on [-322680, -322070], now 1159633123752349417
+  [after the wind-down] Neverland $8647/$3108 3594bps (USDC $0, USDT0 $3110)  Euler $0/$0 0bps  share price 1.53687
+  wind-down: Neverland's lowest health factor 1.353 (sampled each drive poll)
+  PASS  the withdrawal batch was served — {"batchId":1,"lastProcessedBatchId":1,"minutes":"6","debtBefore":"100883","debtAfter":"3108"}
+  one job at a time (ONE_JOB_RULE=A, the default): the service waited 0 ticks, about 0.0 minutes; hand-overs 7: stable desk: move 10000 of Neverland debt from USDC (13.94%, 92.0% used) to USDT0 (5.80%) | stable desk: move 10000 of Neverland debt from USDC (12.71%, 91.7% used) to USDT0 (5.83%) | stable desk: move 10000 of Neverland debt from USDC (11.47%, 91.4% used) to USDT0 (5.86%) | stable desk: move 10000 of Neverland debt from USDC (10.23%, 91.1% used) to USDT0 (5.89%) | stable desk: move 10000 of Neverland debt from USDC (9.00%, 90.8% used) to USDT0 (5.92%) | stable desk: move 10000 of Neverland debt from USDC (7.76%, 90.5% used) to USDT0 (5.95%) | stable desk: move 6030 of Neverland debt from USDC (6.53%, 90.1% used) to USDT0 (5.98%)
+  PASS  the wind-down cost the share price under 0.5% — {"before":1.537844412228359,"after":1.5368661238055776}
+  PASS  no market swap over $1000 ran in any phase, Curve stablecoin conversions and the profit rule's buys aside — {"large":[],"curve":[],"profitBuys":[],"small":3,"shmonadStakes":0}
+  PASS  the keeper filled the desk's resting orders — {"batches":2,"rounds":3,"stopAfter":99}
+  PASS  no bot transaction reverted — 0
+  PASS  no bot action failed to build (signing) — []
+FINAL PASSED

@@ -1,0 +1,11 @@
+  ushMON v2 and the public shMON buyer, Monad fork, live usdc-hl desk
+    ✔ the governor approves a v2 vault for the desk on the cluster (2982ms)
+    ✔ the admin Safe moves the desk's account onto it and opens the pool (8593ms)
+    ✔ a lender seeds the WMON vault, as Root's 390 MON will (1365ms)
+    ✔ the desk parks a little shMON as headroom: the pool pays 99.7% of value against collateral lent at 97% (1038ms)
+    ✔ an outsider sells shMON into the pool for WMON at the rate less 0.3%, the shMON lands in the vault for the desk, the desk borrows (4087ms)
+    ✔ the old attack stops at the deposit: an outsider cannot mint shares (120ms)
+    ✔ the desk unstakes the shMON the pool left in the vault, with nothing to deposit (112ms)
+    ✔ the unstake matures, the settle repays the loan, and the fee goes home as shMON (1057ms)
+  8 passing (21s)
+[exited with code 0]

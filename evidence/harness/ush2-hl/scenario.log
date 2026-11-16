@@ -1,0 +1,34 @@
+  PASS  setup: Neverland's feeds and the Hyperliquid stand-in read the asked prices — {"shmonUsd":0.0251135,"monUsd":0.01519394,"nvShmonUsd":0.0251135,"nvMonUsd":0.01519394,"stubMark":0.01519394}
+== 0: the exit desk's unstaking shMON vault on the cluster ==
+  PASS  setup: the WMON vault holds the seed asked (FINAL_WMON_SEED) — {"asked":"3000000.0","cash":"3000000.0"}
+  unstaking vault 0x7f0Ba910AB24a73784561095ccA4F00FF235eC39; the desk's Euler account is on; bot and oracle restarted
+  pools moved to the oracle's MON price ($0.015194): tick -318195
+  PASS  setup: the live MON pool and both v3 pools moved to the asked price — {"targetTick":-318195,"poolTicks":[-318195,-318195,-318195]}
+  PASS  setup: a $1000 USDC buy of WMON through the route pool quotes inside the controller's 100 bps cap — {"side":"buy","usdIn":1000,"wmonOut":"65572.005532143532845582","impliedUsdPerWmon":0.01525041047447905,"oracleUsdPerWmon":0.01519394,"deviationBps":37,"bandBps":100}
+  PASS  setup: a $1000 WMON sale for USDC through the route pool quotes inside the controller's 100 bps cap — {"side":"sell","usdIn":1000,"wmonIn":"65815.713369935649097897","usdcOut":"996.297073","impliedUsdPerWmon":0.015137677949337618,"oracleUsdPerWmon":0.01519394,"deviationBps":-37,"bandBps":100}
+  depth at $15000 (a fact, not a gate): buy 134 bps over the oracle ($0.015398 vs $0.015194), sale -149 bps ($0.014967)
+  fill check: $1000 USDC -> WMON through 0xfE31F7 (fee 3000): quoter 65572.005532143532845582 WMON, fill 65572.005532143532845582 WMON, 0 bps
+  PASS  setup: a $1000 USDC buy of WMON through the bot's router fills within 10 bps of its quoter's answer — {"usdIn":1000,"quoteWmon":"65572.005532143532845582","fillWmon":"65572.005532143532845582","deviationBps":0,"bandBps":10,"router":"0xfE31F71C1b106EAc32F1A19239c9a9A72ddfb900","fee":3000,"deadlineRouter":false}
+FINAL STOPPED: could not coalesce error (error={ "code": -32603, "message": "failed to get storage for 0x754704Bc059F8C67012fEd69BC8A327a5aafb603 at 26029901843287623594381833976578564770041284499530752454780663429165772643930: server returned an error response: error code -32603: failsafe timeout policy exceeded 
+Error: could not coalesce error (error={ "code": -32603, "message": "failed to get storage for 0x754704Bc059F8C67012fEd69BC8A327a5aafb603 at 26029901843287623594381833976578564770041284499530752454780663429165772643930: server returned an error response: error code -32603: failsafe timeout policy exceeded on network-level after 9.26144765s: dynamic timeout exceeded" }, payload={ "id": 422, "jsonrpc": "2.0", "method": "eth_getStorageAt", "params": [ "0x754704Bc059F8C67012fEd69BC8A327a5aafb603", "0x398c6700306a5d9075ddb3c8bc40dc4eb148563d3dc8c31e92363efe83f31e5a", "latest" ] }, code=UNKNOWN_ERROR, version=6.16.0)
+    at makeError (/Users/root1/ag-structures/alphastructures/node_modules/ethers/src.ts/utils/errors.ts:698:21)
+    at JsonRpcProvider.getRpcError (/Users/root1/ag-structures/alphastructures/node_modules/ethers/src.ts/providers/provider-jsonrpc.ts:1086:25)
+    at <anonymous> (/Users/root1/ag-structures/alphastructures/node_modules/ethers/src.ts/providers/provider-jsonrpc.ts:571:45)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  code: 'UNKNOWN_ERROR',
+  error: {
+    code: -32603,
+    message: 'failed to get storage for 0x754704Bc059F8C67012fEd69BC8A327a5aafb603 at 26029901843287623594381833976578564770041284499530752454780663429165772643930: server returned an error response: error code -32603: failsafe timeout policy exceeded on network-level after 9.26144765s: dynamic timeout exceeded'
+  },
+  payload: {
+    method: 'eth_getStorageAt',
+    params: [
+      '0x754704Bc059F8C67012fEd69BC8A327a5aafb603',
+      '0x398c6700306a5d9075ddb3c8bc40dc4eb148563d3dc8c31e92363efe83f31e5a',
+      'latest'
+    ],
+    id: 422,
+    jsonrpc: '2.0'
+  },
+  shortMessage: 'could not coalesce error'
+}

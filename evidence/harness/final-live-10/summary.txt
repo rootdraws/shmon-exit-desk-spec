@@ -1,0 +1,9 @@
+18:07:43Z INFO fork up at 122523084
+18:07:46Z INFO run final-live-10: base shmon-desk-hl-d0, spread default, mode final, port 8601
+18:07:46Z INFO git 993e028, tree 141 files changed, 1760 insertions(+), 9113 deletions(-)
+18:09:13Z PASS build
+18:09:14Z PASS setup (port free, source answers, clock, keys funded, prices, image from this tree)
+18:11:34Z PASS deploy
+18:11:34Z PASS up
+18:51:55Z PASS scenario
+18:51:56Z DONE teardown

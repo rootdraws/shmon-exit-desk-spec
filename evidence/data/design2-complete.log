@@ -1,0 +1,35 @@
+No files changed, compilation skipped
+Script ran successfully.
+
+== Logs ==
+  unstake completed (MON) 2801675
+  LP debt repaid in one EVC batch: yes
+  LP: WMON deposited 0 unstaking-vault value (WMON) 2007586
+  LP: debt 0 collateral value for borrowing 1806827
+  LP: liability value 0
+  LP net (WMON) 2007586
+  lender's 5M WMON deposit now worth 5000024
+
+## Setting up 1 EVM.
+
+==========================
+
+Chain 143
+
+Estimated gas price: 0.000000015 gwei
+
+Estimated total gas used for script: 492027
+
+Estimated amount required: 0.000000000007380405 ETH
+
+==========================
+
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+
+Transactions saved to: /Users/root1/structures/digester-flow/euler-swap-monad-fork/broadcast/ScenarioDesign2.s.sol/143/run-latest.json
+
+Sensitive values saved to: /Users/root1/structures/digester-flow/euler-swap-monad-fork/cache/ScenarioDesign2.s.sol/143/run-latest.json
+

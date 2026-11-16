@@ -1,0 +1,39 @@
+No files changed, compilation skipped
+Script ran successfully.
+
+== Logs ==
+  sale 1: shMON in 1000000 WMON out 1643099
+    WMON per shMON x1e6 1643099 fee-free rate x1e6 1648043
+    LP debt after sale 1 (WMON) 0
+  sale 2: shMON in 700000 WMON out 1150169
+    LP debt after sale 2 (WMON, borrowed to fill) 793268
+  WMON -> shMON quote refused: yes
+  LP: WMON deposited 0 unstaking-vault value (WMON) 2801675
+  LP: debt 793268 collateral value for borrowing 2521507
+  LP: liability value 793268
+  LP net (WMON) 2008406
+  lender's 5M WMON deposit now worth 5000000
+
+## Setting up 1 EVM.
+
+==========================
+
+Chain 143
+
+Estimated gas price: 0.000000015 gwei
+
+Estimated total gas used for script: 1342796
+
+Estimated amount required: 0.00000000002014194 ETH
+
+==========================
+
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+
+Transactions saved to: /Users/root1/structures/digester-flow/euler-swap-monad-fork/broadcast/ScenarioDesign2.s.sol/143/run-latest.json
+
+Sensitive values saved to: /Users/root1/structures/digester-flow/euler-swap-monad-fork/cache/ScenarioDesign2.s.sol/143/run-latest.json
+
