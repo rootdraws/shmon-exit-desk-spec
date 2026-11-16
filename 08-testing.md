@@ -73,7 +73,7 @@ ends at "FINAL WAITS ON UNSTAKE" (`evidence/harness/final-live-11/scenario.log:2
 | final-live-10, 2026-11-15 | delta neutral | v1 | FINAL PASSED (batch served, debt 100,883 to 3,108) |
 | final-live-11, 2026-11-15 | delta one | v1 | 32 PASS checks, no FAIL, stage 4 FINAL WAITS ON UNSTAKE; stage 2 logged a TIMEOUT on the debt move, as final-live-10 and ush2-d0 also did |
 | ush2-hl, 2026-11-16 18:19Z | delta one | v2 + planner change | FAIL at stage 0: the upstream RPC timed out ("failsafe timeout policy exceeded"); relaunched |
-| ush2-d0, 2026-11-16 18:13Z to 19:22Z | delta neutral | v2 + planner change | **FINAL PASSED**, 29 PASS checks, two stage-2 TIMEOUT lines, no FAIL |
+| ush2-d0, 2026-11-16 18:13Z to 19:22Z | delta neutral | v2 + planner change | **FINAL PASSED**, 29 PASS checks, no FAIL; one TIMEOUT line in stage 2 (debt move) and one in stage 4 (desk sells after the payout) |
 | ush2-hl2, 2026-11-16 18:27Z | delta one | v2 + planner change | in progress at the time of writing; see `evidence/harness/ush2-hl2/` |
 
 ```sh
@@ -93,5 +93,5 @@ move to the second cluster and the pool's retirement, then park, borrow, repay),
 
 2026-11-15, on ushMON v1 and its three live copies (no author named in the report): "No High. 1 Medium, 3 Low, 4
 informational." Fábio Soares' three GitHub issues of 2026-11-16 raise L1 and I2 to High and I1 to Medium with
-reproductions on an anvil fork at block 122775206; the fixes are v2 (sections 1 and 2 above). Eight further issues
+reproductions on an anvil fork of Monad (issue 1 names block 122775206); the fixes are v2 (sections 1 and 2 above). Eight further issues
 (4 to 11, two Medium and six Low) were filed by ardey26 the same day and are listed in [04-ushmon.md](04-ushmon.md).
