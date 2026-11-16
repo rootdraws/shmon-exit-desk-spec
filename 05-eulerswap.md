@@ -65,6 +65,8 @@ the desk's ushMON and the desk to be both the Euler account and the hook. The pa
 
 `getFee` (883-888) charges shMON in whatever brings the fixed ceiling down to **the live rate less 0.30%**
 (`MM_DISCOUNT_BPS = 30`, "Root 2026-11-06: 'charges .3% less'"), and returns 1e18 for WMON in, so the pool only buys.
+Since v1.7.0 it also returns 1e18 for every sale while the vault has an unpaid withdrawal batch, so the vault's own
+leavers get the borrowing room first and outside sellers are routed to shMonad's instant exit for those minutes.
 `afterSwap` (892-903) moves the ceiling to 2% over the live rate when the rate has come within 1% of it, re-anchoring the
 curve at the current reserves (`CEILING_BPS = 200`, `RESET_BPS = 100`). On the fork a seller of 60.48 shMON (99.99 MON
 of value) was quoted 99.69 WMON, 0.30% under (`evidence/rehearsal-fork.log`).

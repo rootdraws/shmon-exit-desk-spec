@@ -14,9 +14,11 @@ cd ushMON && forge test --match-path test/UnstakingShMonVault.t.sol -vv
 ## 2. Fork cycle test: v2 vault, live desk, public buyer, matured unstake (`evidence/hardhat-fork-ush2.txt`)
 
 `alphastructures/contracts/test/NeverlandMarketAdapter/ShMonadExitUsh2.fork.test.ts` on a Hardhat fork of live Monad at
-its head, impersonating the cluster governor and the admin Safe. Eight steps, **8 passing**:
+its head, impersonating the cluster governor and the admin Safe. Ten steps, **10 passing** (rerun after the desk's
+v1.7.0 priority rule was added):
 
 1. The governor approves a v2 vault for the live usdc-hl desk on the cluster (router resolves it, WMON vault lends 97/98).
+1a. The admin Safe upgrades the desk to this tree's v1.7.0 implementation.
 2. The admin Safe moves the desk's account onto it and opens the EulerSwap pool; the fee hook quotes under 1e18 for
    shMON in and refuses WMON in.
 3. A lender seeds the WMON vault with 390 WMON.
@@ -29,6 +31,9 @@ its head, impersonating the cluster governor and the admin Safe. Eight steps, **
 8. shMonad's epoch is moved on (storage slot 18, low 64 bits, the audit's method, since a fork cannot crank);
    `settleEulerUnstake` repays the whole loan from the WMON that came back; `restakeWmon` sends the 0.3% surplus home as
    shMON.
+9. Priority: a depositor joins the live vault (reopened by the admin, since it sealed itself when its last holder
+   left) and asks to leave. With that batch unpaid the desk reads `leaversWaiting() == true`, the fee hook returns
+   1e18 and the pool's quote reverts. Once the handler's last-processed id catches up, the pool quotes again.
 
 ```sh
 cd alphastructures/contracts && FORK_MONAD=true MONAD_RPC_URL=<rpc> \
@@ -83,6 +88,11 @@ cd alphastructures/services/rebalancingBot/test/sim/multi/harness
 ```
 
 ## 5. Earlier fork tests of the desk (`alphastructures/contracts/test/NeverlandMarketAdapter/`)
+
+These were written against the live state of their day and are not all runnable today: `ShMonadExitSettle.fork.test.ts`
+fails 5 of 5 on the untouched tree (it upgrades the live desk to v1.6.0, which is already live) and 4 of 5 with the
+v1.7.0 tree (the cluster's WMON vault has no cash to borrow, `E_InsufficientCash`); both runs on 2026-11-16, the
+stash-and-rerun proof that the change is not the cause.
 
 `ShMonadExit.fork.test.ts` (unstake and v3 orders, oracle refusals, roles), `ShMonadExitV11.fork.test.ts` (v4, Hanji,
 digester orders), `ShMonadExitV111.fork.test.ts` (one listing per tick), `ShMonadExitV15.fork.test.ts` (the account
