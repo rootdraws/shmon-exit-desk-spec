@@ -8,7 +8,7 @@ Contract: `alphastructures/contracts/adapters/venue/ShMonadExitAdapter.sol` at `
 A leaver's shMON must become stablecoin to repay the vault's loan and pay the leaver. shMonad's instant exit costs
 0.41% to 0.73% (30 days of hourly reads, `evidence/data/shmonad-30d.md`); its slow unstake is free but takes about a
 day (`evidence/data/unstake-timing-30d.md`); DEX pairs for shMON carry about $2,700 a day of flow
-(`evidence/data/rate-30d.md`). The instruction behind the desk (2026-11-03, quoted in `docs/shmon-exit-desk-plan.md:5-8`)
+(`evidence/data/rate-30d.md`, 30 days to 2026-11-07). The instruction behind the desk (2026-11-03, quoted in `docs/shmon-exit-desk-plan.md:5-8`)
 was to build withdrawals on the one-day unstake and to sell with resting orders one tick above the price instead of
 taking a market. The withdrawal batch stays five minutes; the desk carries the day (`shmon-exit-desk-plan.md:46-47`).
 

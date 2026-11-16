@@ -1,0 +1,71 @@
+anvil up pid 28232 block 122808869
+deployer 0x501107fe590c8F9b81c00b81867fD19e0d9c0253 on chain 143-fork, 400.533494000949757485 MON
+  USHMON_USDC_HL 0xC8f5023512c0618B754e03d675E3626a4A760092, operated by 0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770
+  govSetResolvedVault 0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c: OK
+  setLTV 9700 9800: OK
+  USHMON_USDC_HL_D0 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664, operated by 0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE
+  govSetResolvedVault 0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c: OK
+  setLTV 9700 9800: OK
+--- verify
+router 0x99f7105CAC565Ac830cf2d66527FBb06dD322C32
+  ok   router governor
+  ok   price feed for 0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c
+  ok   price feed for 0x754704Bc059F8C67012fEd69BC8A327a5aafb603
+  ok   price feed for 0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A
+  ok   price feed for 0xe7cd86e13AC4309349F30B3435a9d337750fC82D
+vault 0xD81D3E243760eD23Ac3DEf2b08d4989bA2790Dfe ("eshMON-6")
+  ok   governor
+  ok   open
+  ok   priced by the router
+  ok   fees to the Safe
+  1 share = $0.02512
+vault 0x5aB09A3EDbb0937Db454f54e6CF04Dd982c40948 ("eUSDC-26")
+  ok   governor
+  ok   open
+  ok   priced by the router
+  ok   fees to the Safe
+  1 share = $0.99977
+vault 0xE4522663752AC47516e39aD11d3780a116850eaf ("eWMON-16")
+  ok   governor
+  ok   open
+  ok   priced by the router
+  ok   fees to the Safe
+  1 share = $0.01519
+vault 0xD6645190976d456907c9807d08E4E4E220c96a3E ("eUSDT0-15")
+  ok   governor
+  ok   open
+  ok   priced by the router
+  ok   fees to the Safe
+  1 share = $0.99915
+  ok   shMON vault caps
+  ok   USDC vault caps
+  ok   USDC vault rate curve
+  ok   USDC lends 79/80 against shMON
+  ok   WMON vault caps
+  ok   WMON vault rate curve
+  ok   WMON lends 97/98 against shMON
+  ok   USDT0 vault caps
+  ok   USDC lends 95/96 against USDT0
+  ok   USDT0 lends 95/96 against USDC
+  ok   USHMON_USDC_HL resolved
+  ok   WMON lends 97/98 against USHMON_USDC_HL
+  ok   USHMON_USDC_HL_D0 resolved
+  ok   WMON lends 97/98 against USHMON_USDC_HL_D0
+verify: all OK
+--- release rehearsal
+FORK chain 143 block 122808875; deployer 0xB9851B5b387BA8cBAf21d8E3FB3e894F3ab6a902 29.705 MON, custody-admin 0xb9a86575182c0F0F07e8b7404612c8207c87681B 0.685 MON
+shmon-neverland-usdc-hl: desk 0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770, ushMON v2 0xC8f5023512c0618B754e03d675E3626a4A760092
+  shmon-neverland-usdc-hl exit desk account -> ushMON v2 0xC8f5023512c0618B754e03d675E3626a4A760092, WMON vault 0xE4522663752AC47516e39aD11d3780a116850eaf: ok 0x07e67fdeb4ee3b6d3a8f397417dc5ab100fd4569c967e6eb186b5731555c6bb4 gas 235587
+  shmon-neverland-usdc-hl open the desk's EulerSwap pool 0x9028e8aF57Da3173B9136189A7E5f0c32d5eA8a8: ok 0xbbbd626ff7fb4c4c528176739148b3842e7801c5e3c3e7fca830d8d70d6aba6f gas 654611
+  OK: pool 0x9028e8aF57Da3173B9136189A7E5f0c32d5eA8a8 buys shMON into 0xC8f5023512c0618B754e03d675E3626a4A760092 at a fee of 2.254901843937879% under its ceiling, refuses WMON in; desk collateral 0xC8f5023512c0618B754e03d675E3626a4A760092, lender 0xE4522663752AC47516e39aD11d3780a116850eaf
+  shmon-neverland-usdc-hl stake 15.0 MON to the desk as shMON: ok 0x85bd3e7cb1c43f440fbc5276b0f17671173d81ea2b6dc2bcdd2c79a67d92e6f1 gas 93095
+  shmon-neverland-usdc-hl park 9.071857287929673717 shMON in 0xC8f5023512c0618B754e03d675E3626a4A760092 as headroom: ok 0x4599e80e3887c13219a8fa6bc71a04786162632e7be1b10f1111b0f24600871b gas 222623
+  config shmon-neverland-usdc-hl.json unstakeVault -> 0xC8f5023512c0618B754e03d675E3626a4A760092 (fork: not written)
+shmon-neverland-usdc-hl-d0: desk 0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE, ushMON v2 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664
+  shmon-neverland-usdc-hl-d0 exit desk account -> ushMON v2 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664, WMON vault 0xE4522663752AC47516e39aD11d3780a116850eaf: ok 0x1088681e620e889757fc774a33f171279aab7364e4f4f44516275bf966e7962d gas 235579
+  shmon-neverland-usdc-hl-d0 open the desk's EulerSwap pool 0x748aD60aff8Fee5C552Cc7Cd480aE2D5226028a8: ok 0xc029d1cf4c124865623c188426ff8011cb859de52c250da394ad1cb0054ab212 gas 654623
+  OK: pool 0x748aD60aff8Fee5C552Cc7Cd480aE2D5226028a8 buys shMON into 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664 at a fee of 2.2549018439378847% under its ceiling, refuses WMON in; desk collateral 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664, lender 0xE4522663752AC47516e39aD11d3780a116850eaf
+Error: deployer holds 14.701093557976216763 MON, under the 25.0 the headroom and gas need
+    at main (/Users/root1/ag-structures/alphastructures/custody/release-ush2-143.ts:191:38)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+anvil stopped

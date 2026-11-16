@@ -17,7 +17,7 @@ As of 2026-11-16, 19:22Z (block 122821118). Live figures are in `evidence/live-r
 
 ## In flight: ushMON v2 and the public buyer
 
-Approved by Root on 2026-11-16 ("plan it. test it. validate it. ship it.", both the three fixes and the EulerSwap pool).
+Approved by Root in the working session of 2026-11-16 ("plan it. test it. validate it. ship it.", both the three fixes and the EulerSwap pool).
 
 | Step | State |
 |---|---|
@@ -29,13 +29,15 @@ Approved by Root on 2026-11-16 ("plan it. test it. validate it. ship it.", both 
 | Five-stage harness | Delta neutral passed with the v2 build. Delta one running (its first launch lost its RPC). |
 | Mainnet: deploy two v2 vaults (`deploy.sh desks`), repoint the desks, open the pools, park headroom, lend the float | Pending the delta-one harness result. The 400 MON Root sent sits on the deployer key. |
 | ushMON repo: commit v2 and tests, update README, reply to and close issues 1 to 3 | Pending the mainnet addresses. |
+| Issues 4 to 11 (ardey26, 2026-11-16 17:58Z) | Open; not in the v2 scope. Each needs Root's call; see [04-ushmon.md](04-ushmon.md). |
 | Bot release to the server | Pending; needs the planner change merged on the server and the bots restarted. |
 
 ## Open decisions
 
 - **The bot's $10 floor.** Every desk step is skipped under $10 of value (`DESK_DUST_USD`). With MON near $0.018 the
   400 MON float is about $7, so the bot would not drive the unstake, settle or restake of the pool's buys on its own.
-  Root was asked on 2026-11-16 whether to send about 700 MON more; no answer yet. Nothing else blocks the release.
+  In the working session of 2026-11-16 Root was asked whether to send about 700 MON more; no answer at the time of
+  writing. Nothing else blocks the release.
 - **The WMON float's size.** 360 MON covers a typical shMonad instant exit (median 1.85 MON, 90th percentile 220 MON)
   once per cycle. Taking the whole public flow (about 160,000 MON a day lately) needs lenders of that order in the
   cluster's WMON vault.

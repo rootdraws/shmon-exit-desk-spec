@@ -6,9 +6,9 @@ guide is `AGENTS.md`; the design docs are under `docs/`.
 ## The strategy in one loop
 
 "Each vault supplies its collateral asset to a lending market, borrows a stablecoin against it, buys more collateral
-with the loan, and holds a Hyperliquid perp short that sets the vault's exposure to a fixed resting delta (0 or 1)."
+with the loan, and holds a Hyperliquid perp short that sets the vault's exposure to a fixed resting delta (0 or 1; …)."
 (`docs/Alpha_Structures_Architecture.md:5`.) The loop repeats until the vault's loan-to-value reaches its target; there
-is no fixed loop count (`Architecture.md:325`). Net profit is funding received on the short less the borrow cost
+is no fixed loop count (`Architecture.md:324`). Net profit is funding received on the short less the borrow cost
 (`Architecture.md:314-324`).
 
 - **Book shape.** The short equals the collateral exposure less `d` times equity, so the book rests at `d` dollars of
@@ -50,8 +50,9 @@ the difference stays with the holders who remain (`contracts/core/WithdrawalHand
 ## The two production vaults
 
 Configs: `deploy/configs/production/shmon-neverland-usdc-hl.json` and `shmon-neverland-usdc-hl-d0.json`. Manifests:
-`deploy/deployments/production/*.json`. Both run on Monad (chain 143) with the same adapters: `neverland-market`,
-`euler-market`, `shmonad-stake`, `across-bridge`, `uniswap-swap`, `curve-swap`, `kyberswap`, `stable-desk`, `shmonad-exit`.
+`deploy/deployments/production/*.json`. Both run on Monad (chain 143) with the same eight adapters in their configs: `neverland-market`,
+`euler-market`, `shmonad-stake`, `across-bridge`, `uniswap-swap`, `curve-swap`, `stable-desk`, `shmonad-exit` (the
+manifests also carry a `kyberswap` adapter proxy).
 
 | Contract | shmon-neverland-usdc-hl (delta one) | shmon-neverland-usdc-hl-d0 (delta neutral) |
 |---|---|---|
@@ -63,7 +64,7 @@ Configs: `deploy/configs/production/shmon-neverland-usdc-hl.json` and `shmon-nev
 | Exit desk (`shmonad-exit` proxy) | [0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770](https://monadscan.com/address/0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770) | [0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE](https://monadscan.com/address/0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE) |
 | Exit desk implementation | 0x623E3EC3E218FcA770eF4bb5Ce5c1399F86Ba467 (v1.6.0, read on chain) | same |
 | Neverland adapter | 0x56251dbe…61C5 | 0xF79E5fA8…DC7D |
-| Euler adapter | 0xa4a912E0…384d | 0x071b7277…7ABB |
+| Euler adapter | 0xa4a912E0…384d | 0x071b7277…5ABB |
 | Stable desk | 0xc19aa853…599a | 0x2dCDEB8B…28f1 |
 | Executor key | 0xC95F60fd…71D3 | 0xF3206EfC…3669 |
 

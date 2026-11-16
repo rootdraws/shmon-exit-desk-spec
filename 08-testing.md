@@ -38,11 +38,13 @@ cd alphastructures/contracts && FORK_MONAD=true MONAD_RPC_URL=<rpc> \
 ## 3. Release rehearsal on an anvil fork (`evidence/rehearsal-fork.log`)
 
 The exact mainnet release path on a fresh fork of Monad at head: `deploy.sh desks` deploys two v2 vaults and sets the
-router and WMON-vault settings (`verify` passes), then `custody/release-ush2-143.ts` moves both desks' accounts, opens
+router and WMON-vault settings (`govSetResolvedVault … OK`, `setLTV 9700 9800: OK` per vault; the first rehearsal's
+`verify` step in `evidence/rehearsal-fork-first.log` reads `ok` for both), then `custody/release-ush2-143.ts` moves both desks' accounts, opens
 both pools, parks 15 MON of headroom per desk, and lends 360 WMON into the WMON vault. Every step ran and read back OK. A
 seller's sale into the pool simulated correctly (`cast call --trace`, 0.30% under the rate, the desk's account check
-passing); the same sale sent with anvil's default gas estimate failed, which points at the estimate on nested EVC
-calls and is checked at the mainnet release with an explicit gas limit.
+passing); the same sale sent through `cast send` returned `status 0 (failed)`; the log records only the status, and the
+writer's reading is anvil's gas estimate on nested EVC calls, to be checked at the mainnet release with an explicit gas
+limit.
 
 ```sh
 anvil --fork-url <rpc> --port 8700 --chain-id 143
@@ -63,15 +65,16 @@ exit desk. The stages (`final.ts:1-12`):
 4. Wind-down: half the shares redeem; the bot raises the loan share through the desk's chunked route and serves the batch.
 
 Through all of it no market swap may run. shMonad's unstake cannot mature on a fork, so stage 4 on the delta-one base
-ends at "FINAL WAITS ON UNSTAKE" by design (`docs/testbook.md:178-182`); the one-day leg is covered by test 2 above.
+ends at "FINAL WAITS ON UNSTAKE" (`evidence/harness/final-live-11/scenario.log:261`; the reason is in
+`docs/testbook.md:178-182`); the one-day leg is covered by test 2 above.
 
 | Run | Base | Vault build | Result |
 |---|---|---|---|
 | final-live-10, 2026-11-15 | delta neutral | v1 | FINAL PASSED (batch served, debt 100,883 to 3,108) |
-| final-live-11, 2026-11-15 | delta one | v1 | stages 0 to 3 passed, stage 4 FINAL WAITS ON UNSTAKE with every check passing |
+| final-live-11, 2026-11-15 | delta one | v1 | 32 PASS checks, no FAIL, stage 4 FINAL WAITS ON UNSTAKE; stage 2 logged a TIMEOUT on the debt move, as final-live-10 and ush2-d0 also did |
 | ush2-hl, 2026-11-16 18:19Z | delta one | v2 + planner change | FAIL at stage 0: the upstream RPC timed out ("failsafe timeout policy exceeded"); relaunched |
-| ush2-d0, 2026-11-16 18:13Z to 19:22Z | delta neutral | v2 + planner change | **FINAL PASSED**, 30 checks |
-| ush2-hl2, 2026-11-16 18:29Z | delta one | v2 + planner change | in progress at the time of writing; see `evidence/harness/ush2-hl2/` |
+| ush2-d0, 2026-11-16 18:13Z to 19:22Z | delta neutral | v2 + planner change | **FINAL PASSED**, 29 PASS checks, two stage-2 TIMEOUT lines, no FAIL |
+| ush2-hl2, 2026-11-16 18:27Z | delta one | v2 + planner change | in progress at the time of writing; see `evidence/harness/ush2-hl2/` |
 
 ```sh
 cd alphastructures/services/rebalancingBot/test/sim/multi/harness
@@ -88,6 +91,7 @@ move to the second cluster and the pool's retirement, then park, borrow, repay),
 
 ## 6. The audit (`evidence/audit-2026-11-15.md`)
 
-Fábio Soares, 2026-11-15, on ushMON v1 and its three live copies: "No High. 1 Medium, 3 Low, 4 informational." The
-three GitHub issues of 2026-11-16 raise L1 and I2 to High and I1 to Medium with reproductions on an anvil fork at block
-122775206; the fixes are v2 (section 1 and 2 above).
+2026-11-15, on ushMON v1 and its three live copies (no author named in the report): "No High. 1 Medium, 3 Low, 4
+informational." Fábio Soares' three GitHub issues of 2026-11-16 raise L1 and I2 to High and I1 to Medium with
+reproductions on an anvil fork at block 122775206; the fixes are v2 (sections 1 and 2 above). Eight further issues
+(4 to 11, two Medium and six Low) were filed by ardey26 the same day and are listed in [04-ushmon.md](04-ushmon.md).

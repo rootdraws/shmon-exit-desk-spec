@@ -89,7 +89,7 @@ first attempt) and the release now parks 15 MON of shMON per desk as headroom be
 So the capital is:
 
 - **Lenders' WMON in the cluster's WMON vault.** This is the float the pool draws on. Today the vault holds 0
-  (`evidence/live-reads.md`). The first release lends the 360 MON Root sent (less headroom and gas) into it. With 9 in
+  (`evidence/live-reads.md`). The first release lends 360 of the 400 MON Root sent (the rest is headroom and gas) into it. With 9 in
   10 shMonad instant exits under 220 MON (`evidence/data/instant-exits-30d.json`), that float serves a typical sale once
   per cycle; to carry the whole public flow at the recent 160,000 MON a day it would need lenders of that order, and
   they earn the WMON vault's rate (20% at zero use, 30% at the 90% kink, `deploy.sh:48`).

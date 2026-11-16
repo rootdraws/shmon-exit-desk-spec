@@ -55,7 +55,7 @@ cast call 0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770 'VERSION()(uint256)' -r htt
 
 The outputs recorded on 2026-11-16 are in [`evidence/`](evidence/): `forge-test.txt`, `hardhat-fork-ush2.txt`, the
 five-stage harness runs under `harness/`, the fork rehearsal of the release in `rehearsal-fork.log`, the audit report,
-the three GitHub issues, the research data under `data/`, and `live-reads.md`.
+the eleven GitHub issues open on the vault, the research data under `data/`, and `live-reads.md`.
 
 ## For another Claude
 

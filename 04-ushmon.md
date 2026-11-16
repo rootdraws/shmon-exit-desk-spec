@@ -35,8 +35,9 @@ Assets are counted in shMON units: shMON held + (MON pending in the unstake + WM
 
 ## v1 to v2: the three issues
 
-Fábio Soares audited v1 on 2026-11-15 (`evidence/audit-2026-11-15.md`: "No High. 1 Medium, 3 Low, 4 informational")
-and filed three issues on 2026-11-16 (`evidence/issues/`):
+v1 was audited on 2026-11-15 (`evidence/audit-2026-11-15.md`, no author named: "No High. 1 Medium, 3 Low, 4
+informational"). On 2026-11-16 Fábio Soares (FSoaresDev) filed three issues with reproductions on an anvil fork
+(`evidence/issues/issue-1.md` to `issue-3.md`):
 
 | Issue | Finding | Fix in v2 |
 |---|---|---|
@@ -47,6 +48,22 @@ and filed three issues on 2026-11-16 (`evidence/issues/`):
 The audit's other findings stand as accepted: M1 a shMonad freeze strands the collateral until shMonad reopens; L2 a
 chunk above shMonad's no-delay allowance waits two more epochs (the bot should split it); L3 a liquidator receives a
 share that pays out a day later.
+
+## Eight more issues, open and not yet decided
+
+Filed by ardey26 on 2026-11-16 at 17:58Z, after the v2 work started (`evidence/issues/issue-4.md` to `issue-11.md`).
+None is addressed by v2 except that v2 adds the tests issue 4 asks for. Each needs a call from Root.
+
+| Issue | Finding |
+|---|---|
+| [#4](https://github.com/rootdraws/ushMON/issues/4) Medium | No tests in the repo, and the fork stand-in behaves differently from live shMonad |
+| [#5](https://github.com/rootdraws/ushMON/issues/5) Low | The operator is a single immutable address with no rotation |
+| [#6](https://github.com/rootdraws/ushMON/issues/6) Medium | A 98% liquidation LTV leaves about 2% for an exit that takes a day or more |
+| [#7](https://github.com/rootdraws/ushMON/issues/7) Low | A 1-wei withdrawal makes an exact-balance `startUnstake` revert |
+| [#8](https://github.com/rootdraws/ushMON/issues/8) Low | `completeUnstake` reverts when nothing is matured, so a settle batch can be griefed (desk v1.6.0 already wraps its call in try/catch) |
+| [#9](https://github.com/rootdraws/ushMON/issues/9) Low | Assets in the unstake earn nothing, and every holder shares that cost |
+| [#10](https://github.com/rootdraws/ushMON/issues/10) Low | `totalAssets` reads raw balances, so a transfer to the vault moves the share price |
+| [#11](https://github.com/rootdraws/ushMON/issues/11) Low | `redeemForWmon` emits no Withdraw event (the audit's I3) |
 
 ## Tests (v2, `test/UnstakingShMonVault.t.sol`, output in `evidence/forge-test.txt`)
 
@@ -70,11 +87,12 @@ The fork cycle test that drives v2 through the live desk, the pool and a matured
 |---|---|---|---|---|
 | [0xa44220Ee57Cb879bd842a24696Df06e398601d8F](https://monadscan.com/address/0xa44220Ee57Cb879bd842a24696Df06e398601d8F) | second (live) | 0x02Df…c770 (usdc-hl) | v1 | the desk's collateral today, empty |
 | [0x066E1eb375369A00e324cF18Eb014B9AB0507690](https://monadscan.com/address/0x066E1eb375369A00e324cF18Eb014B9AB0507690) | second (live) | 0xF460…6CdE (usdc-hl-d0) | v1 | the desk's collateral today, empty |
-| 0x8DB5BAA62968F8Ff971889F07C52e6BD7835Ad16, 0xE5c2612F36dC773D7d85D034F9c8E9171cE2Ef73 | second | the retired usdt0 desks | v1 | unused |
-| 0x59f7f897322D5FdEFCa38beB78137559eD985F80, 0xc0CA1086131046766956bBD030fe9595Cc8204a1 | first (handed over, rejected) | usdc-hl, usdt0-hl desks | v1 | listed in the ushMON README; retired with desk v1.5.0 |
+| 0x8DB5BAA62968F8Ff971889F07C52e6BD7835Ad16, 0xE5c2612F36dC773D7d85D034F9c8E9171cE2Ef73 | second | the retired usdt0 desks (0x5fa6…3d7c, 0xfd12…86f0) | v1 | unused; recorded in the retired configs and the working-tree cluster env |
+| 0x10f5ef37b3b2d3A90CB8AAADB2605CdC0C81f911 | first (handed to the AlphaGrowth Safe 2026-11-09, rejected) | usdc-hl desk | v1 | used by desk v1.5.0 for two days, then left behind by the move to the second cluster |
+| 0x59f7f897322D5FdEFCa38beB78137559eD985F80, 0xc0CA1086131046766956bBD030fe9595Cc8204a1 | the older setup on AlphaGrowth's eWMON-14 (0xfE26…e702), 2026-11-06 | usdc-hl, usdt0-hl desks | v1 | listed in the ushMON README; their EulerSwap pool was retired with desk v1.5.0 |
 
-Operators are from the production and retired configs (`params.unstakeVault`) and the live EVC collateral reads
-(`evidence/live-reads.md`). The ushMON README still lists only the first-cluster pair and says "Not yet audited"; it is
+Operators are from the production and retired configs (`params.unstakeVault`), `docs/shmon-exit-desk-plan.md:183-201`
+and the live EVC collateral reads (`evidence/live-reads.md`). The ushMON README still lists only the first-cluster pair and says "Not yet audited"; it is
 updated with the v2 release. Each vault is approved on the cluster by two governor calls: the router resolves it to shMON
 (`govSetResolvedVault`) and the WMON vault lends 97% against it with a 98% liquidation threshold (`setLTV`), both in
 `ag-euler/contracts/shmon-cluster-monad/deploy.sh:187-188`.

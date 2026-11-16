@@ -46,7 +46,7 @@ exit count jumped (449 to 1,130 exits on several days) while the MON paid out st
 since launch (`instant-exits-30d.json`, `instant-history-daily.csv`). Request to ready: 18.2 h at the 10th percentile,
 19.6 h typical, 21.3 h at the 90th, 21.9 h longest, 5 or 6 epochs of about 4 hours (`evidence/data/unstake-timing-30d.md`).
 
-**DEX flow** (`evidence/data/rate-30d.md`, 1,018,207 swaps over 30 days to 2026-11-07):
+**DEX flow** (`evidence/data/rate-30d.md` and `rate-30d.json`: 1,018,207 swaps over 721 hours, blocks 111184875 to 119665718 per `backfill-30d.json`, run 2026-11-07):
 
 | Pair | Per day, 30-day mean |
 |---|---|
@@ -56,8 +56,9 @@ since launch (`instant-exits-30d.json`, `instant-history-daily.csv`). Request to
 | MON to shMON | $2,369 |
 | shMON to USDC | $4 |
 
-shMON itself hardly trades on DEXes. Of the MON/USDC flow, Uniswap v4 0.05% carries about $2.2M a day, Uniswap v3 0.3%
-$650k and PancakeSwap v3 0.05% $518k.
+shMON itself hardly trades on DEXes. A 24-hour read of 2026-11-05 (`evidence/data/flow-24h-2026-11-05.json`) split the
+MON/USDC flow as: Uniswap v4 0.05% $1.51M bought and $1.59M sold, PancakeSwap v3 0.05% $202k and $210k, Uniswap v3
+0.3% $166k and $221k, the Hanji MON/USDC book $95k and $88k.
 
 ## The instant-exit fee and shMonad's pool depth
 
@@ -66,11 +67,11 @@ Hourly reads (`evidence/data/shmonad-30d.md`, 720 hours to 2026-11-05; `shmonad-
 | | 30d low (p10) | 30d typical | 30d high (p90) | Live 2026-11-16 |
 |---|---|---|---|---|
 | MON payable at once | 1,691,332 | 2,962,823 | 3,889,584 | 3,923,398 |
-| Pool target | | 6.0M to 6.3M | | 6,577,624 |
+| Pool target | 6,053,067 (first row) | 6,412,155 (30-day average, `instant-exits-30d.json`) | 6,256,184 (last row) | 6,577,624 |
 | Instant-exit fee | 0.41% | 0.55% | 0.73% | 0.4085% |
 | Refill after a drain, MON per hour | | 1,258 | 37,378 | |
 
-The desk's 0.30% discount undercuts the instant exit at every hour of the last 30 days read. shMonad holds 329.9M MON
+The desk's 0.30% discount sits under the instant exit's 10th-percentile hour of the last 30 days read (the file gives percentiles, not the lowest hour). shMonad holds 329.9M MON
 in total (`totalAssets`, live), and 1 shMON is worth 1.6533 MON.
 
 ## Capacities
@@ -91,9 +92,9 @@ borrow or hold while the unstake runs (see [05-eulerswap.md](05-eulerswap.md)).
 | $500k | 10% | 73.9 h | 99.6 h (2 of 224 starts never finished) |
 
 The digester pool itself is empty between orders; its depth is the desk's resting orders, and the keeper fills them
-from the MON/USDC flow of about $3.35M a day (`docs/Alpha_Structures_Digester.md:58`, `rate-30d.md`). A 24-hour read on
-2026-11-05 put the digester's buy flow at $82,178 an hour, with 10% fills at $8,218 an hour
-(`alphastructures/services/rebalancingBot/test/sim/withdrawal-sim.md:1`).
+from the MON/USDC flow of about $3.35M a day (`docs/Alpha_Structures_Digester.md:58`, `rate-30d.md`). A 24-hour read put the
+digester's buy flow at $82,178 an hour, with 10% fills at $8,218 an hour
+(`alphastructures/services/rebalancingBot/test/sim/withdrawal-sim.md:1`, undated in the file).
 
 **Borrowing USDC and USDT0 (what the vaults can raise against shMON).** Room before each lender's rate kink, live
 2026-11-16:
@@ -113,7 +114,7 @@ USDT0 ask one blip better than Curve would sell about 63,000 to 66,500 USDT0 a d
 
 Yearly return on $100,000 for a desk that buys shMON at the fee-free rate less a discount, sends it through the unstake
 and gets MON back after 19.6 hours. "Design 2" is the borrow-to-fill EulerSwap pool, lending idle WMON at 4.95% and
-borrowing at 7.78% (the rates of Euler's deepest WMON vault on Monad that day). Outside flow is filled only in hours
+borrowing at 7.78% (`exitMm.sim.ts:26-36`; the rates of Euler's deepest WMON vault on Monad that day; the md rounds it to 7.8%). Outside flow is filled only in hours
 when the discount beats the live instant-exit fee.
 
 | Discount | Vault's own exits per month | Outside flow share 0% / 50% / 100% | Design 2 return per year |

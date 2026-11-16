@@ -63,7 +63,7 @@ v2 vaults described in [04-ushmon.md](04-ushmon.md).
 | Strategy vaults (2) | live, empty, exit desk v1.6.0 on both |
 | Euler cluster on Monad | live, four vaults, no lenders yet, governed by the deployer key |
 | ushMON v1 vaults (2 in use) | live, empty, open deposit (the audit's issue 1) |
-| ushMON v2 | written and tested (10 unit tests, 8-step fork cycle), not yet deployed |
+| ushMON v2 | written and tested (10 unit tests, 8-step fork cycle), not yet deployed; fixes issues 1 to 3 of 11 open |
 | EulerSwap public buyer | code live in the desk; no pool open; reopening rehearsed on a fork |
 | Capital for the buyer | 400 MON sent to the deployer key on 2026-11-16 for the first float and headroom |
 
@@ -71,6 +71,6 @@ v2 vaults described in [04-ushmon.md](04-ushmon.md).
 [^lenders]: `alphastructures/CLAUDE.md:32`, `docs/Alpha_Structures_Architecture.md:10-11,29`.
 [^live]: `evidence/live-reads.md`, block 122821118, 2026-11-16 19:22Z: both vaults return `totalSupply() == 0`.
 [^shmonad]: `evidence/data/unstake-timing-30d.md` (119 requests, read 2026-11-05); `evidence/data/shmonad-30d.md` (720 hourly reads to 2026-11-05); live fee `getCurrentUnstakeFeeRateRay() == 0.4085%` in `evidence/live-reads.md`.
-[^dex]: `evidence/data/rate-30d.md` (1,018,207 swaps over 30 days to 2026-11-07).
+[^dex]: `evidence/data/rate-30d.md` and `rate-30d.json` (1,018,207 swaps over 721 hours, blocks 111184875 to 119665718, run 2026-11-07, `backfill-30d.json`).
 [^desk]: `alphastructures/docs/Alpha_Structures_Digester.md:3-7,24,37-38`; `docs/shmon-exit-desk-plan.md:36-43`; exit fee `contracts/core/WithdrawalHandler.sol:34-35,283`.
 [^flow]: `evidence/data/instant-history.md`, monthly table (instant exits paid out 2025-12 to 2026-10).

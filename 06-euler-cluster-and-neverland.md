@@ -13,7 +13,7 @@ would move governance to the Safe `0x4f894Bfc9481110278C356adE1473eBe2127Fd3C`, 
 | Vault | Address | Lends? | Caps (supply / borrow) | Rate curve | Lends against |
 |---|---|---|---|---|---|
 | shMON | [0xD81D3E243760eD23Ac3DEf2b08d4989bA2790Dfe](https://monadscan.com/address/0xD81D3E243760eD23Ac3DEf2b08d4989bA2790Dfe) | no (borrow cap 1) | 12826 raw | | |
-| USDC | [0x5aB09A3EDbb0937Db454f54e6CF04Dd982c40948](https://monadscan.com/address/0x5aB09A3EDbb0937Db454f54e6CF04Dd982c40948) | yes | 36M / 32.4M | `0xe743…97c6` kinked: 8.5% at 80% use, 9.6% at 90% | shMON 79/80, WMON shares 79/80, USDT0 shares 95/96 |
+| USDC | [0x5aB09A3EDbb0937Db454f54e6CF04Dd982c40948](https://monadscan.com/address/0x5aB09A3EDbb0937Db454f54e6CF04Dd982c40948) | yes | 36M / 32.4M | `0xe743…97c6` kinked: 8.5% at 80% use, 9.6% at 90% (`ag-euler/safe-payloads/monad-shmon-usdc-caps-rate.json:7`) | shMON 79/80, WMON shares 79/80, USDT0 shares 95/96 |
 | WMON | [0xE4522663752AC47516e39aD11d3780a116850eaf](https://monadscan.com/address/0xE4522663752AC47516e39aD11d3780a116850eaf) | yes | 116M / 104M | `0xa359…Ba8a`: 20% at 0, 30% at the 90% kink, 50% at 100% | shMON 97/98, **each ushMON 97/98**, USDC shares 79/80 |
 | USDT0 | [0xD6645190976d456907c9807d08E4E4E220c96a3E](https://monadscan.com/address/0xD6645190976d456907c9807d08E4E4E220c96a3E) | yes | 36M / 32.4M | same as USDC | USDC shares 95/96 |
 
@@ -45,6 +45,6 @@ Read on 2026-11-16 (`evidence/live-reads.md`):
 | USDC | 3,241,762 | 2,592,410 | 80.0% | 90% | **325,176 USDC** | 5.33% |
 | USDT0 | 2,334,856 | 1,998,819 | 85.6% | 90% | **102,551 USDT0** | 5.71% |
 
-Neverland holds 29.5M shMON in total (the shMON aToken's supply), about 9% of all shMON. On 2026-11-09 the USDC reserve
+Neverland holds 29.5M shMON in total (the shMON aToken's supply), about 15% of the 199.5M shMON outstanding (329.9M MON staked at 1.6533 MON per shMON). On 2026-11-09 the USDC reserve
 stood at 87.5% used (`docs/Alpha_Structures_Rebalancing_Policy.md:125`), which is what makes the stable desk's USDC to
 USDT0 debt move and the second lender necessary.

@@ -1,0 +1,206 @@
+{
+  "ranAt": "2026-11-07T12:54:00.989Z",
+  "days": 30,
+  "swaps": 1018207,
+  "hours": 721,
+  "flowStats": {
+    "MON->USDC": {
+      "medianPerHour": 47243.38391200001,
+      "p10PerHour": 20821.53074599999,
+      "p90PerHour": 150284.51456200005,
+      "perDay": 1698731.78010704
+    },
+    "USDC->MON": {
+      "medianPerHour": 46258.12859999999,
+      "p10PerHour": 18945.47385299999,
+      "p90PerHour": 147455.61111399988,
+      "perDay": 1651522.9044004995
+    },
+    "shMON->MON": {
+      "medianPerHour": 8.448540628095737,
+      "p10PerHour": 0,
+      "p90PerHour": 168.84046865118287,
+      "perDay": 2700.8807368664943
+    },
+    "MON->shMON": {
+      "medianPerHour": 8.874477985952339,
+      "p10PerHour": 0,
+      "p90PerHour": 82.96310586966855,
+      "perDay": 2369.3545169194795
+    },
+    "shMON->USDC": {
+      "medianPerHour": 0.073953,
+      "p10PerHour": 0,
+      "p90PerHour": 0.436643,
+      "perDay": 3.9373876726768358
+    },
+    "USDC->shMON": {
+      "medianPerHour": 0.044912,
+      "p10PerHour": 0,
+      "p90PerHour": 0.40599700000000005,
+      "perDay": 3.464027683772539
+    }
+  },
+  "digest": [
+    {
+      "side": "sell MON",
+      "sizeUsd": 10000,
+      "capture": 0.25,
+      "starts": 224,
+      "medianHours": 1.0405555555555555,
+      "p90Hours": 2.3047222222222223,
+      "worstHours": 5.154722222222222,
+      "unfinished": 0
+    },
+    {
+      "side": "sell MON",
+      "sizeUsd": 10000,
+      "capture": 0.1,
+      "starts": 224,
+      "medianHours": 2.2855555555555553,
+      "p90Hours": 4.391666666666667,
+      "worstHours": 8.6325,
+      "unfinished": 0
+    },
+    {
+      "side": "sell MON",
+      "sizeUsd": 50000,
+      "capture": 0.25,
+      "starts": 224,
+      "medianHours": 4.433333333333334,
+      "p90Hours": 7.548055555555556,
+      "worstHours": 12.904166666666667,
+      "unfinished": 0
+    },
+    {
+      "side": "sell MON",
+      "sizeUsd": 50000,
+      "capture": 0.1,
+      "starts": 224,
+      "medianHours": 9.611944444444445,
+      "p90Hours": 16.34888888888889,
+      "worstHours": 23.766666666666666,
+      "unfinished": 0
+    },
+    {
+      "side": "sell MON",
+      "sizeUsd": 200000,
+      "capture": 0.25,
+      "starts": 224,
+      "medianHours": 13.485,
+      "p90Hours": 23.77861111111111,
+      "worstHours": 33.151944444444446,
+      "unfinished": 0
+    },
+    {
+      "side": "sell MON",
+      "sizeUsd": 200000,
+      "capture": 0.1,
+      "starts": 224,
+      "medianHours": 35.478611111111114,
+      "p90Hours": 46.92777777777778,
+      "worstHours": 66.43916666666667,
+      "unfinished": 0
+    },
+    {
+      "side": "sell MON",
+      "sizeUsd": 500000,
+      "capture": 0.25,
+      "starts": 224,
+      "medianHours": 35.478611111111114,
+      "p90Hours": 46.92777777777778,
+      "worstHours": 66.43916666666667,
+      "unfinished": 0
+    },
+    {
+      "side": "sell MON",
+      "sizeUsd": 500000,
+      "capture": 0.1,
+      "starts": 224,
+      "medianHours": 73.9,
+      "p90Hours": 99.565,
+      "worstHours": 112.12055555555555,
+      "unfinished": 2
+    },
+    {
+      "side": "buy MON",
+      "sizeUsd": 10000,
+      "capture": 0.25,
+      "starts": 224,
+      "medianHours": 1.0141666666666667,
+      "p90Hours": 2.1483333333333334,
+      "worstHours": 3.4255555555555555,
+      "unfinished": 0
+    },
+    {
+      "side": "buy MON",
+      "sizeUsd": 10000,
+      "capture": 0.1,
+      "starts": 224,
+      "medianHours": 2.138333333333333,
+      "p90Hours": 4.370555555555556,
+      "worstHours": 6.604444444444445,
+      "unfinished": 0
+    },
+    {
+      "side": "buy MON",
+      "sizeUsd": 50000,
+      "capture": 0.25,
+      "starts": 224,
+      "medianHours": 3.9794444444444443,
+      "p90Hours": 7.805,
+      "worstHours": 11.208333333333334,
+      "unfinished": 0
+    },
+    {
+      "side": "buy MON",
+      "sizeUsd": 50000,
+      "capture": 0.1,
+      "starts": 224,
+      "medianHours": 9.184722222222222,
+      "p90Hours": 16.543333333333333,
+      "worstHours": 21.93777777777778,
+      "unfinished": 0
+    },
+    {
+      "side": "buy MON",
+      "sizeUsd": 200000,
+      "capture": 0.25,
+      "starts": 224,
+      "medianHours": 13.464166666666667,
+      "p90Hours": 22.705277777777777,
+      "worstHours": 32.92388888888889,
+      "unfinished": 0
+    },
+    {
+      "side": "buy MON",
+      "sizeUsd": 200000,
+      "capture": 0.1,
+      "starts": 224,
+      "medianHours": 34.46722222222222,
+      "p90Hours": 45.28888888888889,
+      "worstHours": 64.76666666666667,
+      "unfinished": 0
+    },
+    {
+      "side": "buy MON",
+      "sizeUsd": 500000,
+      "capture": 0.25,
+      "starts": 224,
+      "medianHours": 34.46722222222222,
+      "p90Hours": 45.28888888888889,
+      "worstHours": 64.76666666666667,
+      "unfinished": 0
+    },
+    {
+      "side": "buy MON",
+      "sizeUsd": 500000,
+      "capture": 0.1,
+      "starts": 224,
+      "medianHours": 74.44,
+      "p90Hours": 98.93222222222222,
+      "worstHours": 113.89916666666667,
+      "unfinished": 4
+    }
+  ]
+}
