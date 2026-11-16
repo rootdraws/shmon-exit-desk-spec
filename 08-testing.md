@@ -40,7 +40,7 @@ cd alphastructures/contracts && FORK_MONAD=true MONAD_RPC_URL=<rpc> \
   npx hardhat test test/NeverlandMarketAdapter/ShMonadExitUsh2.fork.test.ts
 ```
 
-## 3. Release rehearsal on an anvil fork (`evidence/rehearsal-fork-9395.log`, final; earlier runs in `rehearsal-fork.log`)
+## 3. Release rehearsal on an anvil fork (`evidence/rehearsal-fork-final.log`, on the final vault build with issues 7, 8 and 11; earlier runs in `rehearsal-fork-9395.log` and `rehearsal-fork.log`)
 
 The exact mainnet release path on a fresh fork of Monad at head (final run at 93/95 with the v1.7.0 desk and the 80 MON
 headroom, 2026-11-16 22:45Z): `deploy.sh desks` deploys two v2 vaults and sets the router and WMON-vault settings (`govSetResolvedVault … OK`, `setLTV 9700 9800: OK` per vault; the first rehearsal's
