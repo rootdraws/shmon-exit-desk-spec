@@ -99,7 +99,14 @@ digester orders), `ShMonadExitV111.fork.test.ts` (one listing per tick), `ShMona
 move to the second cluster and the pool's retirement, then park, borrow, repay), `ShMonadExitSettle.fork.test.ts`
 (v1.6.0's settle fixes H2, H3, H10, M10, and pause/halt gating).
 
-## 6. The audit (`evidence/audit-2026-11-15.md`)
+## 6. The LTV simulation (`evidence/ltv-study/`)
+
+`ShMonadExitUshLtv.fork.test.ts`, 24 cases on a Monad fork: twelve 30-hour holds at six LTV pairs and two
+utilizations (interest matches the curve within 1 bp, nothing liquidatable), and twelve feed drops at two pairs with a
+real liquidation, maturity and redemption. **24 passing.** The results and their reading are in
+[11-ltv-study.md](11-ltv-study.md).
+
+## 7. The audit (`evidence/audit-2026-11-15.md`)
 
 2026-11-15, on ushMON v1 and its three live copies (no author named in the report): "No High. 1 Medium, 3 Low, 4
 informational." Fábio Soares' three GitHub issues of 2026-11-16 raise L1 and I2 to High and I1 to Medium with

@@ -22,6 +22,7 @@ disagree, the spec says so and says which one was checked on chain.
 | [08-testing.md](08-testing.md) | What was tested, how, and the results, with logs and rerun commands |
 | [09-current-state-and-next.md](09-current-state-and-next.md) | What is live, what is in flight, open decisions, known risks |
 | [10-references.md](10-references.md) | Every repo, commit, contract address and file cited |
+| [11-ltv-study.md](11-ltv-study.md) | How much the WMON vault may lend against ushMON: the oracle, its divergence, the rates, the fork simulation, the recommendation (issue 6) |
 
 ## The repos
 
