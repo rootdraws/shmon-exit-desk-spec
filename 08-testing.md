@@ -1,11 +1,15 @@
 # 8. Testing
 
-Every result here has its log under `evidence/` and a command to rerun it. Dates are 2026-11-16 unless stated.
+Every result here has its log under `evidence/` and a command to rerun it. Dates are 2026-11-16 unless stated; the
+one-vault (v3) results of 2026-11-17 are in sections 1, 2a, 3a, 4 and 9.
 
-## 1. ushMON v2 unit tests (`evidence/forge-test.txt`)
+## 1. ushMON unit tests (`evidence/forge-test.txt` for v2; v3 run on 2026-11-17)
 
 Ten Foundry tests in `ushMON/test/UnstakingShMonVault.t.sol` against mocks and the real Ethereum Vault Connector; the
-cases are listed in [04-ushmon.md](04-ushmon.md). Result: **10 passed, 0 failed**.
+cases are listed in [04-ushmon.md](04-ushmon.md). Result: **10 passed, 0 failed** (v2). On v3 (`48d07b3`, 2026-11-17) the
+suite is 16 unit tests (the ten, the two of issues 7 and 8, and four two-desk cases: only the unstaking desk redeems its
+WMON; credits follow each desk's ledger; stray MON and WMON are shared pro rata, a liquidator included; an outsider is
+still shut out), the three donation tests and the two live-shMonad fork tests: **21 passed, 0 failed**.
 
 ```sh
 cd ushMON && forge test --match-path test/UnstakingShMonVault.t.sol -vv
@@ -40,6 +44,22 @@ cd alphastructures/contracts && FORK_MONAD=true MONAD_RPC_URL=<rpc> \
   npx hardhat test test/NeverlandMarketAdapter/ShMonadExitUsh2.fork.test.ts
 ```
 
+## 2a. Fork test of v3: both live desks on one vault (`evidence/hardhat-fork-ush3.txt`, 2026-11-17)
+
+`alphastructures/contracts/test/NeverlandMarketAdapter/ShMonadExitUsh3.fork.test.ts` on a Hardhat fork of live Monad at
+head. Five steps, **5 passing**: the governor approves one v3 vault with both desks as operators (router, 93/95); the
+admin Safe upgrades both desks to v1.8.0, brings each desk's 48.38 shMON headroom home with `unparkShmon` (the first
+run showed the vault refuses a redeem while a controller is enabled, so the desk steps out from under the WMON vault for
+it), moves both accounts onto the one vault and opens a pool per desk; outsiders sell into both pools and each desk
+borrows only for its own pool's buy; desk A unstakes its buy and the ledger is A's alone; the unstake matures (shMonad's
+epoch written), B's settle takes nothing (its loan only grew by interest; the first run asserted equality and was
+corrected) and A's settle repays A's loan and restakes the surplus. The first run of the settle step also showed the
+desk must read `wmonRedeemable`, not `maxRedeemForWmon`, which is 0 under a controller.
+
+```sh
+cd alphastructures/contracts && FORK_MONAD=true MONAD_RPC_URL=<rpc> npx hardhat test test/NeverlandMarketAdapter/ShMonadExitUsh3.fork.test.ts
+```
+
 ## 3. Release rehearsal on an anvil fork (`evidence/rehearsal-fork-final.log`, on the final vault build with issues 7, 8 and 11; earlier runs in `rehearsal-fork-9395.log` and `rehearsal-fork.log`)
 
 The exact mainnet release path on a fresh fork of Monad at head (final run at 93/95 with the v1.7.0 desk and the 80 MON
@@ -56,6 +76,14 @@ anvil --fork-url <rpc> --port 8700 --chain-id 143
 cd ag-euler/contracts/shmon-cluster-monad && RPC=http://127.0.0.1:8700 DESKS="usdc-hl=0x02Df…,usdc-hl-d0=0xF460…" zsh deploy.sh desks
 cd alphastructures && RPC=http://127.0.0.1:8700 FORK=1 CLUSTER_ENV=…/deployed-143-fork.env npx tsx custody/release-ush2-143.ts
 ```
+
+## 3a. Rehearsal of the one-vault release (`evidence/release-ush3/rehearsal-ush3.log`, 2026-11-17)
+
+Twice on a fresh anvil fork of Monad at head, the second on the final desk build: `deploy.sh desks` with
+`DESKS="usdc=0x02Df…+0xF460…"` deploys one v3 vault with both desks as operators (`govSetResolvedVault … OK`,
+`setLTV 9300 9500: OK`, `verify: all OK`), then `custody/release-ush3-143.ts` deploys desk v1.8.0, upgrades both desks,
+takes each desk's 48.38 shMON out of its v2 vault, moves both accounts onto the v3 vault, opens a pool per desk (read-back
+`OK`, fee 2.2549% under the ceiling, WMON in refused) and parks the headroom again. Eight steps `ok`, two read-backs `OK`.
 
 ## 4. The five-stage fork harness (`evidence/harness/`)
 
@@ -86,6 +114,8 @@ and by the planner tests of `settleEulerUnstake` and `restakeWmon` (`services/re
 | ush3-hl, 2026-11-16 21:32Z | delta one | final tree | stages 0 and 1 passed; the same stage-2 revert as ush4-d0 |
 | wd-253, 2026-11-16 23:00Z to 2026-11-17 01:09Z | delta neutral | final tree | resumed from ush4-d0's saved point: stages 2 and 3 passed; stage 4 served the loan (debt 100,893 to 0) and parked 3.23M shMON into shMonad's unstake, which the fork cannot mature, so "the withdrawal batch was served" timed out after 101 minutes. No bot transaction reverted. |
 | wd-254, 2026-11-16 23:04Z to 2026-11-17 00:02Z | delta one | final tree | resumed from ush3-hl's saved point: stages 2 to 4 passed, FINAL WAITS ON UNSTAKE |
+| ush5-d0, 2026-11-17 15:56Z to 16:39Z | delta neutral | one-vault tree (v3 vault, v1.8.0 desk, shared reader) | **FINAL PASSED**, no FAIL; the usual TIMEOUT line on the stage-2 debt move |
+| ush5-hl, 2026-11-17 15:47Z to 18:37Z | delta one | one-vault tree | **FINAL PASSED**, no FAIL: the wind-down served the batch in full (`evidence/harness/ush5-hl/`) |
 
 ```sh
 cd alphastructures/services/rebalancingBot/test/sim/multi/harness
@@ -130,3 +160,15 @@ EulerSwap pools (0x9028e8aF57Da3173B9136189A7E5f0c32d5eA8a8, 0x748aD60aff8Fee5C5
 ceiling and refuses WMON in), staked 80 MON per desk and parked 48.38 shMON in each vault as headroom, and lent
 929.88 WMON to the WMON vault as the float. The dev key kept 9.96 MON for gas. The state read back after the release is
 the last section of `evidence/live-reads.md`.
+
+## 9. The one-vault release (`evidence/release-ush3/`)
+
+2026-11-17, after sections 1, 2a, 3a and the two ush5 harness runs. `mainnet-desks-v3.log`: `deploy.sh desks` created
+one v3 vault, 0x37e07473F1F62CB071Db57440e242b320614A0ce, with both desks as operators; the router resolves it to shMON
+and the WMON vault lends 93/95 against it; `deploy.sh verify` reads "all OK" and the source is verified on Monadscan
+(the v2 lines in `deployed-143.env` are kept as `V2_USHMON_*`). `release-ush3-mainnet.log`: the admin Safe upgraded both
+desks from v1.7.0 to v1.8.0 (implementation 0xDF9515a5d2f68B12a4fAFc44e518B13751A1c3B2), took each desk's 48.38 shMON
+out of its v2 vault with `unparkShmon`, moved each desk's Euler account onto the one vault, opened a pool per desk
+(0xA65De145091aaa6e4540830A34Fc098dE3E668a8 for usdc-hl, 0x6e44D5d4c8a4dA51027A71789934bA33799ca8a8 for usdc-hl-d0; the
+read-back quotes 2.2549% under the ceiling and refuses WMON in) and parked the headroom again; the WMON float of 929.88
+stayed where it was. The state read back after the release is the last section of `evidence/live-reads.md`.

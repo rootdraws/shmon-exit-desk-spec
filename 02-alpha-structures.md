@@ -62,7 +62,7 @@ manifests also carry a `kyberswap` adapter proxy).
 | StrategyControllerSettings | 0xdE30DFdC5107D52c1Dec101db4afDC6a7372adEC | 0xC62D354c3B8fbBEEA9Bee2D35Da38e015770F85a |
 | WithdrawalHandler | 0xFb78583f6D8A9F6c2cCae6111e2817AC9824162a | 0x4B821aFd90eF4F5a35Dec5e4AeeA7C00c7d90Af2 |
 | Exit desk (`shmonad-exit` proxy) | [0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770](https://monadscan.com/address/0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770) | [0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE](https://monadscan.com/address/0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE) |
-| Exit desk implementation | 0xBE243F5e4215720080929eeCfe77047D2Fd2a410 (v1.7.0, upgraded 2026-11-16, read on chain; v1.6.0 was 0x623E3EC3E218FcA770eF4bb5Ce5c1399F86Ba467) | same |
+| Exit desk implementation | 0xDF9515a5d2f68B12a4fAFc44e518B13751A1c3B2 (v1.8.0, upgraded 2026-11-17, read on chain; v1.7.0 was 0xBE243F5e4215720080929eeCfe77047D2Fd2a410, v1.6.0 0x623E3EC3E218FcA770eF4bb5Ce5c1399F86Ba467) | same |
 | Neverland adapter | 0x56251dbe…61C5 | 0xF79E5fA8…DC7D |
 | Euler adapter | 0xa4a912E0…384d | 0x071b7277…5ABB |
 | Stable desk | 0xc19aa853…599a | 0x2dCDEB8B…28f1 |

@@ -53,6 +53,17 @@ paid, the pool quotes nothing, so the desk's borrowing room serves the vault's o
 withdrawal handler's current and last-processed batch ids (`leaversWaiting()`); a seller's router sees no quote from
 this pool and moves on to shMonad's instant exit. Root, 2026-11-16: "build the priority rule into the desk".
 
+**One vault for both desks (v1.8.0, deployed 2026-11-17).** Root, 2026-11-17: "it looks suspicious enough having
+ushMON as collateral, But ushMONdo and ushMONdn Seems like a bit excessive." Both desks now park in one ushMON (v3,
+[04-ushmon.md](04-ushmon.md)), which keeps each desk's unstakes and the WMON they bring back on that desk's own ledger.
+The desk's settle sizes its redeem from `wmonRedeemable(desk)`, the vault's answer for this desk alone, instead of the
+vault's whole WMON balance, so one desk can never take the WMON the other's unstake produced. A new `unparkShmon(shares)`
+brings parked shMON back to the desk (an account cannot move to another vault while shares are parked): with no debt it
+steps out from under the WMON vault's controller for the redeem and back under it after, because the vault reports
+nothing redeemable while a controller may veto. One desk serving both vaults was the other option; it would have meant
+splitting every controller-bound path in the desk (deposit, `returnToController`, `leaversWaiting`, the pool hook) per
+vault, so the smaller change won.
+
 ## The contract, by group (line numbers at `bd9a894`)
 
 | Group | Functions | Who |
@@ -71,17 +82,19 @@ Version history (lines 275-284): v1.1.0 Uniswap v4 and Hanji venues; v1.1.1 a se
 v1.4.0 the Euler account and the EulerSwap pool; v1.5.0 the account moves to the 2026-11-09 cluster and the pool on the
 old pair is retired; v1.6.0 `settleEulerUnstake` skips a reverting `completeUnstake` and settles every share the WMON
 held can pay (audit 2026-11-10 H2, H3, H10), plus `buyMonV4`; v1.7.0 the pool yields to the vault's leavers (implementation
-0xBE243F5e4215720080929eeCfe77047D2Fd2a410, both desks upgraded 2026-11-16). The docs under `docs/` still describe v1.5.0 as live; the chain says v1.7.0 on both
-desks (`evidence/live-reads.md`).
+0xBE243F5e4215720080929eeCfe77047D2Fd2a410, both desks upgraded 2026-11-16); v1.8.0 the settle redeems only the desk's own WMON
+on the shared ushMON v3, plus `unparkShmon` (implementation 0xDF9515a5d2f68B12a4fAFc44e518B13751A1c3B2, both desks upgraded
+2026-11-17). The chain says v1.8.0 on both desks (`evidence/live-reads.md`).
 
-## What the bot decides each tick (`deskEulerStep`, planner lines 172-230, working tree of 2026-11-16, not yet on the server)
+## What the bot decides each tick (`deskEulerStep`, planner lines 172-230; on the server since 2026-11-17)
 
 1. Something matured, or WMON above $10 sits in ushMON, and there is a loan or parked shares: `settleEulerUnstake`.
 2. No loan and WMON above $10 on the desk: `restakeWmon`.
 3. A withdrawal batch is open and the desk holds shMON: `parkShmon(all, all)`, the exit chunk.
 4. Otherwise compute the loan's unbacked part (debt less pending MON and WMON held). Stop under $10.
 5. shMON already in ushMON (the pool's buys) backs it first: `parkShmon(0, min(held, need))`. Added 2026-11-16 for the
-   public buyer; uncommitted at the time of writing.
+   public buyer. On the shared v3 vault the reader counts only this desk's claim (`packages/shared/src/chain/exitDesk.ts`,
+   `ledgerOf` and `wmonRedeemable`).
 6. shMON on the desk: `parkShmon(min(shmon, need), same)`.
 7. No batch open and idle shMON at the controller: `deposit` it to the desk.
 

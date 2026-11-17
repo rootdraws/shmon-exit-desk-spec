@@ -89,3 +89,33 @@ Read with `cast call ... -b 122910315` against a Monad RPC. The release itself i
 | pools 0x9028…A8a8 and 0x748a…28a8 `codesize` | 246 | EulerSwap's minimal proxies are deployed |
 | dev key 0x5011…0253 balance | 9.961 MON | kept for gas |
 | shMonad `convertToAssets(1e18)` | 1653489353626380593 | 1.6535 MON per shMON |
+
+## After the one-vault release, 2026-11-17 18:41Z, block 123091651
+
+Read with `cast call ... -r https://rpc2.monad.xyz`. The release itself is in `evidence/release-ush3/`.
+
+| Read | Raw | Meaning |
+|---|---|---|
+| desk 0x02Df…c770 `VERSION()` | 10800 | exit desk v1.8.0 |
+| desk 0xF460…6CdE `VERSION()` | 10800 | exit desk v1.8.0 |
+| EVC `getCollaterals(desk)`, both | [0x37e07473F1F62CB071Db57440e242b320614A0ce] | both desks' only collateral is the one ushMON v3 |
+| EVC `getControllers(desk)`, both | [0xE4522663752AC47516e39aD11d3780a116850eaf] | the cluster's WMON vault is the only controller |
+| both desks `leaversWaiting()` | false | no unpaid withdrawal batch, so the pools quote |
+| desk 0x02Df…c770 `getEulerPosition()` | 48378465460292174847, 0, 0xA65De145091aaa6e4540830A34Fc098dE3E668a8 | 48.378 shMON of ushMON, no loan, its pool |
+| desk 0xF460…6CdE `getEulerPosition()` | 48378465284963347614, 0, 0x6e44D5d4c8a4dA51027A71789934bA33799ca8a8 | 48.378 shMON of ushMON, no loan, its pool |
+| ushMON v3 `operators()` | [0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770, 0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE] | both desks |
+| ushMON v3 `totalAssets()` / `totalSupply()` | 96756930745255522461 / same | 96.757 shMON parked, every share held by the two desks |
+| ushMON v3 `balanceOf(desk)` | 48378465460292174847 / 48378465284963347614 | each desk's own shares |
+| ushMON v3 `ledgerOf(desk)`, both | [] | no unstake on either ledger |
+| ushMON v3 `wmonCredit(desk)`, both; `creditTotal()`; `sharedWmon()` | 0; 0; 0 | no WMON back yet |
+| router `resolvedVaults(ushMON v3)` | 0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c | priced as shMON |
+| WMON vault `LTVFull(ushMON v3)` | 9300 9500 | borrow 93%, liquidation 95% |
+| WMON vault `cash()` / `totalBorrows()` | 929877902021124257818 / 0 | 929.88 WMON lent, nothing borrowed |
+| WMON vault `caps()` | 46554 41882 | 727M WMON supply, 654M borrow (about $10M at $0.01529 per MON; set 2026-11-17) |
+| USDC vault 0x5aB0…0948 `caps()` | 32012 28812 | 5M supply, 4.5M borrow (set 2026-11-17) |
+| USDT0 vault 0xD664…963E `caps()` | 32012 28812 | 5M supply, 4.5M borrow (set 2026-11-17) |
+| ushMON v2 0xC8f5…0092 and 0xa2F3…f664 `totalAssets()` / `totalSupply()` | 0 / 0 | emptied by `unparkShmon`, no longer used |
+| shMonad `convertToAssets(1e18)` | 1653785613860073299 | 1.6538 MON per shMON |
+
+The pools' quotes were read back by the release script at the time of the release (`evidence/release-ush3/release-ush3-mainnet.log`): each pool
+quotes a fee of 2.2549% under its ceiling for shMON in (the rate less 0.30%) and refuses WMON in.

@@ -56,15 +56,15 @@ flow on Monad, which has run between 3.5 and 9.4 million MON a month since launc
 2026-11-06 on an earlier cluster, retired on 2026-11-09 when the desk moved clusters, and was reopened on 2026-11-16 on the
 ushMON v2 vaults described in [04-ushmon.md](04-ushmon.md).
 
-## State on 2026-11-17, 03:00Z
+## State on 2026-11-17, 18:41Z
 
 | Piece | State |
 |---|---|
-| Strategy vaults (2) | live, empty, exit desk v1.7.0 on both (upgraded 2026-11-16) |
-| Euler cluster on Monad | live, four vaults, 929.88 WMON lent by the deployer key, no loans, governed by the deployer key |
-| ushMON v2 vaults (2 in use) | live since 2026-11-16, operator-only deposit, each holding 48.38 shMON of parked headroom for its desk; WMON lends 93/95 against them |
-| ushMON v1 vaults | replaced; empty, no longer the desks' collateral |
-| EulerSwap public buyer | two pools open since 2026-11-16, one per desk, buying shMON at shMonad's rate less 0.3% |
+| Strategy vaults (2) | live, empty, exit desk v1.8.0 on both (upgraded 2026-11-17) |
+| Euler cluster on Monad | live, four vaults, 929.88 WMON lent by the deployer key, no loans, governed by the deployer key; caps set 2026-11-17: USDC and USDT0 5M supply / 4.5M borrow, WMON 727M supply / 654M borrow (about $10M) |
+| ushMON v3 (one vault for both desks) | 0x37e07473F1F62CB071Db57440e242b320614A0ce, live since 2026-11-17; both desks are its operators, each on its own ledger; 96.76 shMON parked (48.38 per desk); WMON lends 93/95 against it |
+| ushMON v1 and v2 vaults | replaced; empty, no longer any desk's collateral |
+| EulerSwap public buyer | two pools, one per desk, reopened 2026-11-17 on the one vault (0xA65D…68a8, 0x6e44…a8a8), buying shMON at shMonad's rate less 0.3% |
 | Capital for the buyer | 1,100 MON from Root: 80 MON staked per desk as headroom, 929.88 WMON lent as the float, 10 MON kept for gas |
 | Audit issues | all 11 closed on 2026-11-16 (7 fixed in v2, 3 closed by design or by tests, issue 6 by the study and 93/95) |
 

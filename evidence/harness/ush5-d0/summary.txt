@@ -1,0 +1,9 @@
+15:54:47Z INFO fork up at 123058935
+15:54:50Z INFO run ush5-d0: base shmon-desk-hl-d0, spread default, mode final, port 8612
+15:54:50Z INFO git bd9a894, tree 22 files changed, 844 insertions(+), 201 deletions(-)
+15:56:35Z PASS build
+15:56:36Z PASS setup (port free, source answers, clock, keys funded, prices, image from this tree)
+15:59:48Z PASS deploy
+15:59:48Z PASS up
+16:39:33Z PASS scenario
+16:39:34Z DONE teardown

@@ -7,8 +7,9 @@
 # (safe-payloads/monad-shmon-usdc-caps-rate.json). The EulerSwap v2 contracts already deployed by deploy-mm.sh are reused.
 #   cluster   router, shMON collateral vault, USDC, WMON and USDT0 lending vaults, every setting; the dev deployer
 #             stays governor
-#   desks     one unstaking shMON vault per exit desk: DESKS="name=0xdesk,name=0xdesk" (the desk is its operator); the
-#             router resolves it and the WMON vault lends 97/98 against it
+#   desks     unstaking shMON vaults: DESKS="name=0xdesk+0xdesk,..." makes one vault per name with every listed desk as
+#             an operator (ushMON v3, Root 2026-11-17: one ushMON for both desks); the router resolves it and the WMON
+#             vault lends 93/95 against it
 #   handover  every vault's governor and the router's governor become the AlphaGrowth Safe
 #   verify    read-only checks (HANDED=1 also checks the handover)
 #   RPC=<url> zsh deploy.sh cluster|desks|handover|verify       (signs with the `dev` keystore; every step reads first)
@@ -49,15 +50,15 @@ WMON_IRM=0xa359026aae6c26Ba90B3D3AB78Fc483Da09DBa8a          # deploy-mm.sh's WM
 
 # ---- settings, copied ----------------------------------------------------------------------------------------------------
 SHMON_CAP=12826                                            # the Safe batch's eshMON-4 cap
-USDC_CAPS=(23053 20749)                                    # 36M USDC supply / 32.4M borrow
-WMON_CAPS=(7450 6682)                                      # 116M WMON supply / 104M borrow
+USDC_CAPS=(32012 28812)                                    # 5M USDC supply / 4.5M borrow (Root 2026-11-17: "try $5m")
+WMON_CAPS=(46554 41882)                                    # 727M WMON supply / 654M borrow: $10M at $0.015290 per MON (Root 2026-11-17: "$10m in wMON borrow cap")
 LTV_USDC=(7900 8000)                                       # USDC lends 79/80 against shMON and against WMON shares
 LTV_WMON_SH=(9700 9800)         # WMON lends 97/98 against shMON
 LTV_WMON_USH=(9300 9500)        # WMON lends 93/95 against unstaking shMON (Root 2026-11-16: "move to 93/95 now. It's built for external lenders.")
 LTV_WMON_USDC=(7900 8000)                                  # WMON lends 79/80 against USDC shares
 # the USDT0 vault, for the USDC/USDT0 EulerSwap pool, paired with the USDC vault (Root 2026-11-06: "Yes, connected to the main USDC pool.")
 USDT0_IRM=$USDC_IRM                                        # the same kinked stable curve as USDC
-USDT0_CAPS=(23053 20749)                                   # 36M supply / 32.4M borrow, as USDC
+USDT0_CAPS=(32012 28812)                                   # 5M supply / 4.5M borrow, as USDC (Root 2026-11-17)
 LTV_STABLE=(9500 9600)                                     # USDC lends against USDT0 shares, and USDT0 against USDC shares
 FEE=1000; LIQ_DISCOUNT=1500; COOL_OFF=1
 Z=0x0000000000000000000000000000000000000000
@@ -167,13 +168,14 @@ desks() {
   begin
   [ -n "${ROUTER:-}" ] || { print -u2 "run cluster first"; exit 1; }
   local code0=$(python3 -c "import json;print(json.load(open('$USH_ART'))['bytecode']['object'])")
-  for pair in ${(s:,:)${DESKS:?set DESKS=name=0xdesk,...}}; do
-    local name=USHMON_${${pair%%=*}:u} desk=${pair#*=}
+  for pair in ${(s:,:)${DESKS:?set DESKS=name=0xdesk+0xdesk,...}}; do
+    local name=USHMON_${${pair%%=*}:u} desks=${pair#*=}
     name=${name//-/_}
+    local ops="[${desks//+/,}]"
     if [ -z "${(P)name:-}" ]; then
       local NONCE=$(next_nonce)
       local addr=$(cast compute-address $DEP --nonce $NONCE | awk '{print $NF}')
-      local code=$code0${$(cast abi-encode "constructor(address,address,address,address,address)" $EVC $SHMON $SHMON $WMON $desk)#0x}
+      local code=$code0${$(cast abi-encode "constructor(address,address,address,address,address[])" $EVC $SHMON $SHMON $WMON "$ops")#0x}
       local est=$(cast estimate --from $DEP -r $R --create $code 2>/dev/null) || { print -u2 "  estimate failed: $name"; exit 1; }
       local out=$(cast send --gas-limit $((est * 12 / 10)) --nonce $NONCE $KS -r $R --async --create $code 2>&1)
       local h=$(print -r -- "$out" | grep -oE '0x[0-9a-fA-F]{64}' | head -1)
@@ -183,8 +185,10 @@ desks() {
       save $name $addr; typeset -g $name=$addr
     fi
     local u=${(P)name}
-    [ "$(cast call $u 'operator()(address)' -r $R)" = "$desk" ] || { print -u2 "$name at $u is not operated by $desk"; exit 1; }
-    print "  $name $u, operated by $desk"
+    for desk in ${(s:+:)desks}; do
+      [ "$(cast call $u 'isOperator(address)(bool)' $desk -r $R)" = true ] || { print -u2 "$name at $u is not operated by $desk"; exit 1; }
+    done
+    print "  $name $u, operated by ${desks//+/ and }"
     set_if $ROUTER "resolvedVaults(address)(address)|$u" $SHMON 'govSetResolvedVault(address,bool)' $u true || exit 1
     set_if $WMON_VAULT "LTVFull(address)(uint16,uint16,uint16,uint48,uint32)|$u" "$LTV_WMON_USH" 'setLTV(address,uint16,uint16,uint32)' $u $LTV_WMON_USH 0 || exit 1
   done

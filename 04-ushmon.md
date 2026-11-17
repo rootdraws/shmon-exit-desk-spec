@@ -2,8 +2,8 @@
 
 Repo: [rootdraws/ushMON](https://github.com/rootdraws/ushMON) (public). Source
 [`src/UnstakingShMonVault.sol`](https://github.com/rootdraws/ushMON/blob/4235998/src/UnstakingShMonVault.sol)
-at `4235998` (2026-11-16) is v2, live on Monad since 2026-11-16 as the two vaults in the table below; `a7f4788` is v1,
-the replaced code. See [09-current-state-and-next.md](09-current-state-and-next.md). The same file is vendored at
+at `48d07b3` (2026-11-17) is v3, live on Monad since 2026-11-17 as the one vault in the table below; `4235998` is v2
+(2026-11-16, one vault per desk, now empty) and `a7f4788` is v1, the replaced code. See [09-current-state-and-next.md](09-current-state-and-next.md). The same file is vendored at
 `ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol` (copy in [`sources/ag-euler/`](sources/ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol)), whose build artifact every deploy script reads.
 
 ## What it is
@@ -84,12 +84,36 @@ git clone --recurse-submodules https://github.com/rootdraws/ushMON && cd ushMON 
 The fork cycle test that drives v2 through the live desk, the pool and a matured unstake is in
 [08-testing.md](08-testing.md).
 
+## v2 to v3: one vault for both desks (2026-11-17)
+
+Root, 2026-11-17: "it looks suspicious enough having ushMON as collateral, But ushMONdo and ushMONdn Seems like a bit
+excessive." v3 lets several exit desks share one vault without sharing each other's money:
+
+- The constructor takes a list of operators (`isOperator`, `operators()`); only an operator receives shares or starts an
+  unstake, as in v2.
+- `startUnstake` writes the MON shMonad now owes for the request on the caller's ledger (`ledgerOf(operator)`, oldest
+  first). `completeUnstake` wraps every wei of MON as before, then credits the WMON to the operators whose matured ledger
+  entries it pays (`wmonCredit(operator)`), oldest first; what is left (issue 3's stray MON, WMON sent straight in) is
+  a shared pot every holder draws pro rata (`sharedWmon()`).
+- `redeemForWmon(shares, receiver, owner)` pays at most `wmonRedeemable(owner)`: the owner's own credit plus its share of
+  the pot. `maxRedeemForWmon` reports the same bound (0 with a controller, as v2). A liquidator who seizes shares has no
+  credit of its own, so it leaves through `redeem` for shMON the vault holds, or its share of the pot.
+- Shares stay one pot priced pro rata, so a desk holding shMON earns a little of the yield the other desk's unstaking
+  MON does not (about 3 bps a day on the unstaking part at today's rate); stated in the README.
+
+The other way, one desk serving both vaults, would have split every controller-bound path in the desk per vault; this
+way is a vault ledger plus one read in the desk's settle ([03-exit-desk.md](03-exit-desk.md)). Tests: four two-desk cases
+in `test/UnstakingShMonVault.t.sol` (A unstakes and only A can redeem the WMON; credits follow each ledger; stray MON and
+WMON are shared pro rata with a liquidator; an outsider is still shut out), the donation grid and the fork tests all
+pass on v3 (21 tests), and the desk-side fork test runs both live desks on one vault ([08-testing.md](08-testing.md)).
+
 ## Deployed vaults
 
 | ushMON | Cluster | Operator (exit desk) | Version | Note |
 |---|---|---|---|---|
-| [0xC8f5023512c0618B754e03d675E3626a4A760092](https://monadscan.com/address/0xC8f5023512c0618B754e03d675E3626a4A760092) | second (live) | 0x02Df…c770 (usdc-hl) | v2 | the desk's collateral since 2026-11-16; 48.38 shMON parked as headroom; source verified on Monadscan |
-| [0xa2F34235e4C3c0706B2d5B9170F924446b1Df664](https://monadscan.com/address/0xa2F34235e4C3c0706B2d5B9170F924446b1Df664) | second (live) | 0xF460…6CdE (usdc-hl-d0) | v2 | the desk's collateral since 2026-11-16; 48.38 shMON parked as headroom; source verified on Monadscan |
+| [0x37e07473F1F62CB071Db57440e242b320614A0ce](https://monadscan.com/address/0x37e07473F1F62CB071Db57440e242b320614A0ce) | second (live) | 0x02Df…c770 (usdc-hl) and 0xF460…6CdE (usdc-hl-d0), both operators | v3 | both desks' collateral since 2026-11-17; 48.38 shMON parked as headroom by each; source verified on Monadscan; `USHMON_USDC` in `deployed-143.env` |
+| [0xC8f5023512c0618B754e03d675E3626a4A760092](https://monadscan.com/address/0xC8f5023512c0618B754e03d675E3626a4A760092) | second (live) | 0x02Df…c770 (usdc-hl) | v2 | the desk's collateral 2026-11-16 to 2026-11-17; emptied by `unparkShmon`; `V2_USHMON_USDC_HL` in `deployed-143.env` |
+| [0xa2F34235e4C3c0706B2d5B9170F924446b1Df664](https://monadscan.com/address/0xa2F34235e4C3c0706B2d5B9170F924446b1Df664) | second (live) | 0xF460…6CdE (usdc-hl-d0) | v2 | the desk's collateral 2026-11-16 to 2026-11-17; emptied by `unparkShmon`; `V2_USHMON_USDC_HL_D0` in `deployed-143.env` |
 | [0xa44220Ee57Cb879bd842a24696Df06e398601d8F](https://monadscan.com/address/0xa44220Ee57Cb879bd842a24696Df06e398601d8F) | second (live) | 0x02Df…c770 (usdc-hl) | v1 | replaced 2026-11-16, empty; `V1_USHMON_USDC_HL` in `deployed-143.env` |
 | [0x066E1eb375369A00e324cF18Eb014B9AB0507690](https://monadscan.com/address/0x066E1eb375369A00e324cF18Eb014B9AB0507690) | second (live) | 0xF460…6CdE (usdc-hl-d0) | v1 | replaced 2026-11-16, empty; `V1_USHMON_USDC_HL_D0` in `deployed-143.env` |
 | 0x8DB5BAA62968F8Ff971889F07C52e6BD7835Ad16, 0xE5c2612F36dC773D7d85D034F9c8E9171cE2Ef73 | second | the retired usdt0 desks (0x5fa6…3d7c, 0xfd12…86f0) | v1 | unused; recorded in the retired configs and the working-tree cluster env |
@@ -98,6 +122,7 @@ The fork cycle test that drives v2 through the live desk, the pool and a matured
 
 Operators are from the production and retired configs (`params.unstakeVault`), `docs/shmon-exit-desk-plan.md:183-201`
 and the live EVC collateral reads (`evidence/live-reads.md`). The ushMON README still lists only the first-cluster pair and says "Not yet audited"; it is
-updated with the v2 release. Each vault is approved on the cluster by two governor calls: the router resolves it to shMON
-(`govSetResolvedVault`) and the WMON vault lends 97% against it with a 98% liquidation threshold (`setLTV`), both in
-`ag-euler/contracts/shmon-cluster-monad/deploy.sh:187-188`.
+updated with each release. A vault is approved on the cluster by two governor calls: the router resolves it to shMON
+(`govSetResolvedVault`) and the WMON vault lends 93% against it with a 95% liquidation threshold (`setLTV`), both in
+`ag-euler/contracts/shmon-cluster-monad/deploy.sh` (`desks`, which since v3 takes `DESKS="usdc=0xdesk+0xdesk"` and
+passes the list to the constructor).
