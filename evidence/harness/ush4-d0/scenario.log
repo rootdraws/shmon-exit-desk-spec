@@ -1,0 +1,61 @@
+  PASS  setup: Neverland's feeds and the Hyperliquid stand-in read the asked prices — {"shmonUsd":0.02521644,"monUsd":0.015252,"nvShmonUsd":0.02521644,"nvMonUsd":0.015252,"stubMark":0.015252}
+== 0: the exit desk's unstaking shMON vault on the cluster ==
+  PASS  setup: the WMON vault holds the seed asked (FINAL_WMON_SEED) — {"asked":"3000000.0","cash":"3000000.0"}
+  unstaking vault 0x4E347C50e46870ACe9cb1268d733e723Cf6683AD; the desk's Euler account is on; bot and oracle restarted
+  pools moved to the oracle's MON price ($0.015252): tick -318157
+  PASS  setup: the live MON pool and both v3 pools moved to the asked price — {"targetTick":-318157,"poolTicks":[-318157,-318157,-318157]}
+  PASS  setup: a $1000 USDC buy of WMON through the route pool quotes inside the controller's 100 bps cap — {"side":"buy","usdIn":1000,"wmonOut":"65323.514684606646026523","impliedUsdPerWmon":0.015308423082073506,"oracleUsdPerWmon":0.015252,"deviationBps":37,"bandBps":100}
+  PASS  setup: a $1000 WMON sale for USDC through the route pool quotes inside the controller's 100 bps cap — {"side":"sell","usdIn":1000,"wmonIn":"65565.171780750068137422","usdcOut":"996.314162","impliedUsdPerWmon":0.015195783598824,"oracleUsdPerWmon":0.015252,"deviationBps":-37,"bandBps":100}
+  depth at $15000 (a fact, not a gate): buy 131 bps over the oracle ($0.015451 vs $0.015252), sale -136 bps ($0.015044)
+  fill check: $1000 USDC -> WMON through 0xfE31F7 (fee 3000): quoter 65323.514684606646026523 WMON, fill 65323.514684606646026523 WMON, 0 bps
+  PASS  setup: a $1000 USDC buy of WMON through the bot's router fills within 10 bps of its quoter's answer — {"usdIn":1000,"quoteWmon":"65323.514684606646026523","fillWmon":"65323.514684606646026523","deviationBps":0,"bandBps":10,"router":"0xfE31F71C1b106EAc32F1A19239c9a9A72ddfb900","fee":3000,"deadlineRouter":false}
+== 1: growth from a $300000 deposit, through the exit desk ==
+  PASS  setup: the depositor's shMON went in as shares — {"shmon":"11897000.528227","sharesBefore":"0.0","sharesAfter":"11897000.528227","queued":false,"mintedAtPrice":null}
+  growth: borrowed $0, 0 buys resting ($0), desk USDC $0
+  growth: borrowed $100874, 0 buys resting ($0), desk USDC $0
+  growth: still driving after 5 min
+  [after growth] Neverland $300000/$100874 3362bps (USDC $100897, USDT0 $0)  Euler $0/$0 0bps  share price 0.99963
+  PASS  growth finished: borrowing settled within $500 and the resting buys are under it — {"minutes":"8","debtUsd":"100874","debtAfter":"100874","depositUsd":300000,"flatMin":5.03,"restingBuyUsd":0,"deskUsdc":0,"withinUsd":500}
+  the cluster's USDC vault has no cash to lend: the Euler leg was not tested (Neverland $100874)
+  PASS  growth cost the share price under 0.1% — 0.9996267759917321
+  saved the restart point after stage 1
+== 2: Neverland USDC past its kink; the stable desk moves debt to USDT0 ==
+FINAL STOPPED: transaction execution reverted (action="sendTransaction", data=null, reason=null, invocation=null, revert=null, transaction={ "data": "", "from": "0x0200Af675b11aA7F8087f212328E46ddbbA2cd2c", "to": "0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585" }, receipt={ "_type": "TransactionReceipt", "blobGasPrice
+Error: transaction execution reverted (action="sendTransaction", data=null, reason=null, invocation=null, revert=null, transaction={ "data": "", "from": "0x0200Af675b11aA7F8087f212328E46ddbbA2cd2c", "to": "0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585" }, receipt={ "_type": "TransactionReceipt", "blobGasPrice": "1", "blobGasUsed": null, "blockHash": "0x43399235f096c54e428db27586527c2faf17b6ce97e67c455b54a84b35fabd74", "blockNumber": 122848048, "contractAddress": null, "cumulativeGasUsed": "103024", "from": "0x0200Af675b11aA7F8087f212328E46ddbbA2cd2c", "gasPrice": "1000000007", "gasUsed": "103024", "hash": "0xf7f5e39c7d95267a4d3e0a26822ca0ccc37847d83a5411cfba469c68edde8fef", "index": 0, "logs": [  ], "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", "root": null, "status": 0, "to": "0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585" }, code=CALL_EXCEPTION, version=6.16.0)
+    at makeError (/Users/root1/ag-structures/alphastructures/node_modules/ethers/src.ts/utils/errors.ts:698:21)
+    at assert (/Users/root1/ag-structures/alphastructures/node_modules/ethers/src.ts/utils/errors.ts:719:25)
+    at checkReceipt (/Users/root1/ag-structures/alphastructures/node_modules/ethers/src.ts/providers/provider.ts:1617:19)
+    at JsonRpcProvider.txListener (/Users/root1/ag-structures/alphastructures/node_modules/ethers/src.ts/providers/provider.ts:1667:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  code: 'CALL_EXCEPTION',
+  action: 'sendTransaction',
+  data: null,
+  reason: null,
+  invocation: null,
+  revert: null,
+  transaction: {
+    to: '0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585',
+    from: '0x0200Af675b11aA7F8087f212328E46ddbbA2cd2c',
+    data: ''
+  },
+  receipt: TransactionReceipt {
+    provider: JsonRpcProvider {},
+    to: '0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585',
+    from: '0x0200Af675b11aA7F8087f212328E46ddbbA2cd2c',
+    contractAddress: null,
+    hash: '0xf7f5e39c7d95267a4d3e0a26822ca0ccc37847d83a5411cfba469c68edde8fef',
+    index: 0,
+    blockHash: '0x43399235f096c54e428db27586527c2faf17b6ce97e67c455b54a84b35fabd74',
+    blockNumber: 122848048,
+    logsBloom: '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+    gasUsed: 103024n,
+    blobGasUsed: null,
+    cumulativeGasUsed: 103024n,
+    gasPrice: 1000000007n,
+    blobGasPrice: 1n,
+    type: 2,
+    status: 0,
+    root: undefined
+  },
+  shortMessage: 'transaction execution reverted'
+}

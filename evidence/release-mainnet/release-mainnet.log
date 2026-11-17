@@ -1,0 +1,27 @@
+chain 143 block 122909517; deployer 0xB9851B5b387BA8cBAf21d8E3FB3e894F3ab6a902 29.705 MON, dev 0x501107fe590c8F9b81c00b81867fD19e0d9c0253 1099.898 MON, custody-admin 0xb9a86575182c0F0F07e8b7404612c8207c87681B 0.685 MON
+shmon-neverland-usdc-hl: desk 0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770, ushMON v2 0xC8f5023512c0618B754e03d675E3626a4A760092
+  exit desk implementation v10700 at 0xBE243F5e4215720080929eeCfe77047D2Fd2a410
+  shmon-neverland-usdc-hl exit desk v10600 -> v10700: ok 0x1c5c0f4ad075a18d50e7041e7be53b91cce07abc96fcad38455b7e23eb6f14df gas 830041
+  shmon-neverland-usdc-hl exit desk account -> ushMON v2 0xC8f5023512c0618B754e03d675E3626a4A760092, WMON vault 0xE4522663752AC47516e39aD11d3780a116850eaf: ok 0x01e0b9343013a161272ea3b5ac1fa1290d00244a2e04e5a62cc8734b5beb2d16 gas 1403825
+  shmon-neverland-usdc-hl open the desk's EulerSwap pool 0x9028e8aF57Da3173B9136189A7E5f0c32d5eA8a8: ok 0x5322ed290a8baa230d66c444811ffea346789827d746dff73976665d91307ee1 gas 2706874
+  OK: pool 0x9028e8aF57Da3173B9136189A7E5f0c32d5eA8a8 buys shMON into 0xC8f5023512c0618B754e03d675E3626a4A760092 at a fee of 2.254901285913629% under its ceiling, refuses WMON in; desk collateral 0xC8f5023512c0618B754e03d675E3626a4A760092, lender 0xE4522663752AC47516e39aD11d3780a116850eaf
+  shmon-neverland-usdc-hl stake 80.0 MON to the desk as shMON: ok 0x96585199b6bf6d8fb29199a2f808892f4ac2156da78b4b4c4d8ac9f95324aafa gas 97760
+  0.4 MON gas to custody-admin: ok 0xcba78840efec3ebe04f2cbdb902aeb2adcbb228733284b9ca3167c7c1f588add gas 21000
+  shmon-neverland-usdc-hl park 48.378465460292174847 shMON in 0xC8f5023512c0618B754e03d675E3626a4A760092 as headroom: ok 0x7d5babd28eeecd4ae75d9db52b07b5f6539f0f290495b70ea236bfe13bc9afe0 gas 953716
+  config shmon-neverland-usdc-hl.json unstakeVault -> 0xC8f5023512c0618B754e03d675E3626a4A760092
+shmon-neverland-usdc-hl-d0: desk 0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE, ushMON v2 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664
+  shmon-neverland-usdc-hl-d0 exit desk v10600 -> v10700: ok 0xc5709cdce9cece416ecd9996125162c7cdd4d1e69519a354a5d4e09b6b42185f gas 830041
+  0.4 MON gas to custody-admin: ok 0xb3508a32c3431aa24a65347edb992f08dc6e693b33983501aeae1475bffe6aa3 gas 21000
+  shmon-neverland-usdc-hl-d0 exit desk account -> ushMON v2 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664, WMON vault 0xE4522663752AC47516e39aD11d3780a116850eaf: ok 0xe678490846b1565ed5add4e2cc1ef1dbcac7f3d08508744df31bd037d35dc40e gas 1403857
+  shmon-neverland-usdc-hl-d0 open the desk's EulerSwap pool 0x748aD60aff8Fee5C552Cc7Cd480aE2D5226028a8: ok 0xb5413a53bd5e0e9cc259b7f903739543859b7d512255ffd630a7da1b6ad589d1 gas 2706890
+  OK: pool 0x748aD60aff8Fee5C552Cc7Cd480aE2D5226028a8 buys shMON into 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664 at a fee of 2.254901285913811% under its ceiling, refuses WMON in; desk collateral 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664, lender 0xE4522663752AC47516e39aD11d3780a116850eaf
+  shmon-neverland-usdc-hl-d0 stake 80.0 MON to the desk as shMON: ok 0x0c370d1463750c4a573411b41fbb6096558a57da14bf39b2cb3e2a6b40fde376 gas 97760
+  0.4 MON gas to custody-admin: ok 0x5bdd7a70c41c5b4edcf642bd853c1442fd5b17283ef28e7821a4a46ceb0a2e14 gas 21000
+  shmon-neverland-usdc-hl-d0 park 48.378465284963347614 shMON in 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664 as headroom: ok 0x958f4b8b600151acbacc2f45a799c8b187e97b9b0ea5b165c7a574015903c26b gas 953716
+  config shmon-neverland-usdc-hl-d0.json unstakeVault -> 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664
+  wrap 929.877902021124257818 MON: ok 0xa5387c174490cf74d1754b35e0d07101cc9f37b5c4eff2730918c8a788719efd gas 51221
+  approve the WMON vault: ok 0xe3866bc82840d27bfe0eb3bebc04fc3e8c2c5f2a44c0ebada5dc7e7cb81c3e2e gas 53012
+  lend 929.877902021124257818 WMON to 0xE4522663752AC47516e39aD11d3780a116850eaf: ok 0x40bd11b09fc2b07498057c9fcdf7418a03ea5b2f50787e632d8598ef18fb047f gas 277179
+WMON vault 0xE4522663752AC47516e39aD11d3780a116850eaf cash 929.877902021124257818 WMON
+done; dev 9.961 MON, deployer 27.112 MON, custody-admin 0.683 MON
+EXIT 0

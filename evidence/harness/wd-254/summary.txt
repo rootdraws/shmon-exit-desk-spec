@@ -1,0 +1,13 @@
+23:04:01Z INFO resumed at block 122846487, shMON priced 25224200000000000
+23:04:05Z INFO fork up at 122851599
+23:04:07Z INFO run wd-254: base shmon-desk-hl, spread default, mode final, port 8864
+23:04:07Z INFO git bd9a894, tree 8 files changed, 200 insertions(+), 5 deletions(-)
+23:04:20Z INFO setup: SKIP_BUILD=1, the bot image's stamp is 'none'
+23:04:20Z PASS setup (port free, source answers, clock, keys funded, prices, image from this tree)
+23:04:23Z PASS restore-db
+23:04:23Z INFO restore-db: renamed 5 ids, 2273 fields from shmon-ush3-hl to shmon-wd-254
+23:05:36Z PASS restore-stub
+23:05:36Z PASS deploy
+23:06:59Z PASS up
+00:02:43Z PASS scenario
+00:02:44Z DONE teardown

@@ -69,9 +69,11 @@ exit desk. The stages (`final.ts:1-12`):
 3. MON and shMON fall 35% with the bot running: no lender may liquidate, each comes back under its unwind line.
 4. Wind-down: half the shares redeem; the bot raises the loan share through the desk's chunked route and serves the batch.
 
-Through all of it no market swap may run. shMonad's unstake cannot mature on a fork, so stage 4 on the delta-one base
-ends at "FINAL WAITS ON UNSTAKE" (`evidence/harness/final-live-11/scenario.log:261`; the reason is in
-`docs/testbook.md:178-182`); the one-day leg is covered by test 2 above.
+Through all of it no market swap may run. shMonad's unstake cannot mature on a fork, so a stage 4 in which the desk
+parks shMON into the unstake to fund the batch ends waiting for MON the fork never pays: "FINAL WAITS ON UNSTAKE" on the
+delta-one base (`evidence/harness/final-live-11/scenario.log:261`; the reason is in `docs/testbook.md:178-182`), and
+in wd-253 the batch check timed out after 101 minutes for the same reason. The one-day leg is covered by test 2 above
+and by the planner tests of `settleEulerUnstake` and `restakeWmon` (`services/rebalancingBot/test/exitDeskEuler.test.ts`).
 
 | Run | Base | Vault build | Result |
 |---|---|---|---|
@@ -79,7 +81,11 @@ ends at "FINAL WAITS ON UNSTAKE" (`evidence/harness/final-live-11/scenario.log:2
 | final-live-11, 2026-11-15 | delta one | v1 | 32 PASS checks, no FAIL, stage 4 FINAL WAITS ON UNSTAKE; stage 2 logged a TIMEOUT on the debt move, as final-live-10 and ush2-d0 also did |
 | ush2-hl, 2026-11-16 18:19Z | delta one | v2 + planner change | FAIL at stage 0: the upstream RPC timed out ("failsafe timeout policy exceeded"); relaunched |
 | ush2-d0, 2026-11-16 18:13Z to 19:22Z | delta neutral | v2 + planner change | **FINAL PASSED**, 29 PASS checks, no FAIL; one TIMEOUT line in stage 2 (debt move) and one in stage 4 (desk sells after the payout) |
-| ush2-hl2, 2026-11-16 18:27Z | delta one | v2 + planner change | in progress at the time of writing; see `evidence/harness/ush2-hl2/` |
+| ush2-hl2, 2026-11-16 18:32Z | delta one | v2 + planner change | stages 0 to 2 passed; stages 3 and 4 rerun as wd-251 from its saved point: **FINAL PASSED** |
+| ush4-d0, 2026-11-16 21:36Z | delta neutral | final tree (v2, v1.7.0 desk, planner change) | stages 0 and 1 passed; stopped at the start of stage 2 on a revert from Neverland's pool: its WMON supply cap (100M) was hit by the stage's deposit (Aave error 51). `final.ts` now lifts the cap on the fork. |
+| ush3-hl, 2026-11-16 21:32Z | delta one | final tree | stages 0 and 1 passed; the same stage-2 revert as ush4-d0 |
+| wd-253, 2026-11-16 23:00Z to 2026-11-17 01:09Z | delta neutral | final tree | resumed from ush4-d0's saved point: stages 2 and 3 passed; stage 4 served the loan (debt 100,893 to 0) and parked 3.23M shMON into shMonad's unstake, which the fork cannot mature, so "the withdrawal batch was served" timed out after 101 minutes. No bot transaction reverted. |
+| wd-254, 2026-11-16 23:04Z to 2026-11-17 00:02Z | delta one | final tree | resumed from ush3-hl's saved point: stages 2 to 4 passed, FINAL WAITS ON UNSTAKE |
 
 ```sh
 cd alphastructures/services/rebalancingBot/test/sim/multi/harness
@@ -112,3 +118,15 @@ real liquidation, maturity and redemption. **24 passing.** The results and their
 informational." Fábio Soares' three GitHub issues of 2026-11-16 raise L1 and I2 to High and I1 to Medium with
 reproductions on an anvil fork of Monad (issue 1 names block 122775206); the fixes are v2 (sections 1 and 2 above). Eight further issues
 (4 to 11, two Medium and six Low) were filed by ardey26 the same day and are listed in [04-ushmon.md](04-ushmon.md).
+
+## 8. The mainnet release (`evidence/release-mainnet/`)
+
+2026-11-16, after the fork tests above. `mainnet-desks.log`: `deploy.sh desks` created the two v2 vaults
+(0xC8f5023512c0618B754e03d675E3626a4A760092 for the usdc-hl desk, 0xa2F34235e4C3c0706B2d5B9170F924446b1Df664 for the usdc-hl-d0 desk), the router
+resolves each to shMON and the WMON vault lends 93/95 against each; `deploy.sh verify` reads "all OK" and both vaults'
+source is verified on Monadscan. `release-mainnet.log`: the admin Safe upgraded both desks from v1.6.0 to v1.7.0
+(implementation 0xBE243F5e4215720080929eeCfe77047D2Fd2a410), moved each desk's Euler account onto its v2 vault, opened the two
+EulerSwap pools (0x9028e8aF57Da3173B9136189A7E5f0c32d5eA8a8, 0x748aD60aff8Fee5C552Cc7Cd480aE2D5226028a8; the read-back quotes a fee of 2.25% under the
+ceiling and refuses WMON in), staked 80 MON per desk and parked 48.38 shMON in each vault as headroom, and lent
+929.88 WMON to the WMON vault as the float. The dev key kept 9.96 MON for gas. The state read back after the release is
+the last section of `evidence/live-reads.md`.

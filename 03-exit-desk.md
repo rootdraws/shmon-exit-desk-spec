@@ -48,7 +48,7 @@ shMON and sent home (`restakeWmon`, 856).
 `MM_DISCOUNT_BPS = 30` (line 287) and is that pool's pricing hook (`getFee`, 883; `afterSwap`, 892). See
 [05-eulerswap.md](05-eulerswap.md).
 
-**The priority rule (v1.7.0, 2026-11-16, working tree).** While the vault has a withdrawal batch that is not yet
+**The priority rule (v1.7.0, deployed 2026-11-16).** While the vault has a withdrawal batch that is not yet
 paid, the pool quotes nothing, so the desk's borrowing room serves the vault's own leavers first. The desk reads the
 withdrawal handler's current and last-processed batch ids (`leaversWaiting()`); a seller's router sees no quote from
 this pool and moves on to shMonad's instant exit. Root, 2026-11-16: "build the priority rule into the desk".
@@ -70,11 +70,11 @@ this pool and moves on to shMonad's instant exit. Root, 2026-11-16: "build the p
 Version history (lines 275-284): v1.1.0 Uniswap v4 and Hanji venues; v1.1.1 a second placement adds to a listing;
 v1.4.0 the Euler account and the EulerSwap pool; v1.5.0 the account moves to the 2026-11-09 cluster and the pool on the
 old pair is retired; v1.6.0 `settleEulerUnstake` skips a reverting `completeUnstake` and settles every share the WMON
-held can pay (audit 2026-11-10 H2, H3, H10), plus `buyMonV4`; v1.7.0 the pool yields to the vault's leavers (working
-tree, not yet deployed). The docs under `docs/` still describe v1.5.0 as live; the chain says v1.6.0 on both desks
-(`evidence/live-reads.md`).
+held can pay (audit 2026-11-10 H2, H3, H10), plus `buyMonV4`; v1.7.0 the pool yields to the vault's leavers (implementation
+0xBE243F5e4215720080929eeCfe77047D2Fd2a410, both desks upgraded 2026-11-16). The docs under `docs/` still describe v1.5.0 as live; the chain says v1.7.0 on both
+desks (`evidence/live-reads.md`).
 
-## What the bot decides each tick (`deskEulerStep`, planner lines 172-230, working tree of 2026-11-16)
+## What the bot decides each tick (`deskEulerStep`, planner lines 172-230, working tree of 2026-11-16, not yet on the server)
 
 1. Something matured, or WMON above $10 sits in ushMON, and there is a loan or parked shares: `settleEulerUnstake`.
 2. No loan and WMON above $10 on the desk: `restakeWmon`.

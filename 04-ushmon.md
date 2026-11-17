@@ -1,9 +1,9 @@
 # 4. ushMON, the unstaking shMON vault
 
 Repo: [rootdraws/ushMON](https://github.com/rootdraws/ushMON) (public). Source
-[`src/UnstakingShMonVault.sol`](https://github.com/rootdraws/ushMON/blob/a7f478847134a5ff5afdb672ddd97398b3eae713/src/UnstakingShMonVault.sol)
-at `a7f4788` is v1, the code live on Monad. v2 is in the working tree on 2026-11-16 and ships as new vaults; see
-[09-current-state-and-next.md](09-current-state-and-next.md). The same file is vendored at
+[`src/UnstakingShMonVault.sol`](https://github.com/rootdraws/ushMON/blob/4235998/src/UnstakingShMonVault.sol)
+at `4235998` (2026-11-16) is v2, live on Monad since 2026-11-16 as the two vaults in the table below; `a7f4788` is v1,
+the replaced code. See [09-current-state-and-next.md](09-current-state-and-next.md). The same file is vendored at
 `ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol` (copy in [`sources/ag-euler/`](sources/ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol)), whose build artifact every deploy script reads.
 
 ## What it is
@@ -16,18 +16,18 @@ and liquidate it." (`README.md`.) Root's brief, quoted in the NatSpec: "Custom v
 rehypothecation into slow redemption" (2026-11-05).
 
 Assets are counted in shMON units: shMON held + (MON pending in the unstake + WMON held) / shMonad's rate
-(`totalAssets`, line 81). The operator is immutable and is the exit desk; one ushMON per desk.
+(`totalAssets`, line 85). The operator is immutable and is the exit desk; one ushMON per desk.
 
-## Functions (v2 working tree; v1 lines differ by the added overrides)
+## Functions (v2 at `4235998`; v1 lines differ by the added overrides)
 
 | Function | Who | What |
 |---|---|---|
-| `startUnstake(shmon)` 135 | operator | sends shMON into shMonad's unstake, emits `UnstakeStarted` |
-| `completeUnstake()` 143 | anyone | completes matured requests, wraps the vault's MON into WMON, emits `UnstakeCompleted` |
-| `redeemForWmon(shares, receiver, owner)` 152 | holder or approved | burns shares, pays their WMON value at `rate()`, reverts `InsufficientWmon` if short, then the EVC account check |
+| `startUnstake(shmon)` 141 | operator | sends shMON into shMonad's unstake, emits `UnstakeStarted` |
+| `completeUnstake()` 154 | anyone | completes matured requests, wraps the vault's MON into WMON, emits `UnstakeCompleted` |
+| `redeemForWmon(shares, receiver, owner)` 163 | holder or approved | burns shares, pays their WMON value at `rate()`, reverts `InsufficientWmon` if short, then the EVC account check |
 | `deposit` / `mint` (OpenZeppelin) | v1: anyone; v2: receiver must be the operator | shMON in, shares out |
-| `withdraw` / `redeem` 176, 181 | holder | shMON out, then the EVC account check |
-| `transfer` / `transferFrom` 164, 170 | holder | plus the EVC account check, so a controller can veto |
+| `withdraw` / `redeem` 188, 193 | holder | shMON out, then the EVC account check |
+| `transfer` / `transferFrom` 176, 182 | holder | plus the EVC account check, so a controller can veto |
 | `maxDeposit`, `maxMint` 99, 103 (v2) | view | `type(uint256).max` for the operator, 0 for anyone else |
 | `maxWithdraw`, `maxRedeem` 109, 114 (v2) | view | 0 with a controller enabled, else the claim bounded by the shMON held |
 | `maxRedeemForWmon(owner)` 121 (v2, new) | view | 0 with a controller, else the shares the WMON held can pay |
@@ -88,8 +88,10 @@ The fork cycle test that drives v2 through the live desk, the pool and a matured
 
 | ushMON | Cluster | Operator (exit desk) | Version | Note |
 |---|---|---|---|---|
-| [0xa44220Ee57Cb879bd842a24696Df06e398601d8F](https://monadscan.com/address/0xa44220Ee57Cb879bd842a24696Df06e398601d8F) | second (live) | 0x02Df…c770 (usdc-hl) | v1 | the desk's collateral today, empty |
-| [0x066E1eb375369A00e324cF18Eb014B9AB0507690](https://monadscan.com/address/0x066E1eb375369A00e324cF18Eb014B9AB0507690) | second (live) | 0xF460…6CdE (usdc-hl-d0) | v1 | the desk's collateral today, empty |
+| [0xC8f5023512c0618B754e03d675E3626a4A760092](https://monadscan.com/address/0xC8f5023512c0618B754e03d675E3626a4A760092) | second (live) | 0x02Df…c770 (usdc-hl) | v2 | the desk's collateral since 2026-11-16; 48.38 shMON parked as headroom; source verified on Monadscan |
+| [0xa2F34235e4C3c0706B2d5B9170F924446b1Df664](https://monadscan.com/address/0xa2F34235e4C3c0706B2d5B9170F924446b1Df664) | second (live) | 0xF460…6CdE (usdc-hl-d0) | v2 | the desk's collateral since 2026-11-16; 48.38 shMON parked as headroom; source verified on Monadscan |
+| [0xa44220Ee57Cb879bd842a24696Df06e398601d8F](https://monadscan.com/address/0xa44220Ee57Cb879bd842a24696Df06e398601d8F) | second (live) | 0x02Df…c770 (usdc-hl) | v1 | replaced 2026-11-16, empty; `V1_USHMON_USDC_HL` in `deployed-143.env` |
+| [0x066E1eb375369A00e324cF18Eb014B9AB0507690](https://monadscan.com/address/0x066E1eb375369A00e324cF18Eb014B9AB0507690) | second (live) | 0xF460…6CdE (usdc-hl-d0) | v1 | replaced 2026-11-16, empty; `V1_USHMON_USDC_HL_D0` in `deployed-143.env` |
 | 0x8DB5BAA62968F8Ff971889F07C52e6BD7835Ad16, 0xE5c2612F36dC773D7d85D034F9c8E9171cE2Ef73 | second | the retired usdt0 desks (0x5fa6…3d7c, 0xfd12…86f0) | v1 | unused; recorded in the retired configs and the working-tree cluster env |
 | 0x10f5ef37b3b2d3A90CB8AAADB2605CdC0C81f911 | first (handed to the AlphaGrowth Safe 2026-11-09, rejected) | usdc-hl desk | v1 | wired by desk v1.5.0 on 2026-11-09, then left behind when the desk's account moved to the second cluster's vault |
 | 0x59f7f897322D5FdEFCa38beB78137559eD985F80, 0xc0CA1086131046766956bBD030fe9595Cc8204a1 | the older setup on AlphaGrowth's eWMON-14 (0xfE26…e702), 2026-11-06 | usdc-hl, usdt0-hl desks | v1 | listed in the ushMON README; the usdc-hl desk's pool on this pair (0x9aF1…e8a8) was retired with desk v1.5.0; the usdt0-hl desk and its pool (0xeC6b…68A8) were retired with the usdt0 strategy |

@@ -52,7 +52,8 @@ SHMON_CAP=12826                                            # the Safe batch's es
 USDC_CAPS=(23053 20749)                                    # 36M USDC supply / 32.4M borrow
 WMON_CAPS=(7450 6682)                                      # 116M WMON supply / 104M borrow
 LTV_USDC=(7900 8000)                                       # USDC lends 79/80 against shMON and against WMON shares
-LTV_WMON_SH=(9700 9800)                                    # WMON lends 97/98 against shMON and unstaking shMON
+LTV_WMON_SH=(9700 9800)         # WMON lends 97/98 against shMON
+LTV_WMON_USH=(9300 9500)        # WMON lends 93/95 against unstaking shMON (Root 2026-11-16: "move to 93/95 now. It's built for external lenders.")
 LTV_WMON_USDC=(7900 8000)                                  # WMON lends 79/80 against USDC shares
 # the USDT0 vault, for the USDC/USDT0 EulerSwap pool, paired with the USDC vault (Root 2026-11-06: "Yes, connected to the main USDC pool.")
 USDT0_IRM=$USDC_IRM                                        # the same kinked stable curve as USDC
@@ -185,7 +186,7 @@ desks() {
     [ "$(cast call $u 'operator()(address)' -r $R)" = "$desk" ] || { print -u2 "$name at $u is not operated by $desk"; exit 1; }
     print "  $name $u, operated by $desk"
     set_if $ROUTER "resolvedVaults(address)(address)|$u" $SHMON 'govSetResolvedVault(address,bool)' $u true || exit 1
-    set_if $WMON_VAULT "LTVFull(address)(uint16,uint16,uint16,uint48,uint32)|$u" "$LTV_WMON_SH" 'setLTV(address,uint16,uint16,uint32)' $u $LTV_WMON_SH 0 || exit 1
+    set_if $WMON_VAULT "LTVFull(address)(uint16,uint16,uint16,uint48,uint32)|$u" "$LTV_WMON_USH" 'setLTV(address,uint16,uint16,uint32)' $u $LTV_WMON_USH 0 || exit 1
   done
 }
 
@@ -226,7 +227,7 @@ verify() {
   for name in ${(k)parameters[(I)USHMON_*]}; do
     local u=${(P)name}
     chk "$name resolved" "$(cast call $ROUTER 'resolvedVaults(address)(address)' $u -r $R)" $SHMON
-    chk "WMON lends 97/98 against $name" "$(cast call $WMON_VAULT 'LTVFull(address)(uint16,uint16,uint16,uint48,uint32)' $u -r $R | num | head -2 | tr '\n' ' ')" "$LTV_WMON_SH "
+    chk "WMON lends 93/95 against $name" "$(cast call $WMON_VAULT 'LTVFull(address)(uint16,uint16,uint16,uint48,uint32)' $u -r $R | num | head -2 | tr '\n' ' ')" "$LTV_WMON_USH "
   done
   [ $bad = 0 ] && print "verify: all OK" || { print "verify: FAILED"; exit 1; }
 }

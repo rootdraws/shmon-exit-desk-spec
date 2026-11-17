@@ -66,3 +66,26 @@ Raw: USDC cash 649935918882, aToken supply 3241762411556, debt 2592410467688; US
 ## Keys
 
 Deployer / cluster governor `0x501107fe590c8F9b81c00b81867fD19e0d9c0253`: 400.533 MON (Root sent 400 MON on 2026-11-16 for the public buyer's float).
+
+## After the release, 2026-11-17 03:00Z, block 122910315
+
+Read with `cast call ... -b 122910315` against a Monad RPC. The release itself is in `evidence/release-mainnet/`.
+
+| Read | Raw | Meaning |
+|---|---|---|
+| desk 0x02Df…c770 `VERSION()` | 10700 | exit desk v1.7.0 |
+| desk 0xF460…6CdE `VERSION()` | 10700 | exit desk v1.7.0 |
+| desk 0x02Df…c770 proxy implementation slot | 0xBE243F5e4215720080929eeCfe77047D2Fd2a410 | the v1.7.0 implementation |
+| both desks `leaversWaiting()` | false | no unpaid withdrawal batch, so the pools quote |
+| EVC `getCollaterals(0x02Df…c770)` | [0xC8f5023512c0618B754e03d675E3626a4A760092] | the usdc-hl desk's only collateral is its v2 ushMON |
+| EVC `getCollaterals(0xF460…6CdE)` | [0xa2F34235e4C3c0706B2d5B9170F924446b1Df664] | the usdc-hl-d0 desk's only collateral is its v2 ushMON |
+| EVC `getControllers(desk)`, both | [0xE4522663752AC47516e39aD11d3780a116850eaf] | the cluster's WMON vault is the only controller |
+| ushMON 0xC8f5…0092 `totalAssets()` / `totalSupply()` | 48378465460292174847 / same | 48.378 shMON parked, every share held by the desk |
+| ushMON 0xa2F3…f664 `totalAssets()` / `totalSupply()` | 48378465284963347614 / same | 48.378 shMON parked, every share held by the desk |
+| ushMON `operator()`, each | its desk | |
+| ushMON `maxDeposit(0x…dEaD)`, each | 0 | an outsider cannot mint (issue 1) |
+| WMON vault `LTVFull(ushMON)`, each | 9300 9500 | borrow 93%, liquidation 95% |
+| WMON vault `cash()` / `totalBorrows()` / `totalSupply()` | 929877902021124257818 / 0 / 929877902021124257818 | 929.88 WMON lent, nothing borrowed yet |
+| pools 0x9028…A8a8 and 0x748a…28a8 `codesize` | 246 | EulerSwap's minimal proxies are deployed |
+| dev key 0x5011…0253 balance | 9.961 MON | kept for gas |
+| shMonad `convertToAssets(1e18)` | 1653489353626380593 | 1.6535 MON per shMON |

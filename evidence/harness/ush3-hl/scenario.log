@@ -1,0 +1,159 @@
+  PASS  setup: Neverland's feeds and the Hyperliquid stand-in read the asked prices — {"shmonUsd":0.0252242,"monUsd":0.01525669,"nvShmonUsd":0.0252242,"nvMonUsd":0.01525669,"stubMark":0.01525669}
+== 0: the exit desk's unstaking shMON vault on the cluster ==
+  PASS  setup: the WMON vault holds the seed asked (FINAL_WMON_SEED) — {"asked":"3000000.0","cash":"3000000.0"}
+  unstaking vault 0x7f0Ba910AB24a73784561095ccA4F00FF235eC39; the desk's Euler account is on; bot and oracle restarted
+  pools moved to the oracle's MON price ($0.015257): tick -318154
+  PASS  setup: the live MON pool and both v3 pools moved to the asked price — {"targetTick":-318154,"poolTicks":[-318154,-318154,-318154]}
+  PASS  setup: a $1000 USDC buy of WMON through the route pool quotes inside the controller's 100 bps cap — {"side":"buy","usdIn":1000,"wmonOut":"65303.441637147733609717","impliedUsdPerWmon":0.015313128602875226,"oracleUsdPerWmon":0.01525669,"deviationBps":37,"bandBps":100}
+  PASS  setup: a $1000 WMON sale for USDC through the route pool quotes inside the controller's 100 bps cap — {"side":"sell","usdIn":1000,"wmonIn":"65545.016645156982121989","usdcOut":"996.314254","impliedUsdPerWmon":0.01520045771585926,"oracleUsdPerWmon":0.01525669,"deviationBps":-37,"bandBps":100}
+  depth at $15000 (a fact, not a gate): buy 131 bps over the oracle ($0.015456 vs $0.015257), sale -136 bps ($0.015050)
+  fill check: $1000 USDC -> WMON through 0xfE31F7 (fee 3000): quoter 65303.441637147733609717 WMON, fill 65303.441637147733609717 WMON, 0 bps
+  PASS  setup: a $1000 USDC buy of WMON through the bot's router fills within 10 bps of its quoter's answer — {"usdIn":1000,"quoteWmon":"65303.441637147733609717","fillWmon":"65303.441637147733609717","deviationBps":0,"bandBps":10,"router":"0xfE31F71C1b106EAc32F1A19239c9a9A72ddfb900","fee":3000,"deadlineRouter":false}
+== 1: growth from a $300000 deposit, through the exit desk ==
+  PASS  setup: the depositor's shMON went in as shares — {"shmon":"11893340.522197","sharesBefore":"0.0","sharesAfter":"11893340.522197","queued":false,"mintedAtPrice":null}
+  growth: borrowed $0, 0 buys resting ($0), desk USDC $0
+  pool 0x63e4: active liquidity 1151617558550149107 before the move, 1150548326444109689 now; 1069232106039418 minted back on [-318480, -317870], now 1151617558550149107
+  pool 0x63e4: active liquidity 1152686790656188525 before the move, 1151617558550149107 now; 1069232106039418 minted back on [-318480, -317870], now 1152686790656188525
+  growth: borrowed $125099, 7 buys resting ($96222), desk USDC $0
+  growth: still driving after 6 min
+  pool 0x63e4: active liquidity 1153756022762227943 before the move, 1152686790656188525 now; 1069232106039418 minted back on [-318480, -317870], now 1153756022762227943
+  pool 0x63e4: active liquidity 1154825254868267361 before the move, 1153756022762227943 now; 1069232106039418 minted back on [-318480, -317870], now 1154825254868267361
+  pool 0x63e4: active liquidity 1155894486974306779 before the move, 1154825254868267361 now; 1069232106039418 minted back on [-318480, -317870], now 1155894486974306779
+  pool 0x63e4: active liquidity 1156963719080346197 before the move, 1155894486974306779 now; 1069232106039418 minted back on [-318480, -317870], now 1156963719080346197
+  pool 0x63e4: active liquidity 1158032951186385615 before the move, 1156963719080346197 now; 1069232106039418 minted back on [-318480, -317870], now 1158032951186385615
+  growth: borrowed $125099, 10 buys resting ($87321), desk USDC $0
+  growth: still driving after 11 min
+  pool 0x63e4: active liquidity 1159102183292425033 before the move, 1158032951186385615 now; 1069232106039418 minted back on [-318480, -317870], now 1159102183292425033
+  pool 0x63e4: active liquidity 1160171415398464451 before the move, 1159102183292425033 now; 1069232106039418 minted back on [-318480, -317870], now 1160171415398464451
+  pool 0x63e4: active liquidity 1161240647504503869 before the move, 1160171415398464451 now; 1069232106039418 minted back on [-318480, -317870], now 1161240647504503869
+  pool 0x63e4: active liquidity 1162309879610543287 before the move, 1161240647504503869 now; 1069232106039418 minted back on [-318480, -317870], now 1162309879610543287
+  pool 0x63e4: active liquidity 1163379111716582705 before the move, 1162309879610543287 now; 1069232106039418 minted back on [-318480, -317870], now 1163379111716582705
+  growth: borrowed $125099, 9 buys resting ($84735), desk USDC $0
+  growth: still driving after 16 min
+  pool 0x63e4: active liquidity 1164448343822622123 before the move, 1163379111716582705 now; 1069232106039418 minted back on [-318480, -317870], now 1164448343822622123
+  pool 0x63e4: active liquidity 1165517575928661541 before the move, 1164448343822622123 now; 1069232106039418 minted back on [-318480, -317870], now 1165517575928661541
+  pool 0x63e4: active liquidity 1166586808034700959 before the move, 1165517575928661541 now; 1069232106039418 minted back on [-318480, -317880], now 1166586808034700959
+  pool 0x63e4: active liquidity 1167656040140740377 before the move, 1166586808034700959 now; 1069232106039418 minted back on [-318480, -317880], now 1167656040140740377
+  pool 0x63e4: active liquidity 1168725272246779795 before the move, 1167656040140740377 now; 1069232106039418 minted back on [-318490, -317880], now 1168725272246779795
+  growth: borrowed $125099, 6 buys resting ($69029), desk USDC $0
+  growth: still driving after 21 min
+  pool 0x63e4: active liquidity 1169794504352819213 before the move, 1168032451860386051 now; 1762052492433162 minted back on [-318500, -317900], now 1169794504352819213
+  pool 0x63e4: active liquidity 1171556556845252375 before the move, 1169794504352819213 now; 1762052492433162 minted back on [-318500, -317900], now 1171556556845252375
+  pool 0x63e4: active liquidity 1173318609337685537 before the move, 1171556556845252375 now; 1762052492433162 minted back on [-318500, -317900], now 1173318609337685537
+  pool 0x63e4: active liquidity 1175080661830118699 before the move, 1173318609337685537 now; 1762052492433162 minted back on [-318500, -317900], now 1175080661830118699
+  pool 0x63e4: active liquidity 1176842714322551861 before the move, 1175080661830118699 now; 1762052492433162 minted back on [-318500, -317900], now 1176842714322551861
+  growth: borrowed $125099, 6 buys resting ($69029), desk USDC $0
+  growth: still driving after 26 min
+  pool 0x63e4: active liquidity 1178604766814985023 before the move, 1176842714322551861 now; 1762052492433162 minted back on [-318500, -317900], now 1178604766814985023
+  pool 0x63e4: active liquidity 1180366819307418185 before the move, 1179297587201378767 now; 1069232106039418 minted back on [-318480, -317870], now 1180366819307418185
+  pool 0x63e4: active liquidity 1181436051413457603 before the move, 1179673998921024441 now; 1762052492433162 minted back on [-318500, -317900], now 1181436051413457603
+  pool 0x63e4: active liquidity 1183198103905890765 before the move, 1181436051413457603 now; 1762052492433162 minted back on [-318510, -317900], now 1183198103905890765
+  pool 0x63e4: active liquidity 1184960156398323927 before the move, 1183198103905890765 now; 1762052492433162 minted back on [-318510, -317900], now 1184960156398323927
+  growth: borrowed $125099, 8 buys resting ($58973), desk USDC $0
+  growth: still driving after 31 min
+  pool 0x63e4: active liquidity 1186722208890757089 before the move, 1184960156398323927 now; 1762052492433162 minted back on [-318510, -317900], now 1186722208890757089
+  pool 0x63e4: active liquidity 1188484261383190251 before the move, 1186722208890757089 now; 1762052492433162 minted back on [-318510, -317900], now 1188484261383190251
+  pool 0x63e4: active liquidity 1190246313875623413 before the move, 1188484261383190251 now; 1762052492433162 minted back on [-318510, -317900], now 1190246313875623413
+  pool 0x63e4: active liquidity 1192008366368056575 before the move, 1190939134262017157 now; 1069232106039418 minted back on [-318480, -317870], now 1192008366368056575
+  pool 0x63e4: active liquidity 1193077598474095993 before the move, 1191315545981662831 now; 1762052492433162 minted back on [-318500, -317900], now 1193077598474095993
+  growth: borrowed $125100, 10 buys resting ($49732), desk USDC $0
+  growth: still driving after 36 min
+  pool 0x63e4: active liquidity 1194839650966529155 before the move, 1193077598474095993 now; 1762052492433162 minted back on [-318510, -317900], now 1194839650966529155
+  pool 0x63e4: active liquidity 1196601703458962317 before the move, 1194839650966529155 now; 1762052492433162 minted back on [-318510, -317900], now 1196601703458962317
+  pool 0x63e4: active liquidity 1198363755951395479 before the move, 1196601703458962317 now; 1762052492433162 minted back on [-318510, -317900], now 1198363755951395479
+  pool 0x63e4: active liquidity 1200125808443828641 before the move, 1198363755951395479 now; 1762052492433162 minted back on [-318510, -317900], now 1200125808443828641
+  pool 0x63e4: active liquidity 1201887860936261803 before the move, 1200125808443828641 now; 1762052492433162 minted back on [-318510, -317900], now 1201887860936261803
+  growth: borrowed $125100, 11 buys resting ($41343), desk USDC $0
+  growth: still driving after 42 min
+  pool 0x63e4: active liquidity 1203649913428694965 before the move, 1201887860936261803 now; 1762052492433162 minted back on [-318510, -317900], now 1203649913428694965
+  pool 0x63e4: active liquidity 1205411965921128127 before the move, 1203649913428694965 now; 1762052492433162 minted back on [-318510, -317900], now 1205411965921128127
+  pool 0x63e4: active liquidity 1207174018413561289 before the move, 1205411965921128127 now; 1762052492433162 minted back on [-318510, -317900], now 1207174018413561289
+  pool 0x63e4: active liquidity 1208936070905994451 before the move, 1207174018413561289 now; 1762052492433162 minted back on [-318510, -317900], now 1208936070905994451
+  pool 0x63e4: active liquidity 1210698123398427613 before the move, 1208936070905994451 now; 1762052492433162 minted back on [-318510, -317900], now 1210698123398427613
+  growth: borrowed $125100, 11 buys resting ($33939), desk USDC $0
+  growth: still driving after 47 min
+  pool 0x63e4: active liquidity 1212460175890860775 before the move, 1210698123398427613 now; 1762052492433162 minted back on [-318510, -317900], now 1212460175890860775
+  pool 0x63e4: active liquidity 1214222228383293937 before the move, 1212460175890860775 now; 1762052492433162 minted back on [-318510, -317900], now 1214222228383293937
+  pool 0x63e4: active liquidity 1215984280875727099 before the move, 1214222228383293937 now; 1762052492433162 minted back on [-318510, -317900], now 1215984280875727099
+  pool 0x63e4: active liquidity 1217746333368160261 before the move, 1215984280875727099 now; 1762052492433162 minted back on [-318510, -317900], now 1217746333368160261
+  pool 0x63e4: active liquidity 1219508385860593423 before the move, 1217746333368160261 now; 1762052492433162 minted back on [-318510, -317900], now 1219508385860593423
+  growth: borrowed $125100, 12 buys resting ($27079), desk USDC $0
+  growth: still driving after 52 min
+  pool 0x63e4: active liquidity 1221270438353026585 before the move, 1219508385860593423 now; 1762052492433162 minted back on [-318510, -317900], now 1221270438353026585
+  pool 0x63e4: active liquidity 1223032490845459747 before the move, 1221270438353026585 now; 1762052492433162 minted back on [-318510, -317900], now 1223032490845459747
+  pool 0x63e4: active liquidity 1224794543337892909 before the move, 1223032490845459747 now; 1762052492433162 minted back on [-318510, -317900], now 1224794543337892909
+  pool 0x63e4: active liquidity 1226556595830326071 before the move, 1224794543337892909 now; 1762052492433162 minted back on [-318510, -317900], now 1226556595830326071
+  pool 0x63e4: active liquidity 1228318648322759233 before the move, 1226556595830326071 now; 1762052492433162 minted back on [-318510, -317900], now 1228318648322759233
+  pool 0x63e4: active liquidity 1230080700815192395 before the move, 1229011468709152977 now; 1069232106039418 minted back on [-318480, -317870], now 1230080700815192395
+  growth: borrowed $128203, 15 buys resting ($18906), desk USDC $0
+  growth: still driving after 58 min
+  pool 0x63e4: active liquidity 1231149932921231813 before the move, 1230080700815192395 now; 1069232106039418 minted back on [-318480, -317870], now 1231149932921231813
+  pool 0x63e4: active liquidity 1232219165027271231 before the move, 1231149932921231813 now; 1069232106039418 minted back on [-318480, -317870], now 1232219165027271231
+  pool 0x63e4: active liquidity 1233288397133310649 before the move, 1232219165027271231 now; 1069232106039418 minted back on [-318480, -317880], now 1233288397133310649
+  pool 0x63e4: active liquidity 1234357629239350067 before the move, 1233288397133310649 now; 1069232106039418 minted back on [-318490, -317880], now 1234357629239350067
+  pool 0x63e4: active liquidity 1235426861345389485 before the move, 1234357629239350067 now; 1069232106039418 minted back on [-318490, -317880], now 1235426861345389485
+  growth: borrowed $129719, 16 buys resting ($15077), desk USDC $0
+  growth: still driving after 63 min
+  pool 0x63e4: active liquidity 1236496093451428903 before the move, 1235426861345389485 now; 1069232106039418 minted back on [-318490, -317880], now 1236496093451428903
+  pool 0x63e4: active liquidity 1237565325557468321 before the move, 1235803273065035159 now; 1762052492433162 minted back on [-318500, -317890], now 1237565325557468321
+  pool 0x63e4: active liquidity 1239327378049901483 before the move, 1237565325557468321 now; 1762052492433162 minted back on [-318510, -317900], now 1239327378049901483
+  pool 0x63e4: active liquidity 1241089430542334645 before the move, 1239327378049901483 now; 1762052492433162 minted back on [-318510, -317900], now 1241089430542334645
+  pool 0x63e4: active liquidity 1242851483034767807 before the move, 1241089430542334645 now; 1762052492433162 minted back on [-318510, -317900], now 1242851483034767807
+  growth: borrowed $132711, 11 buys resting ($7138), desk USDC $0
+  growth: still driving after 68 min
+  pool 0x63e4: active liquidity 1244613535527200969 before the move, 1242851483034767807 now; 1762052492433162 minted back on [-318510, -317900], now 1244613535527200969
+  pool 0x63e4: active liquidity 1246375588019634131 before the move, 1244613535527200969 now; 1762052492433162 minted back on [-318520, -317910], now 1246375588019634131
+  pool 0x63e4: active liquidity 1248137640512067293 before the move, 1246375588019634131 now; 1762052492433162 minted back on [-318520, -317910], now 1248137640512067293
+  pool 0x63e4: active liquidity 1249899693004500455 before the move, 1248137640512067293 now; 1762052492433162 minted back on [-318520, -317910], now 1249899693004500455
+  pool 0x63e4: active liquidity 1251661745496933617 before the move, 1249899693004500455 now; 1762052492433162 minted back on [-318530, -317920], now 1251661745496933617
+  growth: borrowed $134977, 2 buys resting ($1537), desk USDC $0
+  growth: still driving after 73 min
+  pool 0x63e4: active liquidity 1253423797989366779 before the move, 1251661745496933617 now; 1762052492433162 minted back on [-318530, -317920], now 1253423797989366779
+  pool 0x63e4: active liquidity 1255185850481799941 before the move, 1253423797989366779 now; 1762052492433162 minted back on [-318530, -317920], now 1255185850481799941
+  growth: borrowed $135539, 0 buys resting ($0), desk USDC $0
+  growth: still driving after 78 min
+  [after growth] Neverland $396415/$135539 3419bps (USDC $135570, USDT0 $0)  Euler $0/$0 0bps  share price 1.00075
+  PASS  growth finished: borrowing settled within $500 and the resting buys are under it — {"minutes":"80","debtUsd":"135539","debtAfter":"135539","depositUsd":300000,"flatMin":5.03,"restingBuyUsd":0,"deskUsdc":0,"withinUsd":500}
+  the cluster's USDC vault has no cash to lend: the Euler leg was not tested (Neverland $135539)
+  PASS  growth cost the share price under 0.1% — 1.0007510046764694
+  saved the restart point after stage 1
+== 2: Neverland USDC past its kink; the stable desk moves debt to USDT0 ==
+FINAL STOPPED: transaction execution reverted (action="sendTransaction", data=null, reason=null, invocation=null, revert=null, transaction={ "data": "", "from": "0xb645BcA5629DF1f0AaBCEb90BF010125a67ad94B", "to": "0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585" }, receipt={ "_type": "TransactionReceipt", "blobGasPrice
+Error: transaction execution reverted (action="sendTransaction", data=null, reason=null, invocation=null, revert=null, transaction={ "data": "", "from": "0xb645BcA5629DF1f0AaBCEb90BF010125a67ad94B", "to": "0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585" }, receipt={ "_type": "TransactionReceipt", "blobGasPrice": "1", "blobGasUsed": null, "blockHash": "0xc8e93fcadb39ccfaaad46b952322a82d927c304437365052b276e0da734c2672", "blockNumber": 122851598, "contractAddress": null, "cumulativeGasUsed": "103036", "from": "0xb645BcA5629DF1f0AaBCEb90BF010125a67ad94B", "gasPrice": "1000000007", "gasUsed": "103036", "hash": "0x3eb1230096ea4684ee1ffbc5b642e20664f42f23766821918f2d69ad6a99b39f", "index": 0, "logs": [  ], "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", "root": null, "status": 0, "to": "0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585" }, code=CALL_EXCEPTION, version=6.16.0)
+    at makeError (/Users/root1/ag-structures/alphastructures/node_modules/ethers/src.ts/utils/errors.ts:698:21)
+    at assert (/Users/root1/ag-structures/alphastructures/node_modules/ethers/src.ts/utils/errors.ts:719:25)
+    at checkReceipt (/Users/root1/ag-structures/alphastructures/node_modules/ethers/src.ts/providers/provider.ts:1617:19)
+    at JsonRpcProvider.txListener (/Users/root1/ag-structures/alphastructures/node_modules/ethers/src.ts/providers/provider.ts:1667:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  code: 'CALL_EXCEPTION',
+  action: 'sendTransaction',
+  data: null,
+  reason: null,
+  invocation: null,
+  revert: null,
+  transaction: {
+    to: '0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585',
+    from: '0xb645BcA5629DF1f0AaBCEb90BF010125a67ad94B',
+    data: ''
+  },
+  receipt: TransactionReceipt {
+    provider: JsonRpcProvider {},
+    to: '0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585',
+    from: '0xb645BcA5629DF1f0AaBCEb90BF010125a67ad94B',
+    contractAddress: null,
+    hash: '0x3eb1230096ea4684ee1ffbc5b642e20664f42f23766821918f2d69ad6a99b39f',
+    index: 0,
+    blockHash: '0xc8e93fcadb39ccfaaad46b952322a82d927c304437365052b276e0da734c2672',
+    blockNumber: 122851598,
+    logsBloom: '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+    gasUsed: 103036n,
+    blobGasUsed: null,
+    cumulativeGasUsed: 103036n,
+    gasPrice: 1000000007n,
+    blobGasPrice: 1n,
+    type: 2,
+    status: 0,
+    root: undefined
+  },
+  shortMessage: 'transaction execution reverted'
+}
