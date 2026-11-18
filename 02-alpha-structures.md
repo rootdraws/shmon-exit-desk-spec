@@ -52,7 +52,7 @@ The bot takes one step every 30 seconds. Each row is one rule, read from the two
 | Share price limit | 3% an hour, one window | shares are priced in shMON; the contract refuses a bigger move, counted in dollars per share on Delta Neutral | `StrategyControllerSettings.sol`, `risk.sharePriceDeviation` |
 | NAV publish | 1% Delta One, 0.2% Delta Neutral, 30 min, 2 h empty | the oracle posts the share price | navOracle `publish.ts` |
 | Modes | block 60 s, price 90 min, venue health | DegradedData blocks growth, new shorts, payouts | `state/modeMachine.ts`, `staleness.ts` |
-| Breaker | pause 66.5%, unpause 45% after 30 min | the monitor pauses and unpauses | monitor `breaker.ts` |
+| Breaker | pause 66.5%, unpause at the 50% unwind stop after 30 min (since 2026-11-18) | the monitor pauses and unpauses | monitor `breaker.ts` |
 | Hedge drift warning | 3% of target, $10 or more | the monitor warns; the bot itself moves at 1% | monitor `checkStrategy.ts` |
 | Fixed delta | 1 and 0, on chain | Settings 1.15 has no setter; no gear shift can start | `StrategyControllerSettings.sol` |
 | Performance fee | 10% of every rise over the last published price | Settings 1.16, live 2026-11-18; a fall charges nothing and moves the mark down | `StrategyControllerSettings.sol` |
