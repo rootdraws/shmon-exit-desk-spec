@@ -1,12 +1,13 @@
 # 1. Overview
 
-## What the product is
+## monad.structures.gg
 
-Alpha Structures runs yield vaults. A depositor puts in one asset and the vault runs a carry trade with it: it lends the
-asset as collateral, borrows a stablecoin against it, buys more of the asset with the loan, and holds a Hyperliquid
-perpetual short so the vault's exposure to the asset stays at a fixed "resting delta" of either one or zero. The vault
-earns the funding paid to shorts less the borrow cost, and the share price is measured from live balances, never
-forecast.[^arch]
+monad.structures.gg is a yield vault on Monad.
+* shMON is deposited as collateral
+* the vault borrows a stablecoin against it, and buys more shMON with the loan
+* The vault holds a Hyperliquid perpetual short so the vault's exposure to the asset stays at a fixed "resting delta" of either one or zero.
+
+The vault earns from the levered yield on shMON, plus the funding paid to shorts, less the borrow cost.
 
 On Monad the asset is **shMON**, Fastlane's liquid staking token for MON. Two vaults are live, one per resting delta:
 
@@ -16,84 +17,60 @@ On Monad the asset is **shMON**, Fastlane's liquid staking token for MON. Two va
 | `shmon-neverland-usdc-hl-d0` | 0 (delta neutral) | the carry only, in dollars |
 
 Both borrow USDC or USDT0 from two lenders: Neverland (an Aave v3 fork on Monad) and an Euler cluster the team deployed
-itself.[^lenders] Both are empty at the time of writing (zero shares, zero assets), after a redeployment cycle; see
-[09-current-state-and-next.md](09-current-state-and-next.md).[^live]
+itself.[^lenders]
 
-## Why leaving shMON is the hard part
+## Increasing shMON to USDC Capacity
 
-A depositor leaves by redeeming shares for the vault's asset or for stablecoin. To pay them the vault must turn shMON
-back into MON or a stablecoin and repay its loan. shMON offers two ways out:[^shmonad]
+The current onchain route from shMON to USDC (or USDT) is limited to ~$60k at ~0.70% fee, and above that the slippage is much worse. A serious vault is not able to safely unwind or serve withdrawals, without holding a 20-28 hour duration risk for unstaking shMON.
+
+**shMON** offers two ways out:[^shmonad]
 
 - **The slow unstake.** Free, and it takes about a day: 19.6 hours typically, 18.2 to 21.3 hours for 8 in 10 requests.
-- **The instant exit.** Paid from shMonad's atomic pool at a fee that moves with the pool's fill: 0.41% low, 0.55%
-  typical, 0.73% high over the last 30 days read, and 0.41% at the block this spec was written.
+- **shMON/MON on Curve** can digest around $50k at ~0.4%, and there are no meaningful shMON/USDC pairs. 
+- **Fastlane Instant Redemption** is an exhaustible / replenishable fund, whose available balance sits below $100k:
+  - $12.7k at 0.49% fee
+  - $25.5k at 0.55% fee
+  - $58.8k at 0.71% fee
 
-Selling shMON on a DEX is not a third way. The shMON/MON and shMON/USDC pairs trade about $2,700 and $4 a day across
-every Monad venue, against about $1.7 million a day each way for MON/USDC.[^dex] So the choice is "a day for free" or
-"now for about half a percent", and the vault wants neither for its depositors.
+Without an increase in capacity, depositors are exposed to liquidation risk and slippage which eats into yield, making this an obstacle toward scaling both shMON as an asset, as well as any leverage product.
 
 ## Increasing shMON to USDC capacity
 
 ![Exit desk value flow](figures/exit-desk-value-flow.svg)
 
-shMON to USDC is currently limited to 60k at ~0.70% fee, and above that, the slippage gets much worse. A serious vault
-is not able to safely unwind or serve withdrawals, without holding a 20-28 hour duration risk.
-
-- Market sell of shMON moves $1-2k per trade, at 0.87% to 1.4% slippage.
-- shMON to wMON instant redemption caps at $58,800 today:
-  - $12.7k at 0.49% fee
-  - $25.5k at 0.55% fee
-  - $58.8k at 0.71% fee
-
 The Exit Desk is an adapter, which is owned by the shMON vault. It enables resting limit orders of wMON through a Univ4
-Hook, which greatly increases vault capacity.
+Hook.
 
-ushMON represents a tokenized claim on the 20 to 28 hour process of unstaking shMON. wMON lenders on Euler can provide
-debt swap liquidity against ushMON in return for high lending APR whenever that wMON is utilized.
+ushMON represents a tokenized claim on the 20 to 28 hour process of unstaking shMON. wMON lenders provide a one day line of credit backed by the MON staking contracts, and receive a high lending APR whenever ushMON is active.
 
-wMON lenders are providing ushMON collateral a one day line of credit backed by the MON staking contracts onchain.
-
-- Digester sells $16k to $21k of wMON an hour, through Maker Orders with no slippage.
-- Chunks of about $33k, 4 hours of pace each, capped by what the lenders can spare.
+The exit desk enables a metabolic rate of $16k to $21k wMON an hour, executed through Maker Orders, a tick above the current price across multiple wMON/USDC venues. Capacity in this is limited to onchain demand, as well as depth of wMON lending -- rather than slippage in current shMON/wMON pools, or instant redemption limits.
 
 The Exit Desk will also become more efficient by integrating with Fastlane's soon to be released Monad Liquidity Router,
-Moose.
+Moose, as well as Kyber.
 
-## What the exit desk does about it
+## Functionality
 
-Each vault has an **exit desk**, a contract the vault's bot drives. The desk takes a leaver's shMON through the free
-one-day unstake, and meanwhile raises the stablecoin the leaver is owed without paying a market's slippage:[^desk]
+Each vault has an **exit desk**, which minimizes slippage, and enables a steady metabolic rate for derisking, and withdrawals:[^desk]
 
 1. It parks the shMON in the vault's **unstaking shMON vault (ushMON)** on the Euler cluster and sends it into the
    unstake. The parked shMON is Euler collateral.
 2. It borrows **WMON** (wrapped MON) against it from the cluster's WMON vault, at up to 93% of value.
-3. It sells that WMON for USDC through the **digester**, the team's own Uniswap v4 pool where the desk rests small limit
+3. It sells that WMON for USDC through the **digester**, a Uniswap v4 pool where the desk rests small limit
    orders one tick off the market and a keeper fills them from other pools' flow.
 4. A day later the unstake pays MON back into ushMON as WMON, and the desk repays the WMON loan with it in one Euler
    batch. The leaver has been paid in stablecoin at the fee-free rate, less a 0.3% exit fee that stays with the holders
    who remain.
 
-## What the public shMON buyer adds
+## Eulerswap Integration:
 
 The same desk owns an **EulerSwap pool**, a Uniswap v4 hook AMM whose liquidity is an Euler account instead of a token
-balance. The pool buys shMON from anyone at shMonad's live rate less 0.3%, undercutting the instant exit, and pays WMON
-it borrows just in time against the shMON it just received, which lands in ushMON as the desk's collateral. The one-day
-unstake repays the borrow and the 0.3% stays with the vault. This is how the vault captures a share of the shMON to MON
-flow on Monad, which has run between 3.5 and 9.4 million MON a month since launch.[^flow] The pool was first opened on
-2026-11-06 on an earlier cluster, retired on 2026-11-09 when the desk moved clusters, was reopened on 2026-11-16 on the
-ushMON v2 vaults, and moved on 2026-11-17 to the one ushMON v3 vault described in [04-ushmon.md](04-ushmon.md).
+balance. When the Desks are not utilizing ushMON to support their vaults, the pool buys shMON from anyone at 0.3% under the live rate for shMON.
 
-## State on 2026-11-18, block 123,359,143
+The v4 hook means that this pool can be accessible by any router on Monad, which means that if wMON supply can be attracted into the lender pool, ushMON will provide the deepest shMON/wMON liquidity, while the lenders are paid for the ~1 day duration risk. 
 
-| Piece | State |
-|---|---|
-| Strategy vaults (2) | live, empty, exit desk v1.8.0 on both (upgraded 2026-11-17), Settings 1.16 on both (upgraded 2026-11-18: 10% fee on every gain, each delta fixed) |
-| Euler cluster on Monad | live, four vaults, 929.88 WMON lent by the deployer key, no loans, governed by the deployer key; caps set 2026-11-17: USDC and USDT0 5M supply / 4.5M borrow, WMON 727M supply / 654M borrow (about $10M) |
-| ushMON v3 (one vault for both desks) | 0x37e07473F1F62CB071Db57440e242b320614A0ce, live since 2026-11-17; both desks are its operators, each on its own ledger; 96.76 shMON parked (48.38 per desk); WMON lends 93/95 against it |
-| ushMON v1 and v2 vaults | replaced; empty, retired from the cluster 2026-11-17 (WMON vault LTV 0, unresolved on the router, read 2026-11-18) |
-| EulerSwap public buyer | two pools, one per desk, reopened 2026-11-17 on the one vault (0xA65D…68a8, 0x6e44…a8a8), buying shMON at shMonad's rate less 0.3% |
-| Capital for the buyer | 1,100 MON from Root: 80 MON staked per desk as headroom, 929.88 WMON lent as the float, 10 MON kept for gas |
-| Audit issues | all 11 closed on 2026-11-16 (7 fixed in v2, 3 closed by design or by tests, issue 6 by the study and 93/95) |
+The 0.3% fee from these sales is absorbed as an additional yield source for the shMON vaults, and the size of this flow runs between 3.5 and 9.4 million MON a month since launch.[^flow]
+
+You can read more about ushMON here.[04-ushmon.md](04-ushmon.md).
 
 [^arch]: `alphastructures/docs/Alpha_Structures_Architecture.md:5` and `docs/Alpha_Structures_System_Overview.md:15,127-138`.
 [^lenders]: `alphastructures/CLAUDE.md:32`, `docs/Alpha_Structures_Architecture.md:10-11,29`.
