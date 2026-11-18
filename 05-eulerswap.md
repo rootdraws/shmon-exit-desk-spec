@@ -119,6 +119,17 @@ to 3.4% a year on $100k of capital from outside flow alone at a 0.3% discount, a
 of $500k a month also pass through it; the benchmark it states for shMonad's own instant pool is about 8% a year since
 launch. Those are model figures, not measured returns.
 
+## The keeper's shMON arbitrage
+
+The keeper buys shMON wherever it sells for less than our pools pay, and sells it into our pools.[^arb]
+* The keeper buys on Curve, Uniswap v3 or PancakeSwap v3, then sells to the desk's pool in one router call.
+* The pool pays with WMON it borrows from the cluster, and the shMON unstakes for a day to repay that loan.
+* The arbitrage never runs while any desk has leavers waiting.
+* It always leaves the WMON vault a reserve, the larger of half its unlent WMON or the last leaver payout.
+* It sends each trade to the desk whose pool can take more, and that desk keeps the profit as WMON.
+
+[^arb]: `alphastructures/services/digesterKeeper/src/arb.ts:4-13,42-46`; Root 2026-11-17: "send it to the desk as WMON".
+
 ## How a pool is retired
 
 `moveEulerAccount` (desk line 494) removes the pool as the desk's operator, forgets it and moves the desk's collateral
