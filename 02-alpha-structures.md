@@ -56,6 +56,7 @@ tick, and the target is 43% because the line two points under 45% binds before t
 | Breaker | pause 66.5%, unpause 45% after 30 min | the monitor pauses and unpauses | monitor `breaker.ts` |
 | Hedge drift warning | 3% of target, $10 or more | the monitor warns; the bot itself moves at 1% | monitor `checkStrategy.ts` |
 | Fixed delta | 1 and 0, on chain | Settings 1.15 has no setter; no gear shift can start | `StrategyControllerSettings.sol` |
+| Performance fee | 10% of every rise over the last published price | Settings 1.16, live 2026-11-18; a fall charges nothing and moves the mark down | `StrategyControllerSettings.sol` |
 | Idle | 5 min tick, NAV 2 h | an empty vault's cadence | `idle.ts` |
 
 ## Two lenders

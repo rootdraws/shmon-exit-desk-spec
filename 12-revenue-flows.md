@@ -40,9 +40,9 @@ The exit fees, the pool margin, the arbitrage and the digester gains all raise t
 holders net, that is about 21% on Delta One and 14% on Delta Zero.
 
 Settings 1.16 charges 10% of every rise over the last published price, up or down (Root, 2026-11-18: "change the
-contract to charge 10% on every gain"). It is written, tested and rehearsed on a fork of Monad with
-`custody/release-settings-116.ts`. Both vaults run 1.15 on chain, which charges only above a high-water mark, until
-the mainnet release.
+contract to charge 10% on every gain"). Both vaults run it since 2026-11-18 (implementation
+`0x6B25C62bB8732669174E42CD571839b4AAa3C113`, released by the admin Safe with `custody/release-settings-116.ts`).
+`VERSION()` reads 11600 on both Settings proxies, and the fee reads 1000 bps to the admin Safe.
 
 ## Where it goes at $2M TVL
 
