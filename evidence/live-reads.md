@@ -157,3 +157,19 @@ Addresses derived from the containers' key variables (values never printed):
 | MONAD_DIGESTER_KEEPER_PRIVATE_KEY (monad-digester only) | 0xEE51d642304f8F0b272Fc79cf851CE76ee24c3A7 |
 
 `DEPLOYER_PRIVATE_KEY` absent and no Hyperliquid key in the API container.
+
+## Exit routes, block 123385653 (2026-11-18)
+
+MON at $0.014455 (Hyperliquid mid). shMonad `convertToAssets(1e18)` = 1.654258 MON.
+
+| Read | Size | Result |
+|---|---|---|
+| shMonad `getCurrentLiquidity()` | | 3,355,357 MON in the instant exit pool |
+| shMonad `getCurrentUnstakeFeeRateRay()` | | 0.4949% |
+| shMonad `previewRedeem` | 500,000 shMON (~$12.0k) | 0.554% fee |
+| shMonad `previewRedeem` | 1,000,000 shMON (~$23.9k) | 0.616% fee |
+| shMonad `previewRedeem` | 2,000,000 shMON (~$47.8k) | 0.739% fee |
+| Curve `0x74d8…25d4` `get_dy(1,0)` shMON to WMON | 1,000,000 shMON (~$23.9k) | 0.146% under the rate |
+| Curve `0x74d8…25d4` `get_dy(1,0)` | 2,000,000 shMON (~$47.8k) | 0.413% under the rate |
+| Curve `0x74d8…25d4` `get_dy(1,0)` | 3,000,000 shMON (~$71.7k) | 7.909% under the rate |
+| WMON vault `LTVFull(ushMON v3)` | | 93% borrow, 95% liquidation |
