@@ -31,7 +31,7 @@ The bot takes one step every 30 seconds. Each row is one rule, read from the two
 
 | Rule | Number | Fires | Source |
 |---|---|---|---|
-| Liquidation | 70% today | the whole vault is sized against the stricter lender's line, Neverland's 70%; the split then puts more of the loan on Euler (80%) until both loans sit the same share of the way to their own line; a read under 50% is replaced by 50% with an alert | `lenders.ts`, `observe.ts` |
+| Liquidation | 70% today | Neverland has a 70% Liquidation Threshold; the split then puts more of the loan on Euler (80%) until both loans sit the same share of the way to their own line; a read under 50% is replaced by 50% with an alert | `lenders.ts`, `observe.ts` |
 | Target LTV | 43% | the loan the bot keeps | `policy/worstFallPolicy.ts` |
 | First build | 42% | whole book in one go before the first short | `planner/growth.ts` |
 | Re-lever | below 33%, or idle shMON over $1 | borrow back to 43% | `planner/growth.ts` |
