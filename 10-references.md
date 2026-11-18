@@ -4,9 +4,9 @@
 
 | Repo | Commit | Used for |
 |---|---|---|
-| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) (private) | `bd9a894`, master, 2026-11-16 | the vault system, exit desk, bot, harness, docs, audit |
-| [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) (private) | local `6ecd9ad`, 2026-11-12; the remote lacks the cited projects, which are copied in this repo under [`sources/ag-euler/`](sources/ag-euler/) | the Euler cluster, EulerSwap v2 deployment, ushMON build artifact |
-| [rootdraws/ushMON](https://github.com/rootdraws/ushMON) (public) | [`48d07b3`](https://github.com/rootdraws/ushMON/tree/48d07b3) (v3, live 2026-11-17); [`a7f4788`](https://github.com/rootdraws/ushMON/tree/a7f478847134a5ff5afdb672ddd97398b3eae713) (v1); v2 in the working tree on 2026-11-16 | the unstaking shMON vault |
+| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) (private) | `be23722`, branch `shmon-release-2026-11-18`, 2026-11-18 | the vault system, exit desk, bot, harness, docs, audit |
+| [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) (private) | local working tree on 2026-11-18 (last commit `6ecd9ad`, 2026-11-12, with uncommitted edits since); the remote lacks the cited projects, which are copied in this repo under [`sources/ag-euler/`](sources/ag-euler/) | the Euler cluster, EulerSwap v2 deployment, ushMON build artifact |
+| [rootdraws/ushMON](https://github.com/rootdraws/ushMON) (public) | [`48d07b3`](https://github.com/rootdraws/ushMON/tree/48d07b3) (v3, live 2026-11-17); [`a7f4788`](https://github.com/rootdraws/ushMON/tree/a7f478847134a5ff5afdb672ddd97398b3eae713) (v1); [`4235998`](https://github.com/rootdraws/ushMON/tree/4235998) (v2, 2026-11-16) | the unstaking shMON vault |
 | [euler-xyz/ethereum-vault-connector](https://github.com/euler-xyz/ethereum-vault-connector) | v1.0.1 | EVC, account status checks |
 | [euler-xyz/euler-vault-kit](https://github.com/euler-xyz/euler-vault-kit) | vendored in ag-euler | the cluster's vaults; `maxRedeem` rule at `src/EVault/modules/Vault.sol:234-248` |
 | [euler-xyz/euler-price-oracle](https://github.com/euler-xyz/euler-price-oracle) | `63f20a4` | the Chainlink SVR adapters and the router |
@@ -30,6 +30,7 @@ Links go to Monadscan.
 | WithdrawalHandler | [0xFb78583f6D8A9F6c2cCae6111e2817AC9824162a](https://monadscan.com/address/0xFb78583f6D8A9F6c2cCae6111e2817AC9824162a) | [0x4B821aFd90eF4F5a35Dec5e4AeeA7C00c7d90Af2](https://monadscan.com/address/0x4B821aFd90eF4F5a35Dec5e4AeeA7C00c7d90Af2) |
 | Exit desk proxy (`ShMonadExitAdapter`) | [0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770](https://monadscan.com/address/0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770) | [0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE](https://monadscan.com/address/0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE) |
 | Exit desk implementation (v1.8.0, upgraded 2026-11-17) | [0xDF9515a5d2f68B12a4fAFc44e518B13751A1c3B2](https://monadscan.com/address/0xDF9515a5d2f68B12a4fAFc44e518B13751A1c3B2) | same |
+| Settings implementation 1.16 (fee on every gain, upgraded 2026-11-18) | [0x6B25C62bB8732669174E42CD571839b4AAa3C113](https://monadscan.com/address/0x6B25C62bB8732669174E42CD571839b4AAa3C113) | same |
 | Exit desk implementation v1.7.0 (replaced 2026-11-17) | [0xBE243F5e4215720080929eeCfe77047D2Fd2a410](https://monadscan.com/address/0xBE243F5e4215720080929eeCfe77047D2Fd2a410) | same |
 | Exit desk implementation v1.6.0 (replaced) | [0x623E3EC3E218FcA770eF4bb5Ce5c1399F86Ba467](https://monadscan.com/address/0x623E3EC3E218FcA770eF4bb5Ce5c1399F86Ba467) | same |
 | ushMON v3 (one vault, in use since 2026-11-17) | [0x37e07473F1F62CB071Db57440e242b320614A0ce](https://monadscan.com/address/0x37e07473F1F62CB071Db57440e242b320614A0ce) | same |

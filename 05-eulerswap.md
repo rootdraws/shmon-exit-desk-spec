@@ -47,7 +47,7 @@ or more rejects the swap (`IEulerSwapHookTarget.sol:11`, `QuoteLib.sol:85`). The
 
 ## The desk's pool
 
-Opened by the admin Safe through `ShMonadExitAdapter.deployMmPool` (lines 865-879), which requires `supplyVault0` to be
+Opened by the admin Safe through `ShMonadExitAdapter.deployMmPool` (lines 897-911), which requires `supplyVault0` to be
 the desk's ushMON and the desk to be both the Euler account and the hook. The parameters, from the release scripts
 (`alphastructures/custody/release-mm-143.ts:141-157`, `custody/release-ush2-143.ts`):
 
@@ -63,11 +63,11 @@ the desk's ushMON and the desk to be both the Euler account and the hook. The pa
 | fee0 = 0, fee1 = 1e18 | | shMON in priced by the hook; WMON in refused |
 | hooked operations | 6 (getFee, afterSwap) | |
 
-`getFee` (883-888) charges shMON in whatever brings the fixed ceiling down to **the live rate less 0.30%**
+`getFee` (915-920) charges shMON in whatever brings the fixed ceiling down to **the live rate less 0.30%**
 (`MM_DISCOUNT_BPS = 30`, "Root 2026-11-06: 'charges .3% less'"), and returns 1e18 for WMON in, so the pool only buys.
 Since v1.7.0 it also returns 1e18 for every sale while the vault has an unpaid withdrawal batch, so the vault's own
 leavers get the borrowing room first and outside sellers are routed to shMonad's instant exit for those minutes.
-`afterSwap` (892-903) moves the ceiling to 2% over the live rate when the rate has come within 1% of it, re-anchoring the
+`afterSwap` (932-943) moves the ceiling to 2% over the live rate when the rate has come within 1% of it, re-anchoring the
 curve at the current reserves (`CEILING_BPS = 200`, `RESET_BPS = 100`). On the fork a seller of 60.48 shMON (99.99 MON
 of value) was quoted 99.69 WMON, 0.30% under (`evidence/rehearsal-fork.log`).
 
@@ -84,8 +84,8 @@ The pool pays WMON from two sources, in order, and each has a ceiling:
 |---|---|---|
 | The desk's own WMON supplied in the WMON vault | the desk's balance there, and the vault's cash | `FundsLib.sol:51-58`, `QuoteLib.sol:156-159` |
 | WMON borrowed by the desk | the WMON vault's **cash** (what lenders have supplied and not lent) | `QuoteLib.sol:161-164` |
-| | the WMON vault's **borrow cap** less total borrows: 654M WMON (set 2026-11-17) | `QuoteLib.sol:168-175`, `deploy.sh:53` |
-| | the desk's **loan-to-value**: debt at most 93% of its ushMON collateral (liquidation at 95%) | `deploy.sh:55,188`; checked by the WMON vault after the borrow |
+| | the WMON vault's **borrow cap** less total borrows: 654M WMON (set 2026-11-17) | `QuoteLib.sol:168-175`, `deploy.sh:54` |
+| | the desk's **loan-to-value**: debt at most 93% of its ushMON collateral (liquidation at 95%) | `deploy.sh:57,193`; checked by the WMON vault after the borrow |
 | | the pool's reserve1: 100M WMON | `QuoteLib.sol:142-147` |
 
 The LTV bound sets a standing requirement. A sale adds collateral worth 100 and debt worth 99.7, but the vault lends only
@@ -99,7 +99,7 @@ So the capital is:
   holds 929.88 WMON lent by the deployer key, from the 1,100 MON Root sent (the rest is headroom and gas). With 9 in
   10 shMonad instant exits under 220 MON (`evidence/data/instant-exits-30d.json`), that float serves a typical sale once
   per cycle; to carry the whole public flow at the recent 160,000 MON a day it would need lenders of that order, and
-  they earn the WMON vault's rate (20% at zero use, 30% at the 90% kink, `deploy.sh:48`).
+  they earn the WMON vault's rate (20% at zero use, 30% at the 90% kink, `deploy.sh:49`).
 - **The desk's headroom.** About 7.2% of outstanding buys, parked as ushMON; 80 MON per desk since 2026-11-16.
 - **Gas.** The deployer keeps 10 MON.
 
@@ -121,7 +121,7 @@ launch. Those are model figures, not measured returns.
 
 ## How a pool is retired
 
-`moveEulerAccount` (desk line 478) removes the pool as the desk's operator, forgets it and moves the desk's collateral
+`moveEulerAccount` (desk line 494) removes the pool as the desk's operator, forgets it and moves the desk's collateral
 and lender to a new pair; it refuses while anything is borrowed or parked. The pool on the first cluster
 (`0x9aF1E49D878A5721eC1FdDd76b2237Ff585Ee8a8`) was retired this way on 2026-11-09 (`ShMonadExitV15.fork.test.ts`,
-`docs/shmon-exit-desk-plan.md:183-201`). Static parameters cannot change, so a new ushMON means a new pool.
+`docs/shmon-exit-desk-plan.md:186-204`). Static parameters cannot change, so a new ushMON means a new pool.

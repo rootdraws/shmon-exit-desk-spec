@@ -1,18 +1,18 @@
 # 9. Current state and what is next
 
-As of 2026-11-17, 18:41Z (block 123091651). Live figures are in the last section of `evidence/live-reads.md`; the
-release logs are in `evidence/release-ush3/` (today) and `evidence/release-mainnet/` (2026-11-16).
+As of 2026-11-18, block 123,359,143. Live figures are in the last section of `evidence/live-reads.md`; the release
+logs are in `evidence/release-ush3/` (2026-11-17) and `evidence/release-mainnet/` (2026-11-16).
 
 ## Live today
 
 | Component | State |
 |---|---|
-| Strategy vaults `shmon-neverland-usdc-hl` and `-d0` | Deployed, every contract at the addresses in [02-alpha-structures.md](02-alpha-structures.md). Both hold zero shares and zero assets. |
+| Strategy vaults `shmon-neverland-usdc-hl` and `-d0` | Deployed, every contract at the addresses in [02-alpha-structures.md](02-alpha-structures.md). Both hold zero shares and zero assets. Settings 1.16 on both since 2026-11-18: each delta fixed, and the 10% performance fee charged on every gain ([12-revenue-flows.md](12-revenue-flows.md)). |
 | Exit desks | v1.8.0 on both (implementation 0xDF9515a5d2f68B12a4fAFc44e518B13751A1c3B2, upgraded by the admin Safe on 2026-11-17). Each holds the one ushMON v3 as its only Euler collateral and the cluster's WMON vault as its only controller. No loan. `leaversWaiting()` is false on both. |
 | ushMON v3 | 0x37e07473F1F62CB071Db57440e242b320614A0ce, one vault for both desks, operators 0x02Df…c770 and 0xF460…6CdE. 96.76 shMON parked (48.38 by each desk), every share held by the desks, both ledgers empty, no WMON credit. Source verified on Monadscan. |
 | EulerSwap pools | 0xA65De145091aaa6e4540830A34Fc098dE3E668a8 (usdc-hl) and 0x6e44D5d4c8a4dA51027A71789934bA33799ca8a8 (usdc-hl-d0), opened 2026-11-17 on the one vault, buying shMON at shMonad's rate less 0.3% and refusing WMON in. The pools of 2026-11-16 were retired by the account moves. |
 | Euler cluster | Four vaults live. The WMON vault holds 929.88 WMON lent by the deployer key, no loans, and lends 93/95 against ushMON v3. Caps set today: USDC and USDT0 5M supply / 4.5M borrow, WMON 727M supply / 654M borrow (about $10M). Governed by the deployer key. |
-| ushMON v1 and v2 | Replaced. Empty, no longer any desk's collateral; recorded as `V1_USHMON_*` and `V2_USHMON_*` in `deployed-143.env`. |
+| ushMON v1 and v2 | Replaced. Empty, retired from the cluster 2026-11-17 (WMON vault LTV 0, unresolved on the router, read 2026-11-18); recorded as `V1_USHMON_*` and `V2_USHMON_*` in `deployed-143.env`. |
 | Audit issues | All 11 closed on 2026-11-16 with a reply on each: 1, 2, 3, 4, 7, 8 and 11 fixed in v2; 5, 9 and 10 closed by design or by the donation tests; 6 by [11-ltv-study.md](11-ltv-study.md) and the move to 93/95. v3 keeps every v2 rule. |
 | Server | 3.211.84.65 runs the bots, oracle, monitor, keeper, API and site. The 2026-11-16 release (planner, desk v1.7.0, Exit Desk page) shipped there on 2026-11-17; the one-vault configs and the shared reader were synced after this release and the service image rebuilt (Runbook §4). |
 
@@ -35,10 +35,9 @@ excessive", then "one ushMON". In order:
 
 | Step | State |
 |---|---|
-| Commit the alphastructures working tree | The desk v1.8.0 source and layout, the shared desk reader, the API's sales scan, the Exit Desk page, the planner's `parkShmon` step, the release scripts, the fork tests, and the production configs and manifests the releases wrote (each config's `unstakeVault` now names the v3 vault) are uncommitted. The spec's Claude session does not commit in that repo. |
+| Merge the alphastructures branch | Every change of 2026-11-16 to 2026-11-18 is commit `be23722` on branch `shmon-release-2026-11-18`, pushed 2026-11-18; master is still `bd9a894`. |
 | Headroom at scale | 80 MON per desk covers about 1,100 MON of pool buys a day at the 93% borrow LTV (7.2% of a day's sales). At Root's target of 50k to 150k MON every 20 hours the desks need 3,600 to 10,800 MON parked; whether that comes from the vaults' own shMON or new MON is Root's call. |
 | Lenders | The float is 929.88 WMON. Taking the public flow (about 160,000 MON a day lately) needs WMON lenders of that order in the cluster's WMON vault; the curve charges borrowers 20% at zero use and 30% at the 90% kink, and lenders get 90% of what is paid. |
-| The two empty v2 vaults | Still resolved on the router and lent against at 93/95; nothing holds them. Retiring them is a governor call (`setLTV(v2, 0, 0, 0)`, `govSetResolvedVault(v2, false)`). |
 
 ## Known risks
 

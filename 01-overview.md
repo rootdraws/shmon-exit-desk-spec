@@ -66,7 +66,7 @@ one-day unstake, and meanwhile raises the stablecoin the leaver is owed without 
 
 1. It parks the shMON in the vault's **unstaking shMON vault (ushMON)** on the Euler cluster and sends it into the
    unstake. The parked shMON is Euler collateral.
-2. It borrows **WMON** (wrapped MON) against it from the cluster's WMON vault, at up to 97% of value.
+2. It borrows **WMON** (wrapped MON) against it from the cluster's WMON vault, at up to 93% of value.
 3. It sells that WMON for USDC through the **digester**, the team's own Uniswap v4 pool where the desk rests small limit
    orders one tick off the market and a keeper fills them from other pools' flow.
 4. A day later the unstake pays MON back into ushMON as WMON, and the desk repays the WMON loan with it in one Euler
@@ -80,17 +80,17 @@ balance. The pool buys shMON from anyone at shMonad's live rate less 0.3%, under
 it borrows just in time against the shMON it just received, which lands in ushMON as the desk's collateral. The one-day
 unstake repays the borrow and the 0.3% stays with the vault. This is how the vault captures a share of the shMON to MON
 flow on Monad, which has run between 3.5 and 9.4 million MON a month since launch.[^flow] The pool was first opened on
-2026-11-06 on an earlier cluster, retired on 2026-11-09 when the desk moved clusters, and was reopened on 2026-11-16 on the
-ushMON v2 vaults described in [04-ushmon.md](04-ushmon.md).
+2026-11-06 on an earlier cluster, retired on 2026-11-09 when the desk moved clusters, was reopened on 2026-11-16 on the
+ushMON v2 vaults, and moved on 2026-11-17 to the one ushMON v3 vault described in [04-ushmon.md](04-ushmon.md).
 
-## State on 2026-11-17, 18:41Z
+## State on 2026-11-18, block 123,359,143
 
 | Piece | State |
 |---|---|
-| Strategy vaults (2) | live, empty, exit desk v1.8.0 on both (upgraded 2026-11-17) |
+| Strategy vaults (2) | live, empty, exit desk v1.8.0 on both (upgraded 2026-11-17), Settings 1.16 on both (upgraded 2026-11-18: 10% fee on every gain, each delta fixed) |
 | Euler cluster on Monad | live, four vaults, 929.88 WMON lent by the deployer key, no loans, governed by the deployer key; caps set 2026-11-17: USDC and USDT0 5M supply / 4.5M borrow, WMON 727M supply / 654M borrow (about $10M) |
 | ushMON v3 (one vault for both desks) | 0x37e07473F1F62CB071Db57440e242b320614A0ce, live since 2026-11-17; both desks are its operators, each on its own ledger; 96.76 shMON parked (48.38 per desk); WMON lends 93/95 against it |
-| ushMON v1 and v2 vaults | replaced; empty, no longer any desk's collateral |
+| ushMON v1 and v2 vaults | replaced; empty, retired from the cluster 2026-11-17 (WMON vault LTV 0, unresolved on the router, read 2026-11-18) |
 | EulerSwap public buyer | two pools, one per desk, reopened 2026-11-17 on the one vault (0xA65D…68a8, 0x6e44…a8a8), buying shMON at shMonad's rate less 0.3% |
 | Capital for the buyer | 1,100 MON from Root: 80 MON staked per desk as headroom, 929.88 WMON lent as the float, 10 MON kept for gas |
 | Audit issues | all 11 closed on 2026-11-16 (7 fixed in v2, 3 closed by design or by tests, issue 6 by the study and 93/95) |
@@ -100,5 +100,5 @@ ushMON v2 vaults described in [04-ushmon.md](04-ushmon.md).
 [^live]: `evidence/live-reads.md`, block 122821118, 2026-11-16 19:22Z: both vaults return `totalSupply() == 0`.
 [^shmonad]: `evidence/data/unstake-timing-30d.md` (119 requests, read 2026-11-05); `evidence/data/shmonad-30d.md` (720 hourly reads to 2026-11-05); live fee `getCurrentUnstakeFeeRateRay() == 0.4085%` in `evidence/live-reads.md`.
 [^dex]: `evidence/data/rate-30d.md` and `rate-30d.json` (1,018,207 swaps over 721 hours, blocks 111184875 to 119665718, run 2026-11-07, `backfill-30d.json`).
-[^desk]: `alphastructures/docs/Alpha_Structures_Digester.md:3-7,24,37-38`; `docs/shmon-exit-desk-plan.md:36-43`; exit fee `contracts/core/WithdrawalHandler.sol:34-35,283`.
+[^desk]: `alphastructures/docs/Alpha_Structures_Digester.md:3-7,25,38-39`; `docs/shmon-exit-desk-plan.md:36-43`; exit fee `contracts/core/WithdrawalHandler.sol:34-35,283`.
 [^flow]: `evidence/data/instant-history.md`, monthly table (instant exits paid out 2025-12 to 2026-10).

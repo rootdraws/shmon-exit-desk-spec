@@ -4,7 +4,8 @@ A product specification of Alpha Structures' shMON vaults on Monad and the machi
 into stablecoin: the exit desk, the unstaking shMON vault (ushMON), the digester pool, and the EulerSwap pool that buys
 shMON from anyone at shMonad's rate less 0.3%.
 
-Written 2026-11-16 and brought up to the one-vault release of 2026-11-17 from the code at the commits named in
+Written 2026-11-16, brought up to the one-vault release of 2026-11-17, and checked against the code and the chain on
+2026-11-18 at the commits named in
 [10-references.md](10-references.md). Every claim cites a file
 and line at that commit, or an evidence file in [`evidence/`](evidence/) with the date it was read. Where two sources
 disagree, the spec says so and says which one was checked on chain.
@@ -30,8 +31,8 @@ disagree, the spec says so and says which one was checked on chain.
 
 | Repo | What it holds | Commit used | Access |
 |---|---|---|---|
-| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) | The vault system: contracts, bot, oracle, keeper, docs, fork harness | `bd9a894` (master, 2026-11-16) | private |
-| [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) | The Euler cluster on Monad, the EulerSwap v2 deployment, the deploy scripts | local `6ecd9ad` (2026-11-12); the remote is behind it, so the cited files are copied under [`sources/ag-euler/`](sources/ag-euler/) | private |
+| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) | The vault system: contracts, bot, oracle, keeper, docs, fork harness | `be23722` (branch `shmon-release-2026-11-18`, 2026-11-18) | private |
+| [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) | The Euler cluster on Monad, the EulerSwap v2 deployment, the deploy scripts | local working tree on 2026-11-18 (last commit `6ecd9ad`, 2026-11-12, with uncommitted edits since); the remote is behind it, so the cited files are copied under [`sources/ag-euler/`](sources/ag-euler/) | private |
 | [rootdraws/ushMON](https://github.com/rootdraws/ushMON) | The unstaking shMON vault, its tests, its issues | `48d07b3` (v3, live 2026-11-17); `4235998` (v2, 2026-11-16); `a7f4788` is v1 | public |
 | [rootdraws/shmon-exit-desk-spec](https://github.com/rootdraws/shmon-exit-desk-spec) | This spec and its evidence | this repo | private |
 
@@ -56,7 +57,7 @@ cd alphastructures/contracts && FORK_MONAD=true MONAD_RPC_URL=<rpc> \
 cast call 0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770 'VERSION()(uint256)' -r https://rpc.monad.xyz
 ```
 
-The outputs recorded on 2026-11-16 and 2026-11-17 are in [`evidence/`](evidence/): `forge-test.txt`, `hardhat-fork-ush2.txt`, `hardhat-fork-ush3.txt`, the
+The outputs recorded from 2026-11-16 to 2026-11-18 are in [`evidence/`](evidence/): `forge-test.txt`, `forge-test-v3.txt`, `hardhat-fork-ush2.txt`, `hardhat-fork-ush3.txt`, the
 five-stage harness runs under `harness/`, the fork rehearsals of the releases in `rehearsal-fork*.log` and `release-ush3/rehearsal-ush3.log`, the mainnet release logs under `release-mainnet/` and `release-ush3/`, the audit report,
 the eleven GitHub issues open on the vault, the research data under `data/`, and `live-reads.md`.
 

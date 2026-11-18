@@ -23,7 +23,7 @@ WMON lending is not part of TVL. It is sized by the EulerSwap pools' volume ([05
 
 | Piece | How it makes money | Where it goes | Source |
 |---|---|---|---|
-| Performance fee, Delta One | 10% of share price gain above the high-water mark, counted in shMON, paid as new shares | admin Safe `0xC94d…9CfD` | `getPerformanceFee()` on `0xdE30…dEC` returns 1000 bps to `0xC94d…9CfD`; `StrategyControllerSettings.sol:192-235` |
+| Performance fee, Delta One | 10% of share price gain above the high-water mark, counted in shMON, paid as new shares | admin Safe `0xC94d…9CfD` | `getPerformanceFee()` on `0xdE30…dEC` returns 1000 bps to `0xC94d…9CfD`; `StrategyControllerSettings.sol:195-240` |
 | Performance fee, Delta Zero | the same, counted in dollars | admin Safe | `getPerformanceFee()` on `0xC62D…F85a` returns 1000 bps to `0xC94d…9CfD` |
 | Exit fees, both vaults | 0.30% kept from every withdrawal | the holders who stay | `WithdrawalHandler.sol:281-283` |
 | EulerSwap pools | buy shMON 0.30% under shMonad's rate, pay about one day of WMON interest | the desk, then its vault | [05-eulerswap.md](05-eulerswap.md); EulerSwap's own protocol fee reads 0 for the pools |

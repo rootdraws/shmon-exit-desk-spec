@@ -92,7 +92,7 @@ borrow or hold while the unstake runs (see [05-eulerswap.md](05-eulerswap.md)).
 | $500k | 10% | 73.9 h | 99.6 h (2 of 224 starts never finished) |
 
 The digester pool itself is empty between orders; its depth is the desk's resting orders, and the keeper fills them
-from the MON/USDC flow of about $3.35M a day (`docs/Alpha_Structures_Digester.md:58`, `rate-30d.md`). A 24-hour read put the
+from the MON/USDC flow of about $3.35M a day (`docs/Alpha_Structures_Digester.md:59`, `rate-30d.md`). A 24-hour read put the
 digester's buy flow at $82,178 an hour, with 10% fills at $8,218 an hour
 (`alphastructures/services/rebalancingBot/test/sim/withdrawal-sim.md:1`, undated in the file).
 
@@ -102,7 +102,7 @@ digester's buy flow at $82,178 an hour, with 10% fills at $8,218 an hour
 | Lender | USDC room | USDT0 room | Note |
 |---|---|---|---|
 | Neverland | 325,176 | 102,551 | 80.0% and 85.6% used, kink 90% |
-| Our Euler cluster | 0 | 0 | caps 32.4M each, no lenders yet |
+| Our Euler cluster | 0 | 0 | caps 4.5M borrow each since 2026-11-17, no lenders yet (read 2026-11-18) |
 
 **Moving USDC to USDT0 and back** (Curve, live quotes of 2026-11-09, `docs/Alpha_Structures_Rebalancing_Policy.md:278`):
 USDC to USDT0 pays a premium of +0.083% at $10k and +0.045% at $160k; USDT0 to USDC costs 0.10% at $10k and 0.19% at

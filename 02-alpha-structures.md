@@ -1,6 +1,6 @@
 # 2. Alpha Structures: the vault system
 
-Repo: [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) at `bd9a894`. The system's own
+Repo: [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) at `be23722`. The system's own
 guide is `AGENTS.md`; the design docs are under `docs/`.
 
 ## The strategy in one loop
@@ -12,7 +12,7 @@ is no fixed loop count (`Architecture.md:324`). Net profit is funding received o
 (`Architecture.md:314-324`).
 
 - **Book shape.** The short equals the collateral exposure less `d` times equity, so the book rests at `d` dollars of
-  delta per dollar of equity (`CLAUDE.md:55`). `d` is 1 on the `-hl` vaults and 0 on the `-d0` vaults, held on chain in
+  delta per dollar of equity (`CLAUDE.md:61`). `d` is 1 on the `-hl` vaults and 0 on the `-d0` vaults, held on chain in
   `StrategyControllerSettings`. Since 2026-11-18 Settings 1.15 has no setter, so each vault's delta is fixed for good.
 - **Target LTV.** The lowest of the liquidation threshold times one minus the worst recorded 24-hour fall, 95% of the
   threshold, and 2 points under the 45% line (`services/rebalancingBot/src/policy/worstFallPolicy.ts`). The last one binds, so

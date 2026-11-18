@@ -1,7 +1,7 @@
 # 3. The exit desk
 
-Contract: `alphastructures/contracts/adapters/venue/ShMonadExitAdapter.sol` at `bd9a894`, a UUPS proxy per vault,
-`VERSION = 1_06_00` (line 285), live on both production desks (`evidence/live-reads.md`). Bot: `services/rebalancingBot/src/planner/exitDesk.ts`.
+Contract: `alphastructures/contracts/adapters/venue/ShMonadExitAdapter.sol` at `be23722`, a UUPS proxy per vault,
+`VERSION = 1_08_00` (line 300), live on both production desks (`evidence/live-reads.md`). Bot: `services/rebalancingBot/src/planner/exitDesk.ts`.
 
 ## Why it exists
 
@@ -15,7 +15,7 @@ taking a market. The withdrawal batch stays five minutes; the desk carries the d
 ## What it does
 
 "The vault's slow exit desk on Monad: shMON goes through shMonad's traditional unstake (about a day, no fee), and MON is
-sold (or bought) with resting orders one tick step beyond the price" (contract NatSpec, lines 255-258). It is reached
+sold (or bought) with resting orders one tick step beyond the price" (contract NatSpec, lines 265-268). It is reached
 through the controller's existing venue-margin path; funds leave it only to the controller, to shMonad's unstake, or
 into a resting order (`shmon-exit-desk-plan.md:36-43`).
 
@@ -33,19 +33,18 @@ That needs no capital, and the gain goes to the vault whose order was filled." (
 | Exit bid pools | 0xEA93Cb7Af4bcdAfF8312BEe55dF369970070C4a9 (USDC), 0xB03b966811eBd2E481a77d2ce118f8fA2c5fD716 (WMON) | `contracts/exit-pool/ExitBidPool.sol`, bids for shMON at a 30 bps discount, deployed 2026-11-12 |
 
 The ladder is five rungs one tick apart, sells at +1 to +5 ticks and buys at −2 to −6, re-laddered after 20 ticks off
-for 3 minutes; the keeper simulates sizes 1, ½, ¼, ⅛, 1/16 (`Digester.md:30-56`). `Digester.md:26` lists two other exit
-bid pool addresses (`0xF950…2E6A`, `0x1e55…c4CF`); the deployment record `custody/deployments/exit-pool-143.json` and
-the production configs carry the two above, which this spec takes as current.
+for 3 minutes; the keeper simulates sizes 1, ½, ¼, ⅛, 1/16 (`Digester.md:31-57`). `Digester.md:27` names the same two
+pools and records the first pair (`0xF950…2E6A`, `0x1e55…c4CF`) as retired.
 
 **The chunked WMON route (desk v1.4.0, 2026-11-06).** "The WMON a desk sells can also come from a loan against shMON it
-parks on the Euler cluster, chunk by chunk" (`Digester.md:37-38`). The desk parks shMON in the vault's ushMON, which is
-its Euler collateral, borrows WMON from the cluster's WMON vault at up to 97% of value, sells the WMON through the
+parks on the Euler cluster, chunk by chunk" (`Digester.md:38-39`). The desk parks shMON in the vault's ushMON, which is
+its Euler collateral, borrows WMON from the cluster's WMON vault at up to 93% of value (97% before 2026-11-16), sells the WMON through the
 digester for USDC that goes home to repay, and when the unstake matures a day later redeems ushMON for the WMON that came
-back and repays the WMON loan in one Euler batch (`settleEulerUnstake`, lines 835-853). Leftover WMON is restaked as
-shMON and sent home (`restakeWmon`, 856).
+back and repays the WMON loan in one Euler batch (`settleEulerUnstake`, lines 865-884). Leftover WMON is restaked as
+shMON and sent home (`restakeWmon`, 888).
 
 **The public buyer (also v1.4.0).** The desk owns an EulerSwap pool that buys shMON at shMonad's live rate less
-`MM_DISCOUNT_BPS = 30` (line 287) and is that pool's pricing hook (`getFee`, 883; `afterSwap`, 892). See
+`MM_DISCOUNT_BPS = 30` (line 302) and is that pool's pricing hook (`getFee`, 915; `afterSwap`, 932). See
 [05-eulerswap.md](05-eulerswap.md).
 
 **The priority rule (v1.7.0, deployed 2026-11-16).** While the vault has a withdrawal batch that is not yet
@@ -93,21 +92,21 @@ ladder at the market's own pace, and never more than 1% under the oracle. Both v
 | Euler WMON vault | `0xE4522663752AC47516e39aD11d3780a116850eaf` | WMON | Lends the desk WMON against its ushMON at 93/95. |
 | shMonad | `0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c` | shMON | The slow unstake, about a day, and the rate. |
 
-## The contract, by group (line numbers at `bd9a894`)
+## The contract, by group (line numbers at `be23722`)
 
 | Group | Functions | Who |
 |---|---|---|
-| Setup | `initialize` 417, `initializeV1_1` 436, `initializeV1_4` 455, `initializeV1_5` 470, `moveEulerAccount` 478 (reverts `MarketMakerBusy` with any debt or parked shares), `setPool` 1065, `setV4Pool` 1070, `setHanjiBook` 1075, `rescueTokens` 1088, `_authorizeUpgrade` 1371 (VERSION must rise) | admin Safe |
-| Funds in and out | `deposit` 549 (controller only), `returnToController` 1054 | controller, executor |
-| shMonad unstake | `requestUnstake` 561, `completeUnstake` 568 | executor |
-| Resting orders | v3 `placeOrder` 583 / `closeOrder` 599; v4 `placeV4Order` 639 / `closeV4Order` 665; Hanji `placeHanjiOrder` 941 / `claimHanjiOrder` 967; digester `placeLimitOrder` 998 / `withdrawLimitOrder` 1028 / `cancelLimitOrder` 1038 | executor, all checked against the oracle |
-| Selling shMON into bids | `sellShmonV4` 722, floor at the oracle less the swap limit | executor |
-| Euler account | `parkShmon(shmon, unstake)` 757, `borrowWmon` 764, `repayWmon` 770, `settleEulerUnstake` 835, `restakeWmon` 856, view `getEulerPosition` 907 | executor |
-| Digester with own funds | `sellMonV4` 778, `buyMonV4` 806 (v1.6.0, audit H5) | executor |
-| EulerSwap pool | `deployMmPool` 865 (admin; requires `supplyVault0 == unstakeVault`, `eulerAccount == swapHook == this`), `getFee` 883, `afterSwap` 892 (pool only) | admin, pool |
-| Halts | `whenNotHalted` 519 freezes every executor function; `whenNotPaused` 524 freezes the ones that trade or borrow and leaves the ones that bring funds home (516-518) | guardian |
+| Setup | `initialize` 433, `initializeV1_1` 452, `initializeV1_4` 471, `initializeV1_5` 486, `moveEulerAccount` 494 (reverts `MarketMakerBusy` with any debt or parked shares), `setPool` 1105, `setV4Pool` 1110, `setHanjiBook` 1115, `rescueTokens` 1128, `_authorizeUpgrade` 1411 (VERSION must rise) | admin Safe |
+| Funds in and out | `deposit` 565 (controller only), `returnToController` 1094 | controller, executor |
+| shMonad unstake | `requestUnstake` 577, `completeUnstake` 584 | executor |
+| Resting orders | v3 `placeOrder` 599 / `closeOrder` 615; v4 `placeV4Order` 655 / `closeV4Order` 681; Hanji `placeHanjiOrder` 981 / `claimHanjiOrder` 1007; digester `placeLimitOrder` 1038 / `withdrawLimitOrder` 1068 / `cancelLimitOrder` 1078 | executor, all checked against the oracle |
+| Selling shMON into bids | `sellShmonV4` 738, floor at the oracle less the swap limit | executor |
+| Euler account | `parkShmon(shmon, unstake)` 773, `unparkShmon(shares)` 782, `borrowWmon` 794, `repayWmon` 800, `settleEulerUnstake` 865, `restakeWmon` 888, view `getEulerPosition` 947 | executor |
+| Digester with own funds | `sellMonV4` 808, `buyMonV4` 836 (v1.6.0, audit H5) | executor |
+| EulerSwap pool | `deployMmPool` 897 (admin; requires `supplyVault0 == unstakeVault`, `eulerAccount == swapHook == this`), `getFee` 915, view `leaversWaiting` 924, `afterSwap` 932 (pool only) | admin, pool |
+| Halts | `whenNotHalted` 535 freezes every executor function; `whenNotPaused` 540 freezes the ones that trade or borrow and leaves the ones that bring funds home (532-534) | guardian |
 
-Version history (lines 275-284): v1.1.0 Uniswap v4 and Hanji venues; v1.1.1 a second placement adds to a listing;
+Version history (lines 285-299): v1.1.0 Uniswap v4 and Hanji venues; v1.1.1 a second placement adds to a listing;
 v1.4.0 the Euler account and the EulerSwap pool; v1.5.0 the account moves to the 2026-11-09 cluster and the pool on the
 old pair is retired; v1.6.0 `settleEulerUnstake` skips a reverting `completeUnstake` and settles every share the WMON
 held can pay (audit 2026-11-10 H2, H3, H10), plus `buyMonV4`; v1.7.0 the pool yields to the vault's leavers (implementation

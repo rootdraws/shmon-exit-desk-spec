@@ -15,10 +15,10 @@ was handed to AlphaGrowth and holds nothing.
 ## The Euler cluster
 
 Files: [`sources/ag-euler/contracts/shmon-cluster-monad/deploy.sh`](sources/ag-euler/contracts/shmon-cluster-monad/deploy.sh)
-and [`deployed-143.env`](sources/ag-euler/contracts/shmon-cluster-monad/deployed-143.env) (copied from the local ag-euler tree at `6ecd9ad`; the GitHub remote is behind). Built with the Euler Vault Kit factory `0xba4D…3f1E`, the Euler router factory `0xdDA3…A902`
-and the Ethereum Vault Connector `0x7a9324E8f270413fa2E458f5831226d99C7477CD` (`deploy.sh:28-30`). Deployed
+and [`deployed-143.env`](sources/ag-euler/contracts/shmon-cluster-monad/deployed-143.env) (copied from the local ag-euler working tree on 2026-11-18: its last commit is `6ecd9ad`, and the cap, desk and retirement edits since are uncommitted there; the GitHub remote is behind). Built with the Euler Vault Kit factory `0xba4D…3f1E`, the Euler router factory `0xdDA3…A902`
+and the Ethereum Vault Connector `0x7a9324E8f270413fa2E458f5831226d99C7477CD` (`deploy.sh:29-31`). Deployed
 2026-11-09 as the second cluster, after the first was handed to the AlphaGrowth Safe and rejected
-(`alphastructures/docs/shmon-exit-desk-plan.md:183-190`). The deployer key `0x501107fe590c8F9b81c00b81867fD19e0d9c0253`
+(`alphastructures/docs/shmon-exit-desk-plan.md:186-193`). The deployer key `0x501107fe590c8F9b81c00b81867fD19e0d9c0253`
 is governor of every vault and the router (`deploy.sh:8-9`, confirmed in `evidence/live-reads.md`); `deploy.sh handover`
 would move governance to the Safe `0x4f894Bfc9481110278C356adE1473eBe2127Fd3C`, which also receives the fees.
 
@@ -30,13 +30,13 @@ would move governance to the Safe `0x4f894Bfc9481110278C356adE1473eBe2127Fd3C`, 
 | USDT0 (eUSDT0-15) | [0xD6645190976d456907c9807d08E4E4E220c96a3E](https://monadscan.com/address/0xD6645190976d456907c9807d08E4E4E220c96a3E) | yes | 5M / 4.5M | same as USDC | USDC shares 95/96 |
 
 Common settings: interest fee 10%, max liquidation discount 15%, liquidation cool-off 1 second, hooks off, fee receiver
-the Safe (`deploy.sh:61,108-114`). LTV pairs are borrow/liquidation in percent (`deploy.sh:54-60`).
+the Safe (`deploy.sh:63,110-116`). LTV pairs are borrow/liquidation in percent (`deploy.sh:55-60`).
 
 **Oracles.** One Euler router, `0x99f7105CAC565Ac830cf2d66527FBb06dD322C32`, with Chainlink SVR adapters built from
-euler-xyz/euler-price-oracle `63f20a4`, set 2026-11-12 ("our oracles will be chainlink SVR", `deploy.sh:36-43`):
+euler-xyz/euler-price-oracle `63f20a4`, set 2026-11-12 ("our oracles will be chainlink SVR", `deploy.sh:37-43`):
 shMON/USD as a cross of the shMON/MON SVR rate and WMON/USD (`0x2B43…eAB6`), WMON/USD (`0xe6a6…fB9d`), USDC/USD
 (`0x7459…8284`), USDT0/USD (`0xBD48…519F`). Each ushMON is a "resolved vault" on the router, priced through its
-`convertToAssets` into shMON (`deploy.sh:187`).
+`convertToAssets` into shMON (`deploy.sh:192`).
 
 **State on 2026-11-18, block 123,224,821.** The WMON vault holds 929.88 WMON lent by the deployer key and has nothing
 borrowed, so it charges 20% at zero use. The shMON, USDC and USDT0 vaults hold nothing. The one ushMON v3 vault holds

@@ -5,8 +5,9 @@ one-vault (v3) results of 2026-11-17 are in sections 1, 2a, 3a, 4 and 9.
 
 ## 1. ushMON unit tests (`evidence/forge-test.txt` for v2; v3 run on 2026-11-17)
 
-Ten Foundry tests in `ushMON/test/UnstakingShMonVault.t.sol` against mocks and the real Ethereum Vault Connector; the
-cases are listed in [04-ushmon.md](04-ushmon.md). Result: **10 passed, 0 failed** (v2). On v3 (`48d07b3`, 2026-11-17) the
+On v2, twelve Foundry unit tests in `ushMON/test/UnstakingShMonVault.t.sol` against mocks and the real Ethereum Vault
+Connector, plus three donation tests and two fork tests: **17 passed, 0 failed** (`evidence/forge-test.txt`); the cases
+are listed in [04-ushmon.md](04-ushmon.md). On v3 (`48d07b3`, 2026-11-17, rerun 2026-11-18 in `evidence/forge-test-v3.txt`) the
 suite is 16 unit tests (the ten, the two of issues 7 and 8, and four two-desk cases: only the unstaking desk redeems its
 WMON; credits follow each desk's ledger; stray MON and WMON are shared pro rata, a liquidator included; an outsider is
 still shut out), the three donation tests and the two live-shMonad fork tests: **21 passed, 0 failed**.

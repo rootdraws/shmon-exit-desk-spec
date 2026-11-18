@@ -119,3 +119,22 @@ Read with `cast call ... -r https://rpc2.monad.xyz`. The release itself is in `e
 
 The pools' quotes were read back by the release script at the time of the release (`evidence/release-ush3/release-ush3-mainnet.log`): each pool
 quotes a fee of 2.2549% under its ceiling for shMON in (the rate less 0.30%) and refuses WMON in.
+
+## 2026-11-18, block 123,359,143 (public RPC rpc2.monad.xyz), read for the spec's verity pass
+
+| Read | Value |
+|---|---|
+| Settings `VERSION()` on 0xdE30…dEC and 0xC62D…F85a | 11600 on both |
+| Settings `getPerformanceFee()` on both | 1000 bps, recipient 0xC94dd8e928D681bd85BeB94a8729709d189cCF9D |
+| Executor, oracle, guardian and admin roles on both Settings | `hasRole` true for every key named in 02-alpha-structures.md |
+| Admin Safe 0xC94d…9CfD on Monad and HyperEVM | owner 0xb9a8…681B, threshold 1, module 0x6c3A…3D4d |
+| Hedge Safes 0x704f…C6ed and 0x213a…61C3 on HyperEVM | owner the admin Safe, threshold 1, modules 0x0253…0Cba and 0x0Aa4…9028 |
+| Router v2 0xE1fe…3776 `owner()`; exit bid pools `keeper()` | 0xEE51…c3A7 on all three |
+| Exit desks `VERSION()` | 10800 on both; `leaversWaiting()` false on both; WMON debt 0 on both |
+| ushMON v3 0x37e0…A0ce | totalAssets 96.7569 shMON, each desk 48.3785 shares |
+| WMON vault 0xE452…0eaf | cash 929.8779 WMON, borrows 0, caps raw 46554 / 41882 (727M / 654M); the deployer holds 929.8779 shares |
+| WMON vault LTV against ushMON v3 / v2 pair / v1 pair / shMON | 93/95 / 0/0 / 0/0 / 97/98 |
+| Router `resolvedVaults` | v3 and the shMON vault resolve to shMON; the v1 and v2 vaults resolve to nothing |
+| USDC and USDT0 vaults | cash 0, borrows 0, caps raw 32012 / 28812 (5M / 4.5M); governor the deployer key |
+| Strategy vaults `totalSupply()` / `totalAssets()` | 0 / 0 on both |
+| Withdrawal handlers `getExitFeeBps()` | 30 on both, `VERSION()` 11100 |
