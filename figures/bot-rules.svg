@@ -31,7 +31,7 @@
       <text x="56" y="498" fill="#5f6b69">The bot borrows more only if the book earns money.</text>
       <text x="56" y="516" fill="#5f6b69">It counts staking yield, funding and borrow cost.</text>
       <text x="56" y="534" fill="#5f6b69">It also takes off 1.06% a year for running costs.</text>
-      <text x="56" y="552" fill="#5f6b69">Once growth starts, this check never stops it.</text>
+      <text x="56" y="552" fill="#5f6b69">Once it passes, the check stays open for good.</text>
       <rect x="40" y="588" width="340" height="118" rx="3" fill="#ffffff" stroke="#17201f"/>
       <text x="56" y="612" font-weight="600">The keeper's shMON arbitrage</text>
       <text x="56" y="632" fill="#5f6b69">It never runs while leavers wait.</text>
