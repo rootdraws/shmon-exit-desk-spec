@@ -4,7 +4,7 @@
 
 | Repo | Commit | Used for |
 |---|---|---|
-| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) (private) | `be23722`, branch `shmon-release-2026-11-18`, 2026-11-18 | the vault system, exit desk, bot, harness, docs, audit |
+| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) (private) | `be23722`, merged into master as `ef0f756` on 2026-11-18 | the vault system, exit desk, bot, harness, docs, audit |
 | [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) (private) | local working tree on 2026-11-18 (last commit `6ecd9ad`, 2026-11-12, with uncommitted edits since); the remote lacks the cited projects, which are copied in this repo under [`sources/ag-euler/`](sources/ag-euler/) | the Euler cluster, EulerSwap v2 deployment, ushMON build artifact |
 | [rootdraws/ushMON](https://github.com/rootdraws/ushMON) (public) | [`48d07b3`](https://github.com/rootdraws/ushMON/tree/48d07b3) (v3, live 2026-11-17); [`a7f4788`](https://github.com/rootdraws/ushMON/tree/a7f478847134a5ff5afdb672ddd97398b3eae713) (v1); [`4235998`](https://github.com/rootdraws/ushMON/tree/4235998) (v2, 2026-11-16) | the unstaking shMON vault |
 | [euler-xyz/ethereum-vault-connector](https://github.com/euler-xyz/ethereum-vault-connector) | v1.0.1 | EVC, account status checks |

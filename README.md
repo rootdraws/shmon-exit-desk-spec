@@ -31,7 +31,7 @@ disagree, the spec says so and says which one was checked on chain.
 
 | Repo | What it holds | Commit used | Access |
 |---|---|---|---|
-| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) | The vault system: contracts, bot, oracle, keeper, docs, fork harness | `be23722` (branch `shmon-release-2026-11-18`, 2026-11-18) | private |
+| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) | The vault system: contracts, bot, oracle, keeper, docs, fork harness | `be23722` (merged into master as `ef0f756`, 2026-11-18) | private |
 | [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) | The Euler cluster on Monad, the EulerSwap v2 deployment, the deploy scripts | local working tree on 2026-11-18 (last commit `6ecd9ad`, 2026-11-12, with uncommitted edits since); the remote is behind it, so the cited files are copied under [`sources/ag-euler/`](sources/ag-euler/) | private |
 | [rootdraws/ushMON](https://github.com/rootdraws/ushMON) | The unstaking shMON vault, its tests, its issues | `48d07b3` (v3, live 2026-11-17); `4235998` (v2, 2026-11-16); `a7f4788` is v1 | public |
 | [rootdraws/shmon-exit-desk-spec](https://github.com/rootdraws/shmon-exit-desk-spec) | This spec and its evidence | this repo | private |

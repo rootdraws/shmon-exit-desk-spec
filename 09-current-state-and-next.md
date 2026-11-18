@@ -35,7 +35,6 @@ excessive", then "one ushMON". In order:
 
 | Step | State |
 |---|---|
-| Merge the alphastructures branch | Every change of 2026-11-16 to 2026-11-18 is on branch `shmon-release-2026-11-18`, pushed 2026-11-18: the contracts and release at `be23722`, the runbook at `89d7d6d`, the admin site at `ef0f756`; master is still `bd9a894`. |
 | Headroom at scale | 80 MON per desk covers about 1,100 MON of pool buys a day at the 93% borrow LTV (7.2% of a day's sales). At Root's target of 50k to 150k MON every 20 hours the desks need 3,600 to 10,800 MON parked; whether that comes from the vaults' own shMON or new MON is Root's call. |
 | Lenders | The float is 929.88 WMON. Taking the public flow (about 160,000 MON a day lately) needs WMON lenders of that order in the cluster's WMON vault; the curve charges borrowers 20% at zero use and 30% at the 90% kink, and lenders get 90% of what is paid. |
 
