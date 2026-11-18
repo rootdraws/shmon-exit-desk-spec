@@ -24,6 +24,7 @@ disagree, the spec says so and says which one was checked on chain.
 | [09-current-state-and-next.md](09-current-state-and-next.md) | What is live, what is in flight, open decisions, known risks |
 | [10-references.md](10-references.md) | Every repo, commit, contract address and file cited |
 | [11-ltv-study.md](11-ltv-study.md) | How much the WMON vault may lend against ushMON: the oracle, its divergence, the rates, the fork simulation, the recommendation (issue 6) |
+| [12-revenue-flows.md](12-revenue-flows.md) | What makes money, how much at a given TVL, and where each fee goes |
 
 ## The repos
 
