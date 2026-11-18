@@ -43,7 +43,7 @@ Hook.
 
 ushMON represents a tokenized claim on the 20 to 28 hour process of unstaking shMON. wMON lenders provide a one day line of credit backed by the MON staking contracts, and receive a high lending APR whenever ushMON is active.
 
-The exit desk enables a metabolic rate of $16k to $21k wMON an hour, executed through Maker Orders, one tick above the market in the desk's own Uniswap v4 pool, and a keeper fills them from flow on other WMON/USDC venues. Capacity in this is limited to onchain demand, as well as depth of wMON lending -- rather than slippage in current shMON/wMON pools, or instant redemption limits.
+The exit desk enables a metabolic rate of $6k to $15k of WMON an hour,[^rate] executed through Maker Orders, one tick above the market in the desk's own Uniswap v4 pool, and a keeper fills them from flow on other WMON/USDC venues. Capacity in this is limited to onchain demand, as well as depth of wMON lending -- rather than slippage in current shMON/wMON pools, or instant redemption limits.
 
 The Exit Desk will also become more efficient by integrating with Fastlane's soon to be released Monad Liquidity Router,
 Moose, as well as Kyber.
@@ -76,3 +76,4 @@ You can read more about ushMON here.[04-ushmon.md](04-ushmon.md).
 [^shmonad]: `evidence/data/unstake-timing-30d.md` (119 requests, read 2026-11-05); `evidence/data/shmonad-30d.md` (720 hourly reads to 2026-11-05); Curve and instant exit quotes and live fee `getCurrentUnstakeFeeRateRay() == 0.4949%` at block 123385653 in `evidence/live-reads.md`.
 [^desk]: `alphastructures/docs/Alpha_Structures_Digester.md:3-7,25,38-39`; `docs/shmon-exit-desk-plan.md:36-43`; exit fee `contracts/core/WithdrawalHandler.sol:34-35,283`.
 [^flow]: `evidence/data/instant-history.md`, monthly table (instant exits paid out 2025-12 to 2026-10).
+[^rate]: `evidence/data/rate-30d.md`: 30 days of real WMON/USDC swaps replayed with the keeper's fill rule; a $200k or $500k inventory sells in 13.5 to 35.5 hours if the keeper wins 25% of each trigger, 35.5 to 73.9 hours at 10%.
