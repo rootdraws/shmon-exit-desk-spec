@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="600" viewBox="0 0 1180 600" role="img" aria-label="A chunk of shMON leaves the lenders through the controller to the exit desk. The desk parks it in ushMON as collateral and starts shMonad's one-day unstake, borrows WMON against it from the WMON vault, and rests the WMON as five sell orders just above the market in the digester. The keeper fills an order when the public price crosses it. The USDC goes home to the controller, which repays the USDC debt. A day later the MON comes back as WMON and repays the WMON loan.">
+      <style>
+svg{color:#1a1e26;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.bg{fill:#ffffff}
+.box{fill:#ffffff;stroke:currentColor;stroke-width:1.5}
+.box-wait{fill:#ffffff;stroke:#a8620f;stroke-width:1.8}
+text{fill:currentColor;font-size:15px}
+.t-title{font-size:17px;font-weight:600}
+.t-sub{font-size:14px;fill:#5b6372}
+.t-home{fill:#137a63;font-weight:600}
+.t-wait{fill:#a8620f;font-weight:600}
+.edge{stroke:currentColor;stroke-width:1.8;fill:none}
+.edge-home{stroke:#137a63;stroke-width:2.6;fill:none}
+.edge-wait,.edge-wmon{stroke:#a8620f;stroke-width:2.2;fill:none;stroke-dasharray:7 5}
+</style><rect class="bg" x="0" y="0" width="1180" height="600"/><defs>
+        <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1a1e26"/></marker>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#137a63"/></marker>
+        <marker id="aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#a8620f"/></marker>
+      </defs>
+
+      <!-- shMonad -->
+      <rect class="box-wait" x="600" y="30" width="220" height="70" rx="5"/>
+      <text x="710" y="58" text-anchor="middle" class="t-title">shMON Unstake</text>
+      <text x="710" y="80" text-anchor="middle" class="t-wait">20 to 28 Hours</text>
+
+      <!-- USDC lenders -->
+      <rect class="box" x="40" y="40" width="220" height="70" rx="5"/>
+      <text x="150" y="81" text-anchor="middle" class="t-title">USDC Lenders</text>
+      <line class="edge" x1="150" y1="110" x2="150" y2="186" marker-end="url(#a)"/>
+
+      <!-- Euler -->
+      <rect class="box" x="40" y="190" width="220" height="90" rx="5"/>
+      <text x="150" y="230" text-anchor="middle" class="t-title">Euler</text>
+      <text x="150" y="253" text-anchor="middle" class="t-sub">shMON Vault</text>
+
+      <!-- Controller -->
+      <rect class="box" x="40" y="380" width="220" height="90" rx="5"/>
+      <text x="150" y="412" text-anchor="middle" class="t-title">Controller</text>
+      <text x="150" y="440" text-anchor="middle" class="t-sub">shMON Vault</text>
+
+      <!-- lenders -> controller: shMON chunk ; controller -> lenders: repay -->
+      <line class="edge" x1="100" y1="280" x2="100" y2="376" marker-end="url(#a)"/>
+      <text x="92" y="333" text-anchor="end" class="t-sub">shMON</text>
+      <text x="92" y="351" text-anchor="end" class="t-sub">Collateral</text>
+      <line class="edge-home" x1="200" y1="376" x2="200" y2="284" marker-end="url(#ah)"/>
+      <text x="210" y="342" class="t-home">repay USDC</text>
+
+      <!-- Rebalancing bot -->
+      <rect class="box" x="330" y="60" width="200" height="70" rx="5"/>
+      <text x="430" y="92" text-anchor="middle" class="t-title">Rebalancing Bot</text>
+      <text x="430" y="114" text-anchor="middle" class="t-sub">executor, one step a tick</text>
+      <line class="edge" x1="430" y1="130" x2="430" y2="281" marker-end="url(#a)" stroke-dasharray="3 4"/>
+
+      <!-- Exit desk -->
+      <rect class="box" x="330" y="285" width="200" height="90" rx="5"/>
+      <text x="430" y="317" text-anchor="middle" class="t-title">Exit Desk</text>
+      <text x="430" y="345" text-anchor="middle" class="t-sub">shMON Exit Adapter</text>
+
+      <!-- controller -> desk -->
+      <line class="edge" x1="260" y1="400" x2="330" y2="350" marker-end="url(#a)"/>
+      <text x="296" y="412" class="t-sub">shMON</text>
+
+      <!-- ushMON -->
+      <rect class="box" x="600" y="160" width="220" height="90" rx="5"/>
+      <text x="710" y="192" text-anchor="middle" class="t-title">ushMON</text>
+      <text x="710" y="220" text-anchor="middle" class="t-sub">shMON Unstaking Vault</text>
+
+      <!-- WMON vault -->
+      <rect class="box-wait" x="600" y="410" width="220" height="90" rx="5"/>
+      <text x="710" y="442" text-anchor="middle" class="t-title">wMON Vault</text>
+      <text x="710" y="465" text-anchor="middle" class="t-sub">lends WMON against ushMON</text>
+      <text x="710" y="485" text-anchor="middle" class="t-sub">97% allowed, 92% used</text>
+
+      <!-- desk -> ushMON: park -->
+      <line class="edge" x1="470" y1="285" x2="596" y2="205" marker-end="url(#a)"/>
+      <text x="500" y="236" text-anchor="end" class="t-sub">shMON</text>
+
+      <!-- ushMON -> shMonad: unstake ; shMonad -> ushMON: MON back -->
+      <line class="edge" x1="650" y1="160" x2="650" y2="104" marker-end="url(#a)"/>
+      <text x="636" y="137" text-anchor="end" class="t-sub">unstake</text>
+      <line class="edge-wait" x1="770" y1="100" x2="770" y2="156" marker-end="url(#aw)"/>
+      <text x="784" y="137" class="t-wait">MON</text>
+
+      <!-- WMON vault -> desk: borrow -->
+      <line class="edge-wmon" x1="600" y1="415" x2="526" y2="368" marker-end="url(#aw)"/>
+      <text x="575" y="372" class="t-wait">borrow wMON</text>
+
+      <!-- ushMON -> WMON vault: repay loan (home) -->
+      <line class="edge-wmon" x1="600" y1="245" x2="526" y2="292" marker-end="url(#aw)"/>
+      <text x="575" y="292" class="t-wait">wMON</text>
+      <line class="edge-wmon" x1="470" y1="375" x2="596" y2="455" marker-end="url(#aw)"/>
+      <text x="500" y="430" text-anchor="end" class="t-wait">repay wMON</text>
+
+      <!-- Digester -->
+      <rect class="box" x="900" y="275" width="240" height="110" rx="5"/>
+      <text x="1020" y="307" text-anchor="middle" class="t-title">Digester</text>
+      <text x="1020" y="335" text-anchor="middle" class="t-sub">Uniswap v4 wMON/USDC</text>
+      <text x="1020" y="356" text-anchor="middle" class="t-sub">OZ Limit Order Hook</text>
+
+      <!-- Keeper -->
+      <rect class="box" x="900" y="440" width="240" height="90" rx="5"/>
+      <text x="1020" y="472" text-anchor="middle" class="t-title">Router</text>
+      <text x="1020" y="500" text-anchor="middle" class="t-sub">Uniswap v4 Flash Accounting</text>
+
+      <!-- desk -> digester: WMON sells -->
+      <line class="edge-wmon" x1="530" y1="330" x2="896" y2="330" marker-end="url(#aw)"/>
+      <text x="790" y="310" text-anchor="middle" class="t-wait">wMON, as resting sells</text>
+
+      <!-- keeper -> digester -->
+      <line class="edge" x1="1020" y1="440" x2="1020" y2="389" marker-end="url(#a)"/>
+
+      <!-- digester -> controller: USDC home -->
+      <path class="edge-home" d="M900 365 L860 365 L860 552 L150 552 L150 474" marker-end="url(#ah)"/>
+      <text x="505" y="578" text-anchor="middle" class="t-home">USDC</text>
+    </svg>
