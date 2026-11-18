@@ -13,13 +13,50 @@ is no fixed loop count (`Architecture.md:324`). Net profit is funding received o
 
 - **Book shape.** The short equals the collateral exposure less `d` times equity, so the book rests at `d` dollars of
   delta per dollar of equity (`CLAUDE.md:55`). `d` is 1 on the `-hl` vaults and 0 on the `-d0` vaults, held on chain in
-  `StrategyControllerSettings` and changeable only by the admin Safe (`CLAUDE.md:34-37`).
+  `StrategyControllerSettings`. Since 2026-11-18 Settings 1.15 has no setter, so each vault's delta is fixed for good.
 - **Target LTV.** The lowest of the liquidation threshold times one minus the worst recorded 24-hour fall, 95% of the
-  threshold, and a code clamp under the tripwires (`services/rebalancingBot/src/policy/worstFallPolicy.ts`). The shMON
+  threshold, and 2 points under the 45% line (`services/rebalancingBot/src/policy/worstFallPolicy.ts`). The last one binds, so
+  the target is 43%. The shMON
   vaults use a 34.48% worst fall measured on Binance futures MONUSDT (production configs, `runtime.worstFall`).
-- **Tripwires.** Target 45%, controlled unwind at 55%, panic unwind at 66.5% LTV (`risk` block of each production config).
+- **Lines.** Target 43%, hedge-margin loan cap 45%, controlled unwind at 55%, panic unwind at 66.5% LTV (`risk` block of
+  each production config). The full set is under [The bot's rules](#the-bots-rules).
 - **Hedge.** Hyperliquid, margin ratio 2857 bps (3.5x) on the shMON vaults; no trading key exists, every order is a
   CoreWriter call from a Safe through its Roles module (`docs/Alpha_Structures_Threat_Model.md:166`).
+
+## The bot's rules
+
+![shMON bot rules, from the two production configs, the bot's code and the chain, 2026-11-18](figures/bot-rules.svg)
+
+Every number is the live config's, a code constant, or read on chain on 2026-11-18. The bot takes one step per 30-second
+tick, and the target is 43% because the line two points under 45% binds before the worst-day term does.
+
+| Rule | Number | Fires | Source |
+|---|---|---|---|
+| Liquidation | 70% today | the whole vault is sized against the stricter lender's line, Neverland's 70%; the split then puts more of the loan on Euler (80%) until both loans sit the same share of the way to their own line; a read under 50% is replaced by 50% with an alert | `lenders.ts`, `observe.ts` |
+| Target LTV | 43% | the loan the bot keeps | `policy/worstFallPolicy.ts` |
+| First build | 42% | whole book in one go before the first short | `planner/growth.ts` |
+| Re-lever | below 33%, or idle shMON over $1 | borrow back to 43% | `planner/growth.ts` |
+| Margin loan cap | 45% | borrow for hedge margin up to here, then sell shMON | `planner/growth.ts` |
+| Profit band | repay over 55%, sell over 58% down to 56% | above 55%, repays the loan from the short's profit that came home, toward 43%; with no profit to take and above 58%, sells shMON down to 56%; acts only when the controlled unwind, which runs earlier in the cycle, finds nothing to do | `planner.ts` |
+| Controlled unwind | 55%, sell to 54%, stop at 50% | repay, profit slice, supply, sell; each step trims the short by the smaller of a quarter or the part above what the remaining shMON needs, so the vault keeps its delta | `planner.ts`, `planner/unwind.ts` |
+| Panic | 66.5% | full repay and sale, half the short per tick; monitor pauses | `planner.ts`, monitor `breaker.ts` |
+| Short size | (C + idle + desk shMON − d·E) / price | open or trim when off by 1% of equity and $10 or more | `policy/base.ts`, `planner/hedge.ts` |
+| Margin | 28.57% + 0.05%, × 1.05; top up under 80% | transfer from idle, loan to 45%, or shMON sale | `planner/growth.ts` |
+| Rebound reopen | +4% half, +8% or 48 h all | reopen the short after a pay-down | `planner/unwind.ts` |
+| Carry gate | enter at ≥ 0 after 1.06% costs, 24 h averages | allows growth; never stops it | `policy/worstFallPolicy.ts` |
+| Cost gate | loop ≥ $10, drag ≤ 0.35%, payback ≤ 10 d | skips an uneconomic loop (not the first build) | `policy/costGate.ts` |
+| Lender balance | risk spread 0.5 pt | moves shMON toward the lender further from its liquidation; empties a lender with no debt | `lenders.ts` |
+| Paying leavers | oldest batch first | idle shMON pays; else repay, profit buy, trim and margin, profit slice, Curve, desk route, sale, redeem | `planner.ts`, `planner/unwind.ts` |
+| Curve first | over $10, average cost ≤ 0.15% | sells leavers' shMON for WMON on Curve before the desk route | `planner/exitDesk.ts` |
+| Desk chunk | min(owed, 4 h × 25% taker buys, room × 92%) | park, borrow, sell in the digester | `planner/exitDesk.ts` |
+| Leftover | $10 to $1,000 | market swap at home after Curve declines | `planner/exitDesk.ts` |
+| Share price limit | 3% an hour, one window | shares are priced in shMON; the contract refuses a bigger move, counted in dollars per share on Delta Neutral | `StrategyControllerSettings.sol`, `risk.sharePriceDeviation` |
+| NAV publish | 1% Delta One, 0.2% Delta Neutral, 30 min, 2 h empty | the oracle posts the share price | navOracle `publish.ts` |
+| Modes | block 60 s, price 90 min, venue health | DegradedData blocks growth, new shorts, payouts | `state/modeMachine.ts`, `staleness.ts` |
+| Breaker | pause 66.5%, unpause 45% after 30 min | the monitor pauses and unpauses | monitor `breaker.ts` |
+| Hedge drift warning | 3% of target, $10 or more | the monitor warns; the bot itself moves at 1% | monitor `checkStrategy.ts` |
+| Fixed delta | 1 and 0, on chain | Settings 1.15 has no setter; no gear shift can start | `StrategyControllerSettings.sol` |
+| Idle | 5 min tick, NAV 2 h | an empty vault's cadence | `idle.ts` |
 
 ## Two lenders
 
