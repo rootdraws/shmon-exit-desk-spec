@@ -33,6 +33,7 @@ WMON lending is not part of TVL. It is sized by the EulerSwap pools' volume ([05
 | Euler interest fee | 10% of all interest paid in the cluster, WMON and USDC alike | AlphaGrowth Euler Safe `0x4f89…Fd3C` | `interestFee()` 1000 and `feeReceiver()` `0x4f89…Fd3C` on the USDC, WMON and USDT0 vaults; `protocolFeeShare()` 0 |
 | Exit bid pools | buy shMON at a 0.30% discount | the vault | both hold no bids, so they earn nothing today |
 | Stable desk | moves debt between USDC and USDT0 | the vault, as lower borrow cost | takes no fee |
+| Routing savings | leavers' shMON sells on Curve or through the desk's borrow route instead of shMonad's instant exit | the vault, as a fee it does not pay | about 0.45% saved on each sale: 0.55% typical instant-exit fee (`evidence/data/shmonad-30d.md`) less about 0.10% for our route |
 
 The exit fees, the pool margin, the arbitrage and the digester gains all raise the share price. AlphaGrowth collects
 10% of that rise through the performance fee, and the holders keep the other 90%.
@@ -43,9 +44,9 @@ The exit fees, the pool margin, the arbitrage and the digester gains all raise t
 
 | Receiver | From | $ per year |
 |---|---|---|
-| Admin Safe, AlphaGrowth | performance fees: 4,175 from Delta One, 17,175 from Delta Zero | 21,351 |
+| Admin Safe, AlphaGrowth | performance fees: 4,442 from Delta One, 17,256 from Delta Zero | 21,698 |
 | AlphaGrowth Euler Safe | Euler interest fee on WMON and USDC loans | 8,747 |
-| Holders, both vaults | carry, exit fees, pool margin, after the performance fee: 37,579 Delta One, 154,579 Delta Zero | 192,158 |
+| Holders, both vaults | carry, exit fees, pool margin, routing savings, after the performance fee: 39,980 Delta One, 155,302 Delta Zero | 195,282 |
 | USDC lenders on Euler | vault loan interest, after the Euler fee | 78,215 |
 | WMON suppliers | desks' WMON interest, after the Euler fee | 512 |
 
@@ -80,7 +81,10 @@ Neverland pays 0% for supplied shMON. Trading fees and the cost of entering the 
   follows the WMON vault's curve: 20% at zero use, 30% at the 90% kink, 50% at full use.
 - Pool margin to the vaults = pool gross − WMON interest.
 - Exit fees = TVL × share withdrawn per month × 12 × 0.30%.
-- Vault gain = carry + exit fees + pool margin. The performance fee takes 10% of it, and the holders keep 90%.
+- Routing savings = TVL × share withdrawn per month × 12 × shMON sold per $1 withdrawn × (0.55% − 0.10%). Both vaults
+  pay leavers in shMON (`asset()` is shMON on both), so a vault sells shMON only for the loan it repays less the margin
+  that comes home from Hyperliquid: $0.49 per $1 withdrawn on Delta One and $0.15 on Delta Zero.
+- Vault gain = carry + exit fees + pool margin + routing savings. The performance fee takes 10% of it, and the holders keep 90%.
 - Euler loan interest = TVL × 0.43 ÷ 0.57 × Euler share × Euler borrow APR. Suppliers get 90%, and AlphaGrowth gets 10%.
 
 The calculator with every input is the artifact at https://claude.ai/artifact/BzqBnCLXMaoxTBc7vD9nrD (private).
