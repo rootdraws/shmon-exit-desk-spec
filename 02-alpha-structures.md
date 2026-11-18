@@ -42,7 +42,6 @@ The bot takes one step every 30 seconds. Each row is one rule, read from the two
 | Short size | (C + idle + desk shMON − d·E) / price | open or trim when off by 1% of equity and $10 or more | `policy/base.ts`, `planner/hedge.ts` |
 | Margin | 28.57% + 0.05%, × 1.05; top up under 80% | transfer from idle, loan to 45%, or shMON sale | `planner/growth.ts` |
 | Rebound reopen | +4% half, +8% or 48 h all | reopen the short after a pay-down | `planner/unwind.ts` |
-| Carry gate | enter at ≥ 0 after 1.06% costs, 24 h averages | allows growth; never stops it | `policy/worstFallPolicy.ts` |
 | Cost gate | loop ≥ $10, drag ≤ 0.35%, payback ≤ 10 d | skips an uneconomic loop (not the first build) | `policy/costGate.ts` |
 | Lender balance | risk spread 0.5 pt | moves shMON toward the lender further from its liquidation; empties a lender with no debt | `lenders.ts` |
 | Paying leavers | oldest batch first | idle shMON pays; else repay, profit buy, trim and margin, profit slice, Curve, desk route, sale, redeem | `planner.ts`, `planner/unwind.ts` |
