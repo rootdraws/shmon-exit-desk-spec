@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1268" viewBox="0 0 1240 1268" role="img" aria-label="The bot's loan-to-value lines, the order it tries actions each tick, and the rules for growing the loan, sizing the Hyperliquid short, unwinding, paying leavers, the arbitrage and pausing." style="color:#17201f">
-    <rect x="0" y="0" width="1240" height="1268" fill="#f6f5f1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="838" viewBox="0 0 1240 838" role="img" aria-label="The bot's loan-to-value lines, the order it tries actions each tick, and its rules for growing, the Hyperliquid short, unwinding, paying leavers and the arbitrage." style="color:#17201f">
+    <rect x="0" y="0" width="1240" height="838" fill="#f6f5f1"/>
     <g font-family="IBM Plex Sans, system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#17201f">
 
       <!-- LTV lines, left -->
@@ -8,7 +8,6 @@
       <g>
         <text x="56" y="72" font-weight="600" fill="#8a2b2b">70%</text>
         <text x="112" y="72">Liquidation (Neverland)</text>
-        <text x="112" y="90" fill="#5f6b69">every line is sized to this one</text>
 
         <text x="56" y="122" font-weight="600" fill="#8a2b2b">66.5%</text>
         <text x="112" y="122">Panic: full unwind</text>
@@ -47,118 +46,90 @@
         <text x="56" y="542" font-weight="600" fill="#0a7f6a">43%</text><text x="112" y="542" fill="#0a7f6a">margin loan cap less 2 points</text>
       </g>
 
-      <rect x="40" y="572" width="340" height="112" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <rect x="40" y="572" width="340" height="100" rx="3" fill="#ffffff" stroke="#17201f"/>
       <text x="56" y="596" font-weight="600">Carry gate</text>
-      <text x="56" y="616" fill="#5f6b69">grows only while 24 h average supply yield,</text>
-      <text x="56" y="634" fill="#5f6b69">borrow cost and funding net 0 or more after</text>
-      <text x="56" y="652" fill="#5f6b69">1.06% costs; it never stops a running vault</text>
-      <text x="56" y="670" fill="#5f6b69">and stale funding does not block it</text>
+      <text x="56" y="616" fill="#5f6b69">Grows only if 24 h net carry ≥ 0 after 1.06% costs</text>
+      <text x="56" y="634" fill="#5f6b69">net carry: supply yield + funding − borrow</text>
+      <text x="56" y="652" fill="#5f6b69">never stops a running vault</text>
+      <rect x="40" y="688" width="340" height="100" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="56" y="712" font-weight="600">shMON arbitrage (keeper)</text>
+      <text x="56" y="732" fill="#5f6b69">never while leavers wait</text>
+      <text x="56" y="750" fill="#5f6b69">WMON vault keeps half its cash or the last payout</text>
+      <text x="56" y="768" fill="#5f6b69">profit goes to the desk as WMON</text>
 
       <!-- the tick ladder, middle -->
-      <text x="420" y="30" font-weight="600" font-size="13">Each tick: the first rung with work wins</text>
-      <rect x="420" y="44" width="400" height="148" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="436" y="68" font-weight="600">0. Mode first</text>
-      <text x="436" y="88" fill="#5f6b69">FullHalt: nothing · Paused: risk cuts only</text>
-      <text x="436" y="106" fill="#5f6b69">DegradedData (block over 60 s old, Hyperliquid</text>
-      <text x="436" y="124" fill="#5f6b69">unhealthy, share price over 90 min old): no growth,</text>
-      <text x="436" y="142" fill="#5f6b69">no new short, no payouts · Withdrawing: serve the batch</text>
-      <text x="436" y="160" fill="#5f6b69">an open intent on chain or at the venue: finish it,</text>
-      <text x="436" y="178" fill="#5f6b69">plan nothing else</text>
-
+      <text x="420" y="30" font-weight="600" font-size="13">Each tick: the first step with work wins</text>
+      <rect x="420" y="44" width="400" height="154" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="436" y="68" font-weight="600">0  Mode first</text>
+      <text x="436" y="88" fill="#5f6b69">FullHalt: nothing</text>
+      <text x="436" y="106" fill="#5f6b69">Paused: risk cuts only</text>
+      <text x="436" y="124" fill="#5f6b69">Degraded data: no growth, new short or payouts</text>
+      <text x="436" y="142" fill="#5f6b69">   (block over 60 s, price over 90 min, Hyperliquid down)</text>
+      <text x="436" y="160" fill="#5f6b69">Withdrawing: serve the batch</text>
+      <text x="436" y="178" fill="#5f6b69">Open intent: finish it before anything else</text>
       <g font-size="11.5">
-        <rect x="420" y="208" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="225">1  exit desk step, then stable desk housekeeping</text>
-        <rect x="420" y="240" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="257">2  panic at 66.5%: repay, sell, close half the short</text>
-        <rect x="420" y="272" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="289">3  controlled at 55%: repay, profit slice, sell to 54%</text>
-        <rect x="420" y="304" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="321">4  bridge refund sweep · harvest · conversion sweep</text>
-        <rect x="420" y="336" width="400" height="26" rx="2" fill="#dfeaf2" stroke="#0a5f8f"/><text x="434" y="353">5  hedge repair: short under target by over 1%</text>
-        <rect x="420" y="368" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="385">6  settle deposits · protective stable move · pay leavers</text>
-        <rect x="420" y="400" width="400" height="26" rx="2" fill="#dfeaf2" stroke="#0a5f8f"/><text x="434" y="417">7  hedge trim · margin sync</text>
-        <rect x="420" y="432" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="449">8  profit band · margin sale · venue rebalance</text>
-        <rect x="420" y="464" width="400" height="26" rx="2" fill="#d9efe9" stroke="#0a7f6a"/><text x="434" y="481">9  lender balance · stable debt move · residual sweep · growth</text>
+        <rect x="420" y="212" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="229">1  Exit desk step, stable desk housekeeping</text>
+        <rect x="420" y="244" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="261">2  Panic at 66.5%: repay, sell, close half the short</text>
+        <rect x="420" y="276" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="293">3  Controlled at 55%: repay, take profit, sell to 54%</text>
+        <rect x="420" y="308" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="325">4  Sweeps: bridge refunds, harvest, conversions</text>
+        <rect x="420" y="340" width="400" height="26" rx="2" fill="#dfeaf2" stroke="#0a5f8f"/><text x="434" y="357">5  Hedge repair: short over 1% too small</text>
+        <rect x="420" y="372" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="389">6  Deposits, protective stable move, leavers</text>
+        <rect x="420" y="404" width="400" height="26" rx="2" fill="#dfeaf2" stroke="#0a5f8f"/><text x="434" y="421">7  Hedge trim, margin sync</text>
+        <rect x="420" y="436" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="453">8  Profit band, margin sale, venue rebalance</text>
+        <rect x="420" y="468" width="400" height="26" rx="2" fill="#d9efe9" stroke="#0a7f6a"/><text x="434" y="485">9  Lender balance, stable debt move, sweep, growth</text>
       </g>
-      <rect x="420" y="506" width="400" height="46" rx="3" fill="#ffffff" stroke="#8a948f" stroke-dasharray="5 4"/>
-      <text x="436" y="526" fill="#5f6b69" font-size="11.5">a refused desk step is skipped for 5 min</text>
-      <text x="436" y="542" fill="#5f6b69" font-size="11.5">a failed loan bundle stops bundles for 15 min</text>
-
-      <rect x="420" y="572" width="400" height="202" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="436" y="596" font-weight="600">Pause, breakers, prices, idle</text>
-      <text x="436" y="616" fill="#5f6b69">paused: repay, swap, redeem, close, open hedge, desk</text>
-      <text x="436" y="634" fill="#5f6b69">settle and restake still run; supply, borrow and</text>
-      <text x="436" y="652" fill="#5f6b69">payouts do not; a manual pause stays</text>
-      <text x="436" y="670" fill="#5f6b69">monitor pauses at 66.5%, unpauses at 45% after 30 min</text>
-      <text x="436" y="688" fill="#5f6b69">shares are priced in shMON; the price may move 3%</text>
-      <text x="436" y="706" fill="#5f6b69">an hour on chain, counted in dollars on Delta Neutral</text>
-      <text x="436" y="724" fill="#5f6b69">NAV posts when it moves 1% (Delta One) or 0.2% (Delta</text>
-      <text x="436" y="742" fill="#5f6b69">Neutral), and every 30 min; every 2 h when empty</text>
-      <text x="436" y="760" fill="#5f6b69">an empty vault ticks once every 5 min</text>
+      <rect x="420" y="502" width="400" height="46" rx="3" fill="#ffffff" stroke="#8a948f" stroke-dasharray="5 4"/>
+      <text x="436" y="522" fill="#5f6b69" font-size="11.5">Refused desk step: skipped for 5 min</text>
+      <text x="436" y="538" fill="#5f6b69" font-size="11.5">Failed loan bundle: no bundles for 15 min</text>
+      <rect x="420" y="566" width="400" height="190" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="436" y="590" font-weight="600">Pause and prices</text>
+      <text x="436" y="610" fill="#5f6b69">Runs when paused: repay, swap, redeem, hedge, settle, restake</text>
+      <text x="436" y="628" fill="#5f6b69">Stops when paused: supply, borrow, payouts</text>
+      <text x="436" y="646" fill="#5f6b69">Monitor: pauses at 66.5%, unpauses at 45% after 30 min</text>
+      <text x="436" y="664" fill="#5f6b69">Manual pause: stays until lifted</text>
+      <text x="436" y="682" fill="#5f6b69">Share price: in shMON, at most 3% an hour</text>
+      <text x="436" y="700" fill="#5f6b69">NAV posts: every 30 min, or on a price move of</text>
+      <text x="436" y="718" fill="#5f6b69">   1% (Delta One) or 0.2% (Delta Neutral)</text>
+      <text x="436" y="736" fill="#5f6b69">Empty vault: tick every 5 min, NAV every 2 h</text>
 
       <!-- rule groups, right -->
       <text x="860" y="30" font-weight="600" font-size="13">The rules</text>
-      <rect x="860" y="44" width="340" height="164" rx="3" fill="#d9efe9" stroke="#0a7f6a" stroke-width="2"/>
+      <rect x="860" y="44" width="340" height="190" rx="3" fill="#d9efe9" stroke="#0a7f6a" stroke-width="2"/>
       <text x="876" y="68" font-weight="600">Opening and growing</text>
-      <text x="876" y="88" fill="#5f6b69">first short: builds the book to 42% at once</text>
-      <text x="876" y="106" fill="#5f6b69">then under 33%, or idle shMON over $1: to 43%</text>
-      <text x="876" y="124" fill="#5f6b69">borrows only the lenders' cash before their kink</text>
+      <text x="876" y="88" fill="#5f6b69">First build: 42% in one go</text>
+      <text x="876" y="106" fill="#5f6b69">Re-lever: under 33% or idle shMON over $1, to 43%</text>
+      <text x="876" y="124" fill="#5f6b69">Borrow: only lender cash before its kink</text>
       <text x="876" y="142" fill="#5f6b69">USDT0 when cheaper, in $10,000 stable desk chunks</text>
-      <text x="876" y="160" fill="#5f6b69">skips a loop under $10, over 0.35% drag or 10 days</text>
-      <text x="876" y="178" fill="#5f6b69">payback; deposits wait for the next NAV</text>
-      <text x="876" y="196" fill="#5f6b69">Normal mode only, with shares outstanding</text>
-
-      <rect x="860" y="224" width="340" height="200" rx="3" fill="#dfeaf2" stroke="#0a5f8f" stroke-width="2"/>
-      <text x="876" y="248" font-weight="600">The short on Hyperliquid</text>
-      <text x="876" y="268" fill="#5f6b69">size = collateral + idle and desk shMON,</text>
-      <text x="876" y="286" fill="#5f6b69">less delta × equity, in MON</text>
-      <text x="876" y="304" fill="#5f6b69">Delta One (delta 1): 0.49 × equity at target</text>
-      <text x="876" y="322" fill="#5f6b69">Delta Neutral (delta 0): 1.15 × equity at target</text>
-      <text x="876" y="340" fill="#5f6b69">moves when off by 1% of equity and $10 or more</text>
-      <text x="876" y="358" fill="#5f6b69">margin 28.57% + fee, × 1.05; top up at 80%</text>
-      <text x="876" y="376" fill="#5f6b69">margin from idle, then a loan to 45%, then a sale</text>
-      <text x="876" y="394" fill="#5f6b69">after a pay-down: half back at +4%, all at +8% or 48 h</text>
-      <text x="876" y="412" fill="#5f6b69">funding read live while under 3 min old</text>
-
-      <rect x="860" y="440" width="340" height="146" rx="3" fill="#f3e1e1" stroke="#8a2b2b" stroke-width="2"/>
-      <text x="876" y="464" font-weight="600">Unwinding</text>
-      <text x="876" y="484" fill="#5f6b69">controlled: repay idle stablecoin, bring spare</text>
-      <text x="876" y="502" fill="#5f6b69">margin home, take profit on the short, supply idle</text>
-      <text x="876" y="520" fill="#5f6b69">shMON, sell down to 54%; each step trims the short</text>
-      <text x="876" y="538" fill="#5f6b69">up to a quarter, never under what shMON needs</text>
-      <text x="876" y="556" fill="#5f6b69">panic: full repay and sale, half the short a tick</text>
-      <text x="876" y="574" fill="#5f6b69">more of the loan on Euler, whose line is 80%</text>
-
-      <rect x="860" y="602" width="340" height="200" rx="3" fill="#f3e1e1" stroke="#8a2b2b" stroke-width="2"/>
-      <text x="876" y="626" font-weight="600">Paying leavers</text>
-      <text x="876" y="646" fill="#5f6b69">idle shMON pays the oldest batch when it covers it</text>
-      <text x="876" y="664" fill="#5f6b69">else, in order: repay, buy shMON with profit, trim</text>
-      <text x="876" y="682" fill="#5f6b69">the short and bring margin home, profit slice,</text>
-      <text x="876" y="700" fill="#5f6b69">Curve sale, desk borrow route, sell idle shMON,</text>
-      <text x="876" y="718" fill="#5f6b69">redeem; chain legs go together in one bundle</text>
-      <text x="876" y="736" fill="#5f6b69">Curve: any amount over $10, average cost ≤ 0.15%</text>
-      <text x="876" y="754" fill="#5f6b69">desk chunks: least of owed, 4 h at the pace, 92%</text>
-      <text x="876" y="772" fill="#5f6b69">of room; under $1,000 left: a market swap at home</text>
-      <text x="876" y="790" fill="#5f6b69">exit fee kept: 0.30% on both vaults</text>
-
-      <rect x="40" y="794" width="780" height="98" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="56" y="818" font-weight="600">Since 2026-11-18</text>
-      <text x="56" y="838" fill="#5f6b69">each vault's delta is fixed on chain for good: 1 for Delta One, 0 for Delta Neutral, so no gear shift can start</text>
-      <text x="56" y="856" fill="#5f6b69">the keeper's shMON arbitrage runs apart from the bot: never while leavers wait, and the WMON vault keeps</text>
-      <text x="56" y="874" fill="#5f6b69">the larger of half its cash or the last leaver payout; the profit goes to the desk as WMON</text>
-
-      <!-- numbers -->
-      <rect x="40" y="912" width="1160" height="134" rx="3" fill="none" stroke="#8a948f" stroke-dasharray="5 4"/>
-      <text x="56" y="936" font-weight="600" fill="#5f6b69">Numbers (both vaults unless marked)</text>
-      <text x="56" y="956" fill="#5f6b69">worst day 34.48% (Binance MON futures) · LT cap 95% · lines 45 / 55 / 66.5 · band 2% · re-lever 10 points under · repay over +12 · sell over +15 · episode stop 50%</text>
-      <text x="56" y="974" fill="#5f6b69">margin 28.57% · fee 0.05% · hedge tolerance 1% · min trade $10 · min transfer $5.50 · margin release floor $400 · costs 1.06% · swap floor 1% under the oracle</text>
-      <text x="56" y="992" fill="#5f6b69">venue balancer 30%, 1 h dwell, $50 (one venue, never fires) · lender risk spread 0.5 pt · desk dust $10 · leftover $1,000 · chunk 4 h at 25% of taker buys</text>
-      <text x="56" y="1010" fill="#5f6b69">NAV publishes at 1% (Delta One), 0.2% (Delta Neutral) · share price stale after 90 min · block stale after 60 s · idle tick 5 min</text>
-      <text x="56" y="1028" fill="#5f6b69">monitor warns when the short drifts 3% from its target · Curve limit 0.15% · exit fee 0.30%</text>
-
-      <rect x="40" y="1066" width="1160" height="176" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="56" y="1090" font-weight="600">What a tick does, one sentence each</text>
-      <text x="56" y="1112" fill="#5f6b69">Read the chain and the venue in one call. Pick a mode. If something is in flight, finish it. Otherwise take the first rung with work.</text>
-      <text x="56" y="1134" fill="#5f6b69">The order is: cut risk first, then keep the short right, then serve deposits and leavers, then tidy, then grow.</text>
-      <text x="56" y="1156" fill="#5f6b69">Grow means borrow stablecoin against shMON up to 43% and buy more shMON. Cut means repay and sell down to 54%.</text>
-      <text x="56" y="1178" fill="#5f6b69">Keep the short right means hold a MON short equal to the collateral less the vault's delta, within 1%.</text>
-      <text x="56" y="1200" fill="#5f6b69">Serve leavers means pay the oldest batch: Curve first, then the desk's borrow route at the market's pace.</text>
-      <text x="56" y="1222" fill="#5f6b69">Both vaults run the same rules; only the delta and the NAV publish trigger differ.</text>
+      <text x="876" y="160" fill="#5f6b69">Skip a loop: under $10, drag over 0.35%,</text>
+      <text x="876" y="178" fill="#5f6b69">   or payback over 10 days</text>
+      <text x="876" y="196" fill="#5f6b69">Deposits: wait for the next NAV</text>
+      <text x="876" y="214" fill="#5f6b69">Normal mode only, with shares outstanding</text>
+      <rect x="860" y="250" width="340" height="190" rx="3" fill="#dfeaf2" stroke="#0a5f8f" stroke-width="2"/>
+      <text x="876" y="274" font-weight="600">The short on Hyperliquid</text>
+      <text x="876" y="294" fill="#5f6b69">Size: shMON held − delta × equity, in MON</text>
+      <text x="876" y="312" fill="#5f6b69">Delta One: 0.49 × equity at target</text>
+      <text x="876" y="330" fill="#5f6b69">Delta Neutral: 1.15 × equity at target</text>
+      <text x="876" y="348" fill="#5f6b69">Delta: fixed on chain, 1 and 0</text>
+      <text x="876" y="366" fill="#5f6b69">Resize: off by 1% of equity and $10</text>
+      <text x="876" y="384" fill="#5f6b69">Margin: 28.57% + fee, × 1.05; top up at 80%</text>
+      <text x="876" y="402" fill="#5f6b69">Margin from: idle, a loan to 45%, then a sale</text>
+      <text x="876" y="420" fill="#5f6b69">Reopen: half at +4%, all at +8% or 48 h</text>
+      <rect x="860" y="456" width="340" height="136" rx="3" fill="#f3e1e1" stroke="#8a2b2b" stroke-width="2"/>
+      <text x="876" y="480" font-weight="600">Unwinding</text>
+      <text x="876" y="500" fill="#5f6b69">Controlled: repay, margin home, take profit,</text>
+      <text x="876" y="518" fill="#5f6b69">   supply idle shMON, sell to 54%</text>
+      <text x="876" y="536" fill="#5f6b69">Each step trims the short up to a quarter</text>
+      <text x="876" y="554" fill="#5f6b69">Panic: full repay and sale, half the short a tick</text>
+      <text x="876" y="572" fill="#5f6b69">Loan split: more on Euler, whose line is 80%</text>
+      <rect x="860" y="608" width="340" height="190" rx="3" fill="#f3e1e1" stroke="#8a2b2b" stroke-width="2"/>
+      <text x="876" y="632" font-weight="600">Paying leavers</text>
+      <text x="876" y="652" fill="#5f6b69">Oldest batch first; idle shMON if it covers it</text>
+      <text x="876" y="670" fill="#5f6b69">Else: repay, profit buy, trim, profit slice,</text>
+      <text x="876" y="688" fill="#5f6b69">   Curve, desk route, sale, redeem</text>
+      <text x="876" y="706" fill="#5f6b69">Chain legs: one bundle</text>
+      <text x="876" y="724" fill="#5f6b69">Curve: over $10, average cost ≤ 0.15%</text>
+      <text x="876" y="742" fill="#5f6b69">Desk chunk: least of owed, 4 h pace, 92% of room</text>
+      <text x="876" y="760" fill="#5f6b69">Under $1,000 left: market swap</text>
+      <text x="876" y="778" fill="#5f6b69">Exit fee: 0.30%, kept by the holders who stay</text>
     </g>
 </svg>
