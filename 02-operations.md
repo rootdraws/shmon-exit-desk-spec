@@ -1,4 +1,4 @@
-# 2. Alpha Structures: the vault system
+# 2. Operations:
 
 Alpha Structures is the vault system behind monad.structures.gg.[^repo]
 
@@ -23,7 +23,7 @@ The vault earns shMON's staking yield on the levered collateral, plus the fundin
 
 Every hedge order is a CoreWriter call from a Safe to Hyperliquid, through its Roles module.[^hedge]
 
-## The bot's rules
+## Bot:
 
 ![shMON bot rules, from the two production configs, the bot's code and the chain, 2026-11-18](figures/bot-rules-v4.svg)
 
