@@ -84,23 +84,23 @@ The pool pays WMON from two sources, in order, and each has a ceiling:
 |---|---|---|
 | The desk's own WMON supplied in the WMON vault | the desk's balance there, and the vault's cash | `FundsLib.sol:51-58`, `QuoteLib.sol:156-159` |
 | WMON borrowed by the desk | the WMON vault's **cash** (what lenders have supplied and not lent) | `QuoteLib.sol:161-164` |
-| | the WMON vault's **borrow cap** less total borrows: 104M WMON | `QuoteLib.sol:168-175`, `deploy.sh:53` |
-| | the desk's **loan-to-value**: debt at most 97% of its ushMON collateral | `deploy.sh:55,188`; checked by the WMON vault after the borrow |
+| | the WMON vault's **borrow cap** less total borrows: 654M WMON (set 2026-11-17) | `QuoteLib.sol:168-175`, `deploy.sh:53` |
+| | the desk's **loan-to-value**: debt at most 93% of its ushMON collateral (liquidation at 95%) | `deploy.sh:55,188`; checked by the WMON vault after the borrow |
 | | the pool's reserve1: 100M WMON | `QuoteLib.sol:142-147` |
 
 The LTV bound sets a standing requirement. A sale adds collateral worth 100 and debt worth 99.7, but the vault lends only
-97 against 100, so the desk must already hold about 3% of the day's outstanding buys as parked ushMON, or the borrow
+93 against 100, so the desk must already hold about 7.2% of the day's outstanding buys as parked ushMON, or the borrow
 reverts with `E_AccountLiquidity`. The fork run of 2026-11-16 found exactly this (`evidence/hardhat-fork-ush2.txt`,
-first attempt) and the release now parks 15 MON of shMON per desk as headroom before opening the pool.
+first attempt) and the releases now park 80 MON of shMON (48.38 shMON) per desk as headroom before opening the pools.
 
 So the capital is:
 
-- **Lenders' WMON in the cluster's WMON vault.** This is the float the pool draws on. Today the vault holds 0
-  (`evidence/live-reads.md`). The first release lends 360 of the 400 MON Root sent (the rest is headroom and gas) into it. With 9 in
+- **Lenders' WMON in the cluster's WMON vault.** This is the float the pool draws on. On 2026-11-18 the vault
+  holds 929.88 WMON lent by the deployer key, from the 1,100 MON Root sent (the rest is headroom and gas). With 9 in
   10 shMonad instant exits under 220 MON (`evidence/data/instant-exits-30d.json`), that float serves a typical sale once
   per cycle; to carry the whole public flow at the recent 160,000 MON a day it would need lenders of that order, and
   they earn the WMON vault's rate (20% at zero use, 30% at the 90% kink, `deploy.sh:48`).
-- **The desk's headroom.** About 3% of outstanding buys, parked as ushMON; 15 MON per desk in the first release.
+- **The desk's headroom.** About 7.2% of outstanding buys, parked as ushMON; 80 MON per desk since 2026-11-16.
 - **Gas.** The deployer keeps 10 MON.
 
 The desk's margin per sale is the 0.30% discount less one day of WMON interest on the borrow and the gas of the park
