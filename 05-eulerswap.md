@@ -103,6 +103,16 @@ So the capital is:
 - **The desk's headroom.** About 7.2% of outstanding buys, parked as ushMON; 80 MON per desk since 2026-11-16.
 - **Gas.** The deployer keeps 10 MON.
 
+**Sizing for a capacity target.** To buy $100k of shMON in one unstake cycle:
+
+| Need | Amount | Why |
+|---|---|---|
+| WMON borrowed | $99.7k | the pool pays 99.7% of the shMON's value |
+| WMON supply in the WMON vault | about $111k | $99.7k is 90% of $111k, so the vault stays at its rate kink (30%); $99.7k alone works but runs the vault at 100% use and 50% |
+| shMON parked as headroom | about $7.2k | the vault lends 93% against ushMON, so the desk must already hold 0.997 / 0.93 − 1 = 7.2% of the buys as collateral |
+
+Both scale in a straight line with the target, and the headroom sits with whichever desk's pool does the buying.
+
 The desk's margin per sale is the 0.30% discount less one day of WMON interest on the borrow and the gas of the park
 and settle calls. The economics model in `evidence/data/exit-mm.md` (2026-11-05) puts the borrow-to-fill design at 1.8%
 to 3.4% a year on $100k of capital from outside flow alone at a 0.3% discount, and 18% to 22% when the vault's own exits
