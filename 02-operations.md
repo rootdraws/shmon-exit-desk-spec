@@ -57,7 +57,7 @@ The bot takes one step every 30 seconds. Each row is one rule, read from the two
 | Performance fee | 10% of every rise over the last published price | Settings 1.16, live 2026-11-18; a fall charges nothing and moves the mark down | `StrategyControllerSettings.sol` |
 | Idle | 5 min tick, NAV 2 h | an empty vault's cadence | `idle.ts` |
 
-## Two lenders
+## Neverland & Euler:
 
 Both vaults borrow USDC or USDT0 from two lenders:[^lenders]
 * **Neverland**, an Aave v3 fork on Monad: shMON borrows at 65% and liquidates at 70%.
@@ -66,12 +66,11 @@ Both vaults borrow USDC or USDT0 from two lenders:[^lenders]
 The bot borrows only the room left before each lender's rate kink.[^kink] A **stable desk** moves USDC debt to USDT0 when
 Neverland's USDC is past its kink. The cluster is in [06-euler-cluster-and-neverland.md](06-euler-cluster-and-neverland.md).
 
-## NAV and the share price
+## NAV Oracle:
 
-The NAV oracle adds up everything the vault owns and subtracts everything it owes, then publishes the share price on chain.[^nav]
-* It counts each lender's collateral less debt, the controller's balances, both desks, and the Hyperliquid account.
+The NAV oracle calculates share price onchain.[^nav]
+* It accounts for collateral, debt, vault controller balances, exit desks, and the Hyperliquid account.
 * It posts every 30 minutes, or every 2 hours on an empty vault.
-* The price is measured from live balances, never forecast.
 
 ## Withdrawals
 
