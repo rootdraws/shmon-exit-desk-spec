@@ -1,9 +1,9 @@
-# 2. Alpha Structures: the vault system
+# 2. Alpha Structures:
 
 Repo: [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) at `be23722`. The system's own
 guide is `AGENTS.md`; the design docs are under `docs/`.
 
-## The strategy in one loop
+## Strategy:
 
 "Each vault supplies its collateral asset to a lending market, borrows a stablecoin against it, buys more collateral
 with the loan, and holds a Hyperliquid perp short that sets the vault's exposure to a fixed resting delta (0 or 1; …)."
@@ -27,8 +27,7 @@ is no fixed loop count (`Architecture.md:324`). Net profit is funding received o
 
 ![shMON bot rules, from the two production configs, the bot's code and the chain, 2026-11-18](figures/bot-rules.svg)
 
-Every number is the live config's, a code constant, or read on chain on 2026-11-18. The bot takes one step per 30-second
-tick, and the target is 43% because the line two points under 45% binds before the worst-day term does.
+The bot takes one step per 30-second tick, and the target is 43% because the line two points under 45% binds before the worst-day term does.
 
 | Rule | Number | Fires | Source |
 |---|---|---|---|
