@@ -39,8 +39,10 @@ The exit fees, the pool margin, the arbitrage and the digester gains all raise t
 10% of every rise through the performance fee, including rises that only win back a dip. Measured against what the
 holders net, that is about 21% on Delta One and 14% on Delta Zero.
 
-The contracts charge only above the high-water mark today (`StrategyControllerSettings.sol:213-235`). The figures
-below use 10% on every gain, the structure Root asked for on 2026-11-18 ("make it 10% regardless").
+Settings 1.16 charges 10% of every rise over the last published price, up or down (Root, 2026-11-18: "change the
+contract to charge 10% on every gain"). It is written, tested and rehearsed on a fork of Monad with
+`custody/release-settings-116.ts`. Both vaults run 1.15 on chain, which charges only above a high-water mark, until
+the mainnet release.
 
 ## Where it goes at $2M TVL
 
