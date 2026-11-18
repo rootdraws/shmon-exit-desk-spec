@@ -173,3 +173,9 @@ MON at $0.014455 (Hyperliquid mid). shMonad `convertToAssets(1e18)` = 1.654258 M
 | Curve `0x74d8…25d4` `get_dy(1,0)` | 2,000,000 shMON (~$47.8k) | 0.413% under the rate |
 | Curve `0x74d8…25d4` `get_dy(1,0)` | 3,000,000 shMON (~$71.7k) | 7.909% under the rate |
 | WMON vault `LTVFull(ushMON v3)` | | 93% borrow, 95% liquidation |
+
+## Deposit cap, 2026-11-18
+
+Admin Safe `setDepositCap(84,000,000 shMON)` on both vaults' Settings, read back with `getDepositCap()`:
+- Delta One `0xdE30…adEC`: 4,000 to 84,000,000 shMON, tx `0xf5bfe72beba23781ad1391409fa04c542c8a86b42c0c09b31834d51491e8563c`
+- Delta Neutral `0xC62D…F85a`: 4,000 to 84,000,000 shMON, tx `0x195450ea8041ebf1764658b8f02884120593ecc7222db04ad6c739616caf3f1b`
