@@ -28,14 +28,14 @@
       <text x="112" y="414">Below this, the bot borrows back to 43%.</text>
       <text x="420" y="30" font-weight="600" font-size="13">Each tick, the bot takes the first step with work.</text>
       <rect x="420" y="44" width="400" height="172" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="436" y="68" font-weight="600">0. The mode comes first.</text>
-      <text x="436" y="88" fill="#5f6b69">In FullHalt, the bot does nothing.</text>
-      <text x="436" y="106" fill="#5f6b69">In Paused, the bot only cuts risk.</text>
-      <text x="436" y="124" fill="#5f6b69">In DegradedData, it skips growth, new shorts and payouts.</text>
-      <text x="436" y="142" fill="#5f6b69">Data is stale after 60 s for blocks and 90 min for prices.</text>
+      <text x="436" y="68" font-weight="600">0. First, the bot reads the vault's mode.</text>
+      <text x="436" y="88" fill="#5f6b69">Halted: the admin Safe stopped the vault. The bot does nothing.</text>
+      <text x="436" y="106" fill="#5f6b69">Paused: the bot only repays and sells to cut risk.</text>
+      <text x="436" y="124" fill="#5f6b69">Stale data: the bot stops borrowing, shorting and paying leavers.</text>
+      <text x="436" y="142" fill="#5f6b69">Data is stale when a block is 60 s old or a price is 90 min old.</text>
       <text x="436" y="160" fill="#5f6b69">A Hyperliquid outage also counts as stale data.</text>
-      <text x="436" y="178" fill="#5f6b69">In Withdrawing, the bot serves the batch.</text>
-      <text x="436" y="196" fill="#5f6b69">An open intent is finished before anything else.</text>
+      <text x="436" y="178" fill="#5f6b69">Withdrawing: the bot pays waiting leavers and does not grow.</text>
+      <text x="436" y="196" fill="#5f6b69">A trade still in flight finishes before anything new starts.</text>
       <g font-size="11.5">
         <rect x="420" y="230" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="247">1. The exit desk and the stable desk take their step.</text>
         <rect x="420" y="262" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="279">2. Over 66.5%, the bot repays, sells and halves the short.</text>
