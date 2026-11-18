@@ -14,6 +14,9 @@ TVL is the shMON that depositors put into the two vaults, valued in dollars. The
 | USDC or USDT0 borrowed | about $1.5M | TVL × 0.43 ÷ (1 − 0.43) |
 | of which borrowed from the Euler cluster, at a 50% split | about $750k | borrowed × Euler share |
 
+The vault borrows $1.5M against the $2M deposit and buys $1.5M more shMON with it. It then holds $3.5M of shMON and
+owes $1.5M, so the depositors still own $2M.
+
 WMON lending is not part of TVL. It is sized by the EulerSwap pools' volume ([05-eulerswap.md](05-eulerswap.md)).
 
 ## The pieces
