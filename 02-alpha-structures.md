@@ -19,9 +19,9 @@ The vault earns shMON's staking yield on the levered collateral, plus the fundin
 | Worst 24-hour fall used | 34.48%, Binance MONUSDT futures |
 | Hedge margin | 28.57% of the short (3.5x) |
 | Resting delta | 1 on Delta One, 0 on Delta Neutral, fixed on chain with no setter |
-| Deposit cap | 84 million shMON per vault, about $2M (set 2026-11-18) |
+| Deposit cap | 84 million shMON per vault, about $2M.|
 
-The hedge has no trading key. Every order is a CoreWriter call from a Safe through its Roles module.[^hedge]
+Every hedge order is a CoreWriter call from a Safe to Hyperliquid, through its Roles module.[^hedge]
 
 ## The bot's rules
 
