@@ -10,8 +10,8 @@
         <text x="112" y="72">Liquidation (Neverland)</text>
 
         <text x="56" y="122" font-weight="600" fill="#8a2b2b">66.5%</text>
-        <text x="112" y="122">Panic: full unwind</text>
-        <text x="112" y="140" fill="#5f6b69">vault paused</text>
+        <text x="112" y="122">Panic: repay and sell until under 66.5%</text>
+        <text x="112" y="140" fill="#5f6b69">vault paused, then unwinds to 50%</text>
 
         <text x="56" y="172" font-weight="600" fill="#5f6b69">64.5%</text>
         <text x="112" y="172">Limit for taking collateral out</text>
@@ -20,7 +20,7 @@
         <text x="112" y="204">Sell shMON down to 56%</text>
 
         <text x="56" y="236" font-weight="600" fill="#8a2b2b">55%</text>
-        <text x="112" y="236">Controlled unwind</text>
+        <text x="112" y="236">Controlled unwind to 50%</text>
         <text x="112" y="254" fill="#5f6b69">repay from the short's profit</text>
 
         <text x="56" y="286" font-weight="600" fill="#5f6b69">50%</text>
@@ -119,7 +119,7 @@
       <text x="876" y="500" fill="#5f6b69">Controlled: repay, margin home, take profit,</text>
       <text x="876" y="518" fill="#5f6b69">   supply idle shMON, sell to 54%</text>
       <text x="876" y="536" fill="#5f6b69">Each step trims the short up to a quarter</text>
-      <text x="876" y="554" fill="#5f6b69">Panic: full repay and sale, half the short a tick</text>
+      <text x="876" y="554" fill="#5f6b69">Panic: repay and sell until under 66.5%</text>
       <text x="876" y="572" fill="#5f6b69">Loan split: more on Euler, whose line is 80%</text>
       <rect x="860" y="608" width="340" height="190" rx="3" fill="#f3e1e1" stroke="#8a2b2b" stroke-width="2"/>
       <text x="876" y="632" font-weight="600">Paying leavers</text>
