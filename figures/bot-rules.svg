@@ -3,47 +3,48 @@
     <g font-family="IBM Plex Sans, system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#17201f">
 
       <!-- LTV lines, left -->
-      <text x="40" y="30" font-weight="600" font-size="13">Loan to value: the lines</text>
+      <text x="40" y="30" font-weight="600" font-size="13">Loan-to-value lines</text>
       <rect x="40" y="44" width="340" height="508" rx="3" fill="#ffffff" stroke="#17201f"/>
       <g>
         <text x="56" y="72" font-weight="600" fill="#8a2b2b">70%</text>
-        <text x="112" y="72">the yardstick: Neverland's 70% line</text>
-        <text x="112" y="90" fill="#5f6b69">every line below is sized as if all on it</text>
+        <text x="112" y="72">Liquidation (Neverland)</text>
+        <text x="112" y="90" fill="#5f6b69">every line is sized to this one</text>
 
         <text x="56" y="122" font-weight="600" fill="#8a2b2b">66.5%</text>
-        <text x="112" y="122">panic: unwind hard</text>
-        <text x="112" y="140" fill="#5f6b69">the monitor pauses the vault</text>
+        <text x="112" y="122">Panic: full unwind</text>
+        <text x="112" y="140" fill="#5f6b69">vault paused</text>
 
         <text x="56" y="172" font-weight="600" fill="#5f6b69">64.5%</text>
-        <text x="112" y="172">redeem headroom aim</text>
+        <text x="112" y="172">Limit for taking collateral out</text>
 
         <text x="56" y="204" font-weight="600" fill="#8a2b2b">58%</text>
-        <text x="112" y="204">no short profit to take: sells to 56%</text>
+        <text x="112" y="204">Sell shMON down to 56%</text>
 
         <text x="56" y="236" font-weight="600" fill="#8a2b2b">55%</text>
-        <text x="112" y="236">controlled unwind; no new short</text>
-        <text x="112" y="254" fill="#5f6b69">profit band: repays from the short's profit</text>
+        <text x="112" y="236">Controlled unwind</text>
+        <text x="112" y="254" fill="#5f6b69">repay from the short's profit</text>
 
         <text x="56" y="286" font-weight="600" fill="#5f6b69">50%</text>
-        <text x="112" y="286">an unwind episode ends here</text>
-        <text x="112" y="304" fill="#5f6b69">or after 10 quiet ticks</text>
+        <text x="112" y="286">Unwind stops</text>
+        <text x="112" y="304" fill="#5f6b69">or after 5 calm minutes</text>
 
         <text x="56" y="336" font-weight="600">45%</text>
-        <text x="112" y="336">most the loan reaches for hedge margin</text>
-        <text x="112" y="354" fill="#5f6b69">the monitor unpauses below it</text>
+        <text x="112" y="336">Margin loan cap</text>
+        <text x="112" y="354" fill="#5f6b69">vault unpauses below</text>
 
         <text x="56" y="386" font-weight="600" fill="#0a7f6a">43%</text>
-        <text x="112" y="386">target: 2 points under the 45% line</text>
+        <text x="112" y="386">Target</text>
 
         <text x="56" y="418" font-weight="600" fill="#0a7f6a">42%</text>
-        <text x="112" y="418">first build aims one point under target</text>
+        <text x="112" y="418">First build</text>
 
         <text x="56" y="450" font-weight="600" fill="#0a7f6a">33%</text>
-        <text x="112" y="450">re-lever: borrows back up to 43%</text>
+        <text x="112" y="450">Re-lever back to 43%</text>
 
-        <text x="56" y="490" font-weight="600">Target</text>
-        <text x="56" y="510" fill="#5f6b69">the lowest of: LT × (1 − 34.48% worst day),</text>
-        <text x="56" y="528" fill="#5f6b69">LT × 95%, and 2 points under the 45% line</text>
+        <text x="56" y="490" font-weight="600">Target = the lowest of</text>
+        <text x="56" y="510" fill="#5f6b69">45.9%</text><text x="112" y="510" fill="#5f6b69">liquidation after a 34.48% worst day</text>
+        <text x="56" y="526" fill="#5f6b69">66.5%</text><text x="112" y="526" fill="#5f6b69">95% of liquidation</text>
+        <text x="56" y="542" font-weight="600" fill="#0a7f6a">43%</text><text x="112" y="542" fill="#0a7f6a">margin loan cap less 2 points</text>
       </g>
 
       <rect x="40" y="572" width="340" height="112" rx="3" fill="#ffffff" stroke="#17201f"/>
