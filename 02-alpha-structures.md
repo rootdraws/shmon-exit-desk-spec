@@ -25,7 +25,7 @@ Every hedge order is a CoreWriter call from a Safe to Hyperliquid, through its R
 
 ## The bot's rules
 
-![shMON bot rules, from the two production configs, the bot's code and the chain, 2026-11-18](figures/bot-rules-v3.svg)
+![shMON bot rules, from the two production configs, the bot's code and the chain, 2026-11-18](figures/bot-rules-v4.svg)
 
 The bot takes one step every 30 seconds. Each row is one rule, read from the two production configs, the bot's code and the chain.
 
