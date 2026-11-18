@@ -14,7 +14,7 @@ logs are in `evidence/release-ush3/` (2026-11-17) and `evidence/release-mainnet/
 | Euler cluster | Four vaults live. The WMON vault holds 929.88 WMON lent by the deployer key, no loans, and lends 93/95 against ushMON v3. Caps set today: USDC and USDT0 5M supply / 4.5M borrow, WMON 727M supply / 654M borrow (about $10M). Governed by the deployer key. |
 | ushMON v1 and v2 | Replaced. Empty, retired from the cluster 2026-11-17 (WMON vault LTV 0, unresolved on the router, read 2026-11-18); recorded as `V1_USHMON_*` and `V2_USHMON_*` in `deployed-143.env`. |
 | Audit issues | All 11 closed on 2026-11-16 with a reply on each: 1, 2, 3, 4, 7, 8 and 11 fixed in v2; 5, 9 and 10 closed by design or by the donation tests; 6 by [11-ltv-study.md](11-ltv-study.md) and the move to 93/95. v3 keeps every v2 rule. |
-| Server | 3.211.84.65 runs the bots, oracle, monitor, keeper, API and site. The 2026-11-16 release (planner, desk v1.7.0, Exit Desk page) shipped there on 2026-11-17; the one-vault configs and the shared reader were synced after this release and the service image rebuilt (Runbook §4). |
+| Server | 3.211.84.65 (`monad.structures.gg`) runs 12 containers: the two shMON bots, oracle, monitor, digester keeper (`monad-digester`), funding feed, API, site, Caddy, research refresh, RPC meter and MongoDB. The bots, API and site run the service image built 2026-11-18 14:12Z; read over SSH 2026-11-18 18:38Z. |
 
 ## Shipped on 2026-11-17
 

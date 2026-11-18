@@ -136,7 +136,8 @@ vaults each tick, and those keys can move money only inside the strategies and t
 
 ## Where it runs
 
-One server, `3.211.84.65` (`docs/Alpha_Structures_Production_Server_Runbook.md:14`), running one bot container per
-vault, one NAV oracle (`oracle-hyperliquid`), `monitor`, `funding-feed`, `api`, `www-user`, `caddy`, `research-refresh`,
-`rpc-meter`, `digester-keeper` and `mongodb` (`Runbook:47-59`). Production is built on the server from
+One server, `3.211.84.65`, serving `monad.structures.gg`, runs 12 containers (`docker ps` 2026-11-18 18:38Z,
+`evidence/live-reads.md`): one bot per shMON vault, one NAV oracle (`oracle-hyperliquid`), `monitor`, `funding-feed`,
+`api`, `www-user`, `caddy`, `research-refresh`, `rpc-meter`, `monad-digester` and `mongodb`. The six "server env" keys
+above were derived from the running containers' environment on that read, and each matches its address. Production is built on the server from
 `/opt/alphastructures/src`, never from a developer machine (`CLAUDE.md`).

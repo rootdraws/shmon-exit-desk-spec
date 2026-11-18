@@ -138,3 +138,22 @@ quotes a fee of 2.2549% under its ceiling for shMON in (the rate less 0.30%) and
 | USDC and USDT0 vaults | cash 0, borrows 0, caps raw 32012 / 28812 (5M / 4.5M); governor the deployer key |
 | Strategy vaults `totalSupply()` / `totalAssets()` | 0 / 0 on both |
 | Withdrawal handlers `getExitFeeBps()` | 30 on both, `VERSION()` 11100 |
+
+## Production server, 2026-11-18 18:38Z (SSH `alphastructures-prod-deploy`)
+
+`docker ps`, 12 containers: api, bot-shmon-neverland-usdc-hl, bot-shmon-neverland-usdc-hl-d0, caddy, funding-feed,
+monad-digester, mongodb, monitor, oracle-hyperliquid, research-refresh, rpc-meter, www-user.
+`env/.env.caddy`: `APP_HOST=monad.structures.gg`. Service image `staging` = `exitqueue-20261118`, built 2026-11-18 14:12:25Z.
+
+Addresses derived from the containers' key variables (values never printed):
+
+| Variable | Address |
+|---|---|
+| EXECUTOR_SHMON_NEVERLAND_USDC_HL_PRIVATE_KEY | 0xC95F60fdE77ECEBf9DED1228A939ac8eDB2671D3 |
+| EXECUTOR_SHMON_NEVERLAND_USDC_HL_D0_PRIVATE_KEY | 0xF3206EfC847386E66043459832eDb74998C63669 |
+| ORACLE_SHMON_NEVERLAND_USDC_HL_PRIVATE_KEY | 0x77d550f9C11AAFC69Cb7651d7B2E405BE43Eb0B9 |
+| ORACLE_SHMON_NEVERLAND_USDC_HL_D0_PRIVATE_KEY | 0x2ECF679c2DF38a758F365f1EEc7CD090567FD5e7 |
+| GUARDIAN_PRIVATE_KEY | 0x868736358fA307d70b359BcaB2e92e6A7ED0734C |
+| MONAD_DIGESTER_KEEPER_PRIVATE_KEY (monad-digester only) | 0xEE51d642304f8F0b272Fc79cf851CE76ee24c3A7 |
+
+`DEPLOYER_PRIVATE_KEY` absent and no Hyperliquid key in the API container.
