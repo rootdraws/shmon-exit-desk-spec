@@ -1,33 +1,33 @@
-# 2. Alpha Structures:
+# 2. Alpha Structures: the vault system
 
-Repo: [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) at `be23722`. The system's own
-guide is `AGENTS.md`; the design docs are under `docs/`.
+Alpha Structures is the vault system behind monad.structures.gg.[^repo]
 
-## Strategy:
+## Strategy
 
-"Each vault supplies its collateral asset to a lending market, borrows a stablecoin against it, buys more collateral
-with the loan, and holds a Hyperliquid perp short that sets the vault's exposure to a fixed resting delta (0 or 1; …)."
-(`docs/Alpha_Structures_Architecture.md:5`.) The loop repeats until the vault's loan-to-value reaches its target; there
-is no fixed loop count (`Architecture.md:324`). Net profit is funding received on the short less the borrow cost
-(`Architecture.md:314-324`).
+Each vault runs one loop:[^arch]
+* It supplies shMON to a lender and borrows a stablecoin against it.
+* It buys more shMON with the loan, and repeats until the loan reaches 43% of the collateral.
+* It holds a Hyperliquid short sized so the vault's exposure stays at its resting delta, 1 or 0.
 
-- **Book shape.** The short equals the collateral exposure less `d` times equity, so the book rests at `d` dollars of
-  delta per dollar of equity (`CLAUDE.md:61`). `d` is 1 on the `-hl` vaults and 0 on the `-d0` vaults, held on chain in
-  `StrategyControllerSettings`. Since 2026-11-18 Settings 1.15 has no setter, so each vault's delta is fixed for good.
-- **Target LTV.** The lowest of the liquidation threshold times one minus the worst recorded 24-hour fall, 95% of the
-  threshold, and 2 points under the 45% line (`services/rebalancingBot/src/policy/worstFallPolicy.ts`). The last one binds, so
-  the target is 43%. The shMON
-  vaults use a 34.48% worst fall measured on Binance futures MONUSDT (production configs, `runtime.worstFall`).
-- **Lines.** Target 43%, hedge-margin loan cap 45%, controlled unwind at 55%, panic unwind at 66.5% LTV (`risk` block of
-  each production config). The full set is under [The bot's rules](#the-bots-rules).
-- **Hedge.** Hyperliquid, margin ratio 2857 bps (3.5x) on the shMON vaults; no trading key exists, every order is a
-  CoreWriter call from a Safe through its Roles module (`docs/Alpha_Structures_Threat_Model.md:166`).
+The vault earns shMON's staking yield on the levered collateral, plus the funding paid to the short, less the borrow cost.
+
+| Setting | Value |
+|---|---|
+| Target loan-to-value (LTV) | 43%, two points under the 45% margin loan cap[^target] |
+| Controlled unwind | 55% |
+| Panic unwind | 66.5% |
+| Worst 24-hour fall used | 34.48%, Binance MONUSDT futures |
+| Hedge margin | 28.57% of the short (3.5x) |
+| Resting delta | 1 on Delta One, 0 on Delta Neutral, fixed on chain with no setter |
+| Deposit cap | 4,000 shMON per vault |
+
+The hedge has no trading key. Every order is a CoreWriter call from a Safe through its Roles module.[^hedge]
 
 ## The bot's rules
 
 ![shMON bot rules, from the two production configs, the bot's code and the chain, 2026-11-18](figures/bot-rules.svg)
 
-The bot takes one step per 30-second tick, and the target is 43% because the line two points under 45% binds before the worst-day term does.
+The bot takes one step every 30 seconds. Each row is one rule, read from the two production configs, the bot's code and the chain.
 
 | Rule | Number | Fires | Source |
 |---|---|---|---|
@@ -60,36 +60,30 @@ The bot takes one step per 30-second tick, and the target is 43% because the lin
 
 ## Two lenders
 
-The shMON vaults borrow from Neverland, an Aave v3 fork on Monad, and from the Euler cluster the team deployed
-(`CLAUDE.md:32`, `Architecture.md:10-11,29`). Each lender has its own LTV lines scaled to its liquidation threshold.
-The bot sizes a borrow by the lender's room before its rate kink: free cash, capped so utilization stays at or under the
-kink (`services/rebalancingBot/src/lenders.ts:128-166`). A **stable desk** moves USDC debt to USDT0 when Neverland's USDC
-is past its kink (`Architecture.md:10-11`). The cluster is described in
-[06-euler-cluster-and-neverland.md](06-euler-cluster-and-neverland.md).
+Both vaults borrow USDC or USDT0 from two lenders:[^lenders]
+* **Neverland**, an Aave v3 fork on Monad: shMON borrows at 65% and liquidates at 70%.
+* **The team's Euler cluster**: shMON borrows at 79% and liquidates at 80%.
+
+The bot borrows only the room left before each lender's rate kink.[^kink] A **stable desk** moves USDC debt to USDT0 when
+Neverland's USDC is past its kink. The cluster is in [06-euler-cluster-and-neverland.md](06-euler-cluster-and-neverland.md).
 
 ## NAV and the share price
 
-The NAV oracle sums market collateral less debt at every lender, controller balances, the stable desk's net position,
-the exit desk's holdings (idle tokens, pending unstake, open orders, and its Euler account: parked shMON less the WMON
-loan), venue equity and venue-wallet balances, and publishes an asset-denominated share price with `setSharePrice`
-(`docs/Alpha_Structures_System_Overview.md:127-136`). "The published share price is measured, never forecast"
-(`System_Overview.md:138`). NAV posts every 30 minutes, or every 2 hours on an empty vault (`CLAUDE.md`, idle vaults).
+The NAV oracle adds up everything the vault owns and subtracts everything it owes, then publishes the share price on chain.[^nav]
+* It counts each lender's collateral less debt, the controller's balances, both desks, and the Hyperliquid account.
+* It posts every 30 minutes, or every 2 hours on an empty vault.
+* The price is measured from live balances, never forecast.
 
 ## Withdrawals
 
-Every redemption request joins a batch. A batch settles at the lower of the request-time and fulfilment-time share
-price and pays pro rata by shares; shares redeem no sooner than one hour after the receiver's last deposit
-(`System_Overview.md:77`). Every production config sets the batch window to 300 seconds plus the time the bot needs to
-unwind (`System_Overview.md:140`). Since WithdrawalHandler v1.9.0 a batch settles 0.3% under its price-sized amount and
-the difference stays with the holders who remain (`contracts/core/WithdrawalHandler.sol:34-35`, deduction at line 283,
-`setExitFeeBps` at 523-527, set to 30 bps by the admin Safe in `custody/release-mm-143.ts:41,137`).
+A redemption request joins a batch that settles about 5 minutes later, plus the time the bot needs to unwind.[^batch]
+* A batch pays at the lower of the share price when asked and when paid.
+* Shares can redeem one hour after the holder's last deposit.
+* The payout is 0.3% under the share price, and that 0.3% stays with the holders who remain. Both vaults read 30 bps on chain.
 
 ## The two production vaults
 
-Configs: `deploy/configs/production/shmon-neverland-usdc-hl.json` and `shmon-neverland-usdc-hl-d0.json`. Manifests:
-`deploy/deployments/production/*.json`. Both run on Monad (chain 143) with the same eight adapters in their configs: `neverland-market`,
-`euler-market`, `shmonad-stake`, `across-bridge`, `uniswap-swap`, `curve-swap`, `stable-desk`, `shmonad-exit` (the
-manifests also carry a `kyberswap` adapter proxy).
+Both run on Monad (chain 143) with the same eight adapters.[^configs] Both are empty: zero shares and zero assets at block 123,387,135.
 
 | Contract | shmon-neverland-usdc-hl (delta one) | shmon-neverland-usdc-hl-d0 (delta neutral) |
 |---|---|---|
@@ -105,15 +99,14 @@ manifests also carry a `kyberswap` adapter proxy).
 | Stable desk | 0xc19aa853…599a | 0x2dCDEB8B…28f1 |
 | Executor key | 0xC95F60fd…71D3 | 0xF3206EfC…3669 |
 
-Full addresses for the abbreviated rows are in the manifests. Both vaults are empty at the time of writing
-(`evidence/live-reads.md`).
+Full addresses for the abbreviated rows are in the manifests.
 
 ## Roles and permissions
 
 ![shMON vault permissions, read on chain 2026-11-18 on Monad, HyperEVM and the Hyperliquid API](figures/vault-permissions.svg)
 
-One key, the custody-admin keystore on Root's Mac, stands behind every Safe. The server holds the keys that run the
-vaults each tick, and those keys can move money only inside the strategies and the hedges.
+One key, the custody-admin keystore on Root's Mac, is the sole owner of every Safe. The server's keys can move money only
+inside the strategies and the hedges.
 
 | Key or Safe | Address | Where | What it can do |
 |---|---|---|---|
@@ -131,14 +124,24 @@ vaults each tick, and those keys can move money only inside the strategies and t
 | Hedge Safe, Delta One | `0x704f20644035b5fA822cC920a25C99F97BF7C6ed` | HyperEVM / HyperCore, 1 of 1 | The vault's Hyperliquid account. Owner: the admin Safe. Roles module `0x0253…0Cba` lets the executor move margin and trade. |
 | Hedge Safe, Delta Neutral | `0x213a4C29c42Bb956c34064750b689baB313561C3` | HyperEVM / HyperCore, 1 of 1 | Same. Roles module `0x0Aa4…9028`. |
 | API wallets | `0x1dE4…8435`, `0xeb12…142C` | Root's Mac env file, approved on Hyperliquid to Jan 2027 | Trading only, on the hedge accounts. Not on the server; the bot signs through the Roles module instead. |
-| ushMON operators | `0x37e07473F1F62CB071Db57440e242b320614A0ce`, operated by the two exit desks | contracts | The only addresses that can get ushMON shares or start an unstake; each desk's unstakes and WMON stay on its own ledger. |
+| ushMON v3 operators | the two exit desks, on vault `0x37e07473F1F62CB071Db57440e242b320614A0ce` | contracts | The only addresses that can get ushMON shares or start an unstake; each desk's unstakes and WMON stay on its own ledger. |
 
 ## Where it runs
 
-One server, `3.211.84.65`, serving `monad.structures.gg`, runs 12 containers (`docker ps` 2026-11-18 18:38Z,
-`evidence/live-reads.md`): one bot per shMON vault, one NAV oracle (`oracle-hyperliquid`), `monitor`, `funding-feed`,
-`api`, `www-user`, `caddy`, `research-refresh`, `rpc-meter`, `monad-digester` and `mongodb`. The six "server env" keys
-above were derived from the running containers' environment on that read, and each matches its address.
-Caddy on the same server also serves `admin.structures.gg`, the live revenue page, behind a password
-([12-revenue-flows.md](12-revenue-flows.md)); the public host never routes its `/admin` data. Production is built on the server from
-`/opt/alphastructures/src`, never from a developer machine (`CLAUDE.md`).
+One server, `3.211.84.65`, runs 12 containers for monad.structures.gg (`docker ps`, 2026-11-18):
+* one bot per vault, the NAV oracle and the monitor
+* the digester keeper, the funding feed and the research refresh
+* the API, the website, Caddy, the RPC meter and MongoDB
+
+Caddy also serves `admin.structures.gg`, the live revenue page, behind a password ([12-revenue-flows.md](12-revenue-flows.md)).
+Production is built on the server from `/opt/alphastructures/src`, never from a developer machine.
+
+[^repo]: [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) at `be23722`; the system's own guide is `AGENTS.md`, the design docs are under `docs/`.
+[^arch]: `docs/Alpha_Structures_Architecture.md:5,314-324`; no fixed loop count (`Architecture.md:324`).
+[^target]: `services/rebalancingBot/src/policy/worstFallPolicy.ts`: the lowest of liquidation × (1 − worst fall), 95% of liquidation, and 2 points under 45%; the last binds. Lines from the `risk` and `runtime.worstFall` blocks of both production configs.
+[^hedge]: `docs/Alpha_Structures_Threat_Model.md:166`; delta is `getRestingDeltaBps()` in `StrategyControllerSettings` 1.16, which has no setter for it.
+[^lenders]: `CLAUDE.md:32`, `Architecture.md:10-11,29`. Lines read on chain 2026-11-18: Neverland `getConfiguration(shMON)` 6500/7000; Euler USDC and USDT0 vaults `LTVFull(shMON vault)` 7900/8000.
+[^kink]: `services/rebalancingBot/src/lenders.ts:128-166`.
+[^nav]: `docs/Alpha_Structures_System_Overview.md:127-138`; idle cadence in `CLAUDE.md`.
+[^batch]: `System_Overview.md:77,140`; `redeemBatchDurationSec` 300 in both configs; exit fee in `contracts/core/WithdrawalHandler.sol:34-35,283`, setter 523-527, set by the admin Safe in `custody/release-mm-143.ts:41,137`; `getExitFeeBps()` 30 on both handlers at block 123,387,135.
+[^configs]: `deploy/configs/production/shmon-neverland-usdc-hl.json` and `-d0.json`: `neverland-market`, `euler-market`, `shmonad-stake`, `across-bridge`, `uniswap-swap`, `curve-swap`, `stable-desk`, `shmonad-exit`. Manifests in `deploy/deployments/production/` also carry a `kyberswap` proxy. `totalSupply()` and `totalAssets()` read 0 on both vaults.
