@@ -2,9 +2,9 @@
     <rect x="0" y="0" width="1240" height="928" fill="#f6f5f1"/>
     <g font-family="IBM Plex Sans, system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#17201f">
       <text x="40" y="30" font-weight="600" font-size="13">Loan-to-value lines</text>
-      <rect x="40" y="44" width="340" height="496" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <rect x="40" y="44" width="340" height="408" rx="3" fill="#ffffff" stroke="#17201f"/>
         <text x="56" y="72" font-weight="600" fill="#8a2b2b">70%</text>
-      <text x="112" y="72">Neverland liquidates the loan here.</text>
+      <text x="112" y="72">Neverland liquidation threshold.</text>
         <text x="56" y="104" font-weight="600" fill="#8a2b2b">66.5%</text>
       <text x="112" y="104">Panic: the bot cuts the loan below 66.5%.</text>
       <text x="112" y="122" fill="#5f6b69">The monitor pauses the vault.</text>
@@ -17,35 +17,28 @@
       <text x="112" y="236" fill="#5f6b69">It repays from the short's profit first.</text>
         <text x="56" y="268" font-weight="600" fill="#5f6b69">50%</text>
       <text x="112" y="268">The unwind stops here.</text>
-      <text x="112" y="286" fill="#5f6b69">It also stops after 5 calm minutes.</text>
+      <text x="112" y="286" fill="#5f6b69">It also ends when nothing is left to cut.</text>
         <text x="56" y="318" font-weight="600" fill="#17201f">45%</text>
       <text x="112" y="318">Hedge margin can borrow up to here.</text>
       <text x="112" y="336" fill="#5f6b69">The monitor unpauses below this line.</text>
         <text x="56" y="368" font-weight="600" fill="#0a7f6a">43%</text>
-      <text x="112" y="368">The bot holds the loan here.</text>
+      <text x="112" y="368">Target LTV.</text>
         <text x="56" y="400" font-weight="600" fill="#0a7f6a">42%</text>
       <text x="112" y="400">The first build stops here.</text>
         <text x="56" y="432" font-weight="600" fill="#0a7f6a">33%</text>
       <text x="112" y="432">Below this, the bot borrows back to 43%.</text>
-      <text x="56" y="472" font-weight="600">The target is the lowest of three lines.</text>
-        <text x="56" y="492" font-weight="600" fill="#5f6b69">45.9%</text>
-      <text x="112" y="492" fill="#5f6b69">A 34.48% fall takes this loan to 70%.</text>
-        <text x="56" y="508" font-weight="600" fill="#5f6b69">66.5%</text>
-      <text x="112" y="508" fill="#5f6b69">This is 95% of the 70% line.</text>
-        <text x="56" y="524" font-weight="600" fill="#0a7f6a">43%</text>
-      <text x="112" y="524" fill="#0a7f6a">This is 2 points under the 45% cap.</text>
-      <rect x="40" y="560" width="340" height="118" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="56" y="584" font-weight="600">Carry gate</text>
-      <text x="56" y="604" fill="#5f6b69">The bot grows only when 24-hour carry is positive.</text>
-      <text x="56" y="622" fill="#5f6b69">Carry is yield plus funding less borrow and costs.</text>
-      <text x="56" y="640" fill="#5f6b69">Costs of 1.06% come off before the check.</text>
-      <text x="56" y="658" fill="#5f6b69">The gate never shrinks a running vault.</text>
-      <rect x="40" y="694" width="340" height="118" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="56" y="718" font-weight="600">The keeper's shMON arbitrage</text>
-      <text x="56" y="738" fill="#5f6b69">It never runs while leavers wait.</text>
-      <text x="56" y="756" fill="#5f6b69">It always leaves the WMON vault a reserve.</text>
-      <text x="56" y="774" fill="#5f6b69">The reserve is half its cash or the last payout.</text>
-      <text x="56" y="792" fill="#5f6b69">Its profit goes to the desk as WMON.</text>
+      <rect x="40" y="472" width="340" height="118" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="56" y="496" font-weight="600">Carry gate</text>
+      <text x="56" y="516" fill="#5f6b69">The bot grows only when 24-hour carry is positive.</text>
+      <text x="56" y="534" fill="#5f6b69">Carry is yield plus funding less borrow and costs.</text>
+      <text x="56" y="552" fill="#5f6b69">Costs of 1.06% come off before the check.</text>
+      <text x="56" y="570" fill="#5f6b69">The gate never shrinks a running vault.</text>
+      <rect x="40" y="606" width="340" height="118" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="56" y="630" font-weight="600">The keeper's shMON arbitrage</text>
+      <text x="56" y="650" fill="#5f6b69">It never runs while leavers wait.</text>
+      <text x="56" y="668" fill="#5f6b69">It always leaves the WMON vault a reserve.</text>
+      <text x="56" y="686" fill="#5f6b69">The reserve is half its cash or the last payout.</text>
+      <text x="56" y="704" fill="#5f6b69">Its profit goes to the desk as WMON.</text>
       <text x="420" y="30" font-weight="600" font-size="13">Each tick, the bot takes the first step with work.</text>
       <rect x="420" y="44" width="400" height="172" rx="3" fill="#ffffff" stroke="#17201f"/>
       <text x="436" y="68" font-weight="600">0. The mode comes first.</text>
