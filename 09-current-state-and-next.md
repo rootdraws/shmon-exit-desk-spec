@@ -14,7 +14,7 @@ logs are in `evidence/release-ush3/` (2026-11-17) and `evidence/release-mainnet/
 | Euler cluster | Four vaults live. The WMON vault holds 929.88 WMON lent by the deployer key, no loans, and lends 93/95 against ushMON v3. Caps set today: USDC and USDT0 5M supply / 4.5M borrow, WMON 727M supply / 654M borrow (about $10M). Governed by the deployer key. |
 | ushMON v1 and v2 | Replaced. Empty, retired from the cluster 2026-11-17 (WMON vault LTV 0, unresolved on the router, read 2026-11-18); recorded as `V1_USHMON_*` and `V2_USHMON_*` in `deployed-143.env`. |
 | Audit issues | All 11 closed on 2026-11-16 with a reply on each: 1, 2, 3, 4, 7, 8 and 11 fixed in v2; 5, 9 and 10 closed by design or by the donation tests; 6 by [11-ltv-study.md](11-ltv-study.md) and the move to 93/95. v3 keeps every v2 rule. |
-| Server | 3.211.84.65 (`monad.structures.gg`) runs 12 containers: the two shMON bots, oracle, monitor, digester keeper (`monad-digester`), funding feed, API, site, Caddy, research refresh, RPC meter and MongoDB. The bots, API and site run the service image built 2026-11-18 14:12Z; read over SSH 2026-11-18 18:38Z. |
+| Server | 3.211.84.65 (`monad.structures.gg`) runs 12 containers: the two shMON bots, oracle, monitor, digester keeper (`monad-digester`), funding feed, API, site, Caddy, research refresh, RPC meter and MongoDB. The bots and site run the service image built 2026-11-18 14:12Z, read over SSH 2026-11-18 18:38Z; the API moved to the admin-page build at 18:59Z, and `admin.structures.gg` serves the live revenue page behind a password. |
 
 ## Shipped on 2026-11-17
 
@@ -35,7 +35,7 @@ excessive", then "one ushMON". In order:
 
 | Step | State |
 |---|---|
-| Merge the alphastructures branch | Every change of 2026-11-16 to 2026-11-18 is commit `be23722` on branch `shmon-release-2026-11-18`, pushed 2026-11-18; master is still `bd9a894`. |
+| Merge the alphastructures branch | Every change of 2026-11-16 to 2026-11-18 is on branch `shmon-release-2026-11-18`, pushed 2026-11-18: the contracts and release at `be23722`, the runbook at `89d7d6d`, the admin site at `ef0f756`; master is still `bd9a894`. |
 | Headroom at scale | 80 MON per desk covers about 1,100 MON of pool buys a day at the 93% borrow LTV (7.2% of a day's sales). At Root's target of 50k to 150k MON every 20 hours the desks need 3,600 to 10,800 MON parked; whether that comes from the vaults' own shMON or new MON is Root's call. |
 | Lenders | The float is 929.88 WMON. Taking the public flow (about 160,000 MON a day lately) needs WMON lenders of that order in the cluster's WMON vault; the curve charges borrowers 20% at zero use and 30% at the 90% kink, and lenders get 90% of what is paid. |
 

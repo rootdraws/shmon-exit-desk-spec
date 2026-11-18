@@ -98,3 +98,24 @@ Neverland pays 0% for supplied shMON. Trading fees and the cost of entering the 
 - Euler loan interest = TVL × 0.43 ÷ 0.57 × Euler share × Euler borrow APR. Suppliers get 90%, and AlphaGrowth gets 10%.
 
 The calculator with every input is the artifact at https://claude.ai/artifact/BzqBnCLXMaoxTBc7vD9nrD (private).
+
+## The live revenue page
+
+`https://admin.structures.gg` shows the same flows with real data, behind a password (user `admin`). It runs on the
+production server, and the code is alphastructures `ef0f756`: the page is `api/admin/index.html`, and its data comes
+from `/admin/revenue` in `api/src/adminRevenue.ts`, which it reads every minute. Nothing on the page can be edited.
+
+| Part | Where the number comes from |
+|---|---|
+| Fees and settings | The contracts: performance fee, rate and recipient, and whether it charges every gain (`getPerformanceFee`, Settings `VERSION`); exit fee (`getExitFeeBps`); pool discount (`MM_DISCOUNT_BPS` on each desk); LTV ceiling (each config's `targetMaxLTVBps`) |
+| Book and rates | Each bot's latest observation: equity, collateral, debt, short, LTV, shMON staking APR, MON funding now and on average, blended borrow APR, prices |
+| Euler cluster | The USDC, USDT0 and WMON vaults: supplied, borrowed, borrow APR, caps, LTV on the collateral, interest fee and receiver, and the fees that receiver has earned; ushMON's parked shMON |
+| Holders, last 30 days | Each hourly share price step times the shares then outstanding, at today's shMON price |
+| Performance fee, last 30 days | Every `PerformanceFeeCharged` event on each Settings proxy |
+| Exit desks, last 30 days | The desk income reader: EulerSwap pool buys, keeper arbitrage, and exit fees with routing savings |
+| Carry, last 30 days | Holders' gain plus the performance fee, less the three desk streams |
+| Euler interest | Today's loans times today's borrow APR, split 90% to suppliers and 10% to the AlphaGrowth Euler Safe |
+
+The yearly figures are the last 30 days times 365 ÷ 30. Both vaults were empty when the page went live on 2026-11-18,
+so it read close to zero: $0.21 of exit desk income from leavers, and every other flow at $0.
+

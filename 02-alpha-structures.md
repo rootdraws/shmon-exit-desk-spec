@@ -139,5 +139,7 @@ vaults each tick, and those keys can move money only inside the strategies and t
 One server, `3.211.84.65`, serving `monad.structures.gg`, runs 12 containers (`docker ps` 2026-11-18 18:38Z,
 `evidence/live-reads.md`): one bot per shMON vault, one NAV oracle (`oracle-hyperliquid`), `monitor`, `funding-feed`,
 `api`, `www-user`, `caddy`, `research-refresh`, `rpc-meter`, `monad-digester` and `mongodb`. The six "server env" keys
-above were derived from the running containers' environment on that read, and each matches its address. Production is built on the server from
+above were derived from the running containers' environment on that read, and each matches its address.
+Caddy on the same server also serves `admin.structures.gg`, the live revenue page, behind a password
+([12-revenue-flows.md](12-revenue-flows.md)); the public host never routes its `/admin` data. Production is built on the server from
 `/opt/alphastructures/src`, never from a developer machine (`CLAUDE.md`).
