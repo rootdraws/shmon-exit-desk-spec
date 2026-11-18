@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1130" viewBox="0 0 1240 1130" role="img" aria-label="The exit desk takes shMON from the vault's leavers, from anyone selling into its EulerSwap pool and from the arbitrage keeper; leavers' shMON sells on Curve first, the rest goes the borrow route through the WMON vault and shMonad's one-day unstake; the desk sells WMON for USDC through its digester ladder, which the keeper fills against outside pools." style="color:#17201f">
+    <rect x="0" y="0" width="1240" height="1130" fill="#f6f5f1"/>
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#17201f"/></marker>
+      <marker id="arrow-in" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0a7f6a"/></marker>
+      <marker id="arrow-out" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a5a0a"/></marker>
+    </defs>
+    <g font-family="IBM Plex Sans, system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#17201f">
+
+      <!-- every arrow first, so each box sits on top of the lines that meet it -->
+      <g>
+        <line x1="300" y1="112" x2="378" y2="112" stroke="#0a7f6a" stroke-width="2" marker-end="url(#arrow-in)"/>
+        <line x1="300" y1="242" x2="378" y2="242" stroke="#0a7f6a" stroke-width="2" marker-end="url(#arrow-in)"/>
+        <line x1="300" y1="372" x2="378" y2="372" stroke="#0a7f6a" stroke-width="2" marker-end="url(#arrow-in)"/>
+        <line x1="300" y1="500" x2="378" y2="500" stroke="#17201f" marker-end="url(#arrow)"/>
+        <line x1="380" y1="606" x2="302" y2="606" stroke="#17201f" marker-end="url(#arrow)"/>
+        <line x1="820" y1="106" x2="878" y2="106" stroke="#8a5a0a" stroke-width="2" marker-end="url(#arrow-out)"/>
+        <line x1="820" y1="222" x2="878" y2="222" stroke="#8a5a0a" stroke-width="2" marker-end="url(#arrow-out)"/>
+        <line x1="820" y1="366" x2="878" y2="366" stroke="#8a5a0a" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow-out)"/>
+        <line x1="600" y1="652" x2="600" y2="680" stroke="#8a5a0a" stroke-width="2" marker-end="url(#arrow-out)"/>
+        <path d="M880,850 H866 V288 H878" fill="none" stroke="#17201f" marker-end="url(#arrow)"/>
+        <line x1="880" y1="900" x2="822" y2="900" stroke="#17201f" marker-end="url(#arrow)"/>
+      </g>
+
+      <!-- IN, left column -->
+      <text x="40" y="30" font-weight="600" font-size="13" fill="#0a7f6a">shMON in</text>
+      <rect x="40" y="44" width="260" height="120" rx="3" fill="#d9efe9" stroke="#0a7f6a" stroke-width="2"/>
+      <text x="56" y="68" font-weight="600">Vault leavers</text>
+      <text x="56" y="88" fill="#5f6b69">a withdrawal batch to pay</text>
+      <text x="56" y="106" fill="#5f6b69">Curve first, while it pays within</text>
+      <text x="56" y="124" fill="#5f6b69">0.15% of shMonad's rate</text>
+      <text x="56" y="142" fill="#5f6b69">the rest takes the borrow route</text>
+
+      <rect x="40" y="184" width="260" height="116" rx="3" fill="#d9efe9" stroke="#0a7f6a" stroke-width="2"/>
+      <text x="56" y="208" font-weight="600">Anyone selling shMON</text>
+      <text x="56" y="228" fill="#5f6b69">into the desk's EulerSwap pool</text>
+      <text x="56" y="246" fill="#5f6b69">paid WMON at once,</text>
+      <text x="56" y="264" fill="#5f6b69">0.30% under shMonad's rate</text>
+      <text x="56" y="282" fill="#5f6b69">the pool pauses while leavers wait</text>
+
+      <rect x="40" y="320" width="260" height="116" rx="3" fill="#d9efe9" stroke="#0a7f6a" stroke-width="2"/>
+      <text x="56" y="344" font-weight="600">Arbitrage keeper</text>
+      <text x="56" y="364" fill="#5f6b69">buys shMON a pool sells cheap</text>
+      <text x="56" y="382" fill="#5f6b69">and sells it into our pool,</text>
+      <text x="56" y="400" fill="#5f6b69">all in one transaction</text>
+      <text x="56" y="418" fill="#5f6b69">its WMON gain goes to the desk</text>
+
+      <rect x="40" y="456" width="260" height="98" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="56" y="480" font-weight="600">Euler WMON vault</text>
+      <text x="56" y="498" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">0xE452…0eaf</text>
+      <text x="56" y="518" fill="#5f6b69">lends WMON against ushMON</text>
+      <text x="56" y="536" fill="#5f6b69">at 93%, liquidates at 95%</text>
+
+      <rect x="40" y="574" width="260" height="78" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="56" y="598" font-weight="600">shMonad unstake</text>
+      <text x="56" y="618" fill="#5f6b69">shMON to MON in about a day</text>
+      <text x="56" y="636" fill="#5f6b69">the MON repays the WMON loan</text>
+
+      <!-- THE DESK, middle -->
+      <rect x="380" y="44" width="440" height="608" rx="4" fill="#ffffff" stroke="#17201f" stroke-width="2"/>
+      <text x="400" y="70" font-weight="600" font-size="14">Exit desk, one per vault</text>
+      <text x="400" y="90" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">Delta One 0x02Df…c770 · Delta Neutral 0xF460…6CdE</text>
+
+      <text x="400" y="124" font-weight="600" font-size="12">Leavers, Curve first</text>
+      <text x="400" y="144" fill="#5f6b69">any amount over $10 sells on Curve while its average</text>
+      <text x="400" y="162" fill="#5f6b69">cost stays within 0.15%; the WMON goes to the digester</text>
+
+      <text x="400" y="196" font-weight="600" font-size="12">Leavers, the borrow route</text>
+      <text x="400" y="216" fill="#5f6b69">the rest comes to the desk in chunks; each chunk is</text>
+      <text x="400" y="234" fill="#5f6b69">parked in ushMON and unstaked, the desk borrows WMON</text>
+      <text x="400" y="252" fill="#5f6b69">against it, and the digester sells the WMON for USDC</text>
+
+      <text x="400" y="286" font-weight="600" font-size="12">Chunk size</text>
+      <text x="400" y="306" fill="#5f6b69">the least of: what is left to raise, four hours at</text>
+      <text x="400" y="324" fill="#5f6b69">the pace, 92% of the lenders' spare room</text>
+      <text x="400" y="342" fill="#5f6b69">one at a time; under $1,000 left, a market swap at home</text>
+
+      <text x="400" y="376" font-weight="600" font-size="12">Pace</text>
+      <text x="400" y="396" fill="#5f6b69">a quarter of the MON that takers bought on seven</text>
+      <text x="400" y="414" fill="#5f6b69">outside venues, per hour, over the last day</text>
+
+      <text x="400" y="448" font-weight="600" font-size="12">Oracle floor</text>
+      <text x="400" y="468" fill="#5f6b69">never sells more than 1% under the oracle price</text>
+
+      <text x="400" y="502" font-weight="600" font-size="12">Its own EulerSwap pool</text>
+      <text x="400" y="522" fill="#5f6b69">buys shMON at shMonad's rate less 0.30%</text>
+      <text x="400" y="540" fill="#5f6b69">refuses WMON in; quotes nothing while a batch is unpaid</text>
+      <text x="400" y="558" fill="#5f6b69">fixed price 2% over the rate, moved up at 1% drift</text>
+      <text x="400" y="578" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">pools 0xA65D…68a8 · 0x6e44…a8a8</text>
+
+      <text x="400" y="612" font-weight="600" font-size="12">Paused</text>
+      <text x="400" y="632" fill="#5f6b69">only repays the loan and sends spare WMON home</text>
+
+      <!-- OUT, right column -->
+      <text x="880" y="30" font-weight="600" font-size="13" fill="#8a5a0a">where it sells</text>
+      <rect x="880" y="44" width="320" height="110" rx="3" fill="#f3ead6" stroke="#8a5a0a" stroke-width="2"/>
+      <text x="896" y="68" font-weight="600">Curve MON LSTs pool</text>
+      <text x="896" y="86" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">0x74d8…25d4</text>
+      <text x="896" y="106" fill="#5f6b69">leavers' shMON for WMON, fee 0.01%</text>
+      <text x="896" y="124" fill="#5f6b69">sold by the vault's Curve adapter</text>
+      <text x="896" y="142" fill="#5f6b69">average cost within 0.15% of the rate</text>
+
+      <rect x="880" y="174" width="320" height="128" rx="3" fill="#f3ead6" stroke="#8a5a0a" stroke-width="2"/>
+      <text x="896" y="198" font-weight="600">Digester ladder</text>
+      <text x="896" y="216" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">v4 WMON/USDC 0.01% · hook 0x94Df…1040</text>
+      <text x="896" y="236" fill="#5f6b69">5 sell rungs, 1 to 5 ticks over the price</text>
+      <text x="896" y="254" fill="#5f6b69">5 buy rungs, 2 to 6 ticks under it</text>
+      <text x="896" y="272" fill="#5f6b69">a rung left 20 ticks behind for 3 min</text>
+      <text x="896" y="290" fill="#5f6b69">is cancelled; stray bids are hit at once</text>
+
+      <rect x="880" y="322" width="320" height="92" rx="3" fill="#ffffff" stroke="#8a948f" stroke-dasharray="5 4"/>
+      <text x="896" y="346" font-weight="600" fill="#5f6b69">Exit bid pools, empty today</text>
+      <text x="896" y="364" font-family="IBM Plex Mono, Menlo, monospace" font-size="11" fill="#5f6b69">USDC 0xEA93…C4a9 · WMON 0xB03b…D716</text>
+      <text x="896" y="384" fill="#5f6b69">shMON into standing bids, USDC first</text>
+      <text x="896" y="402" fill="#5f6b69">both hold no bids, so nothing sells there</text>
+
+      <rect x="880" y="434" width="320" height="110" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="896" y="458" font-weight="600">Resting venues</text>
+      <text x="896" y="478" fill="#5f6b69">used only by a desk with no digester</text>
+      <text x="896" y="496" fill="#5f6b69">Uniswap v3 0.3% · PancakeSwap v3 0.05%</text>
+      <text x="896" y="514" fill="#5f6b69">PancakeSwap AUSD/WMON · v4 0.05%, 0.001%</text>
+      <text x="896" y="532" fill="#5f6b69">Hanji MON/USDC book</text>
+
+      <rect x="880" y="564" width="320" height="88" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="896" y="588" font-weight="600">Stable desk</text>
+      <text x="896" y="608" fill="#5f6b69">EulerSwap USDC/USDT0, moves the vault's</text>
+      <text x="896" y="626" fill="#5f6b69">debt between the two stablecoins,</text>
+      <text x="896" y="644" fill="#5f6b69">priced off Curve 0x9426…91ab</text>
+
+      <!-- money home -->
+      <rect x="40" y="682" width="780" height="104" rx="3" fill="#f3ead6" stroke="#8a5a0a" stroke-width="2"/>
+      <text x="56" y="706" font-weight="600">What goes home to the vault</text>
+      <text x="56" y="726" fill="#5f6b69">the digester's USDC pays the withdrawal batch</text>
+      <text x="56" y="744" fill="#5f6b69">the pool's 0.30% and the arbitrage gain come home as shMON, once the loan is repaid</text>
+      <text x="56" y="762" fill="#5f6b69">the keeper's gain on each digester fill goes to the vault's controller</text>
+
+      <!-- the keeper, bottom -->
+      <text x="40" y="822" font-weight="600" font-size="13">Who fills the digester, and what prices the fills</text>
+      <rect x="40" y="834" width="360" height="128" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="56" y="858" font-weight="600">Flow venues the pace counts</text>
+      <text x="56" y="878" fill="#5f6b69">Uniswap v3 0.3% · PancakeSwap v3 0.05%</text>
+      <text x="56" y="896" fill="#5f6b69">PancakeSwap AUSD/WMON · v4 0.05%, 0.001%</text>
+      <text x="56" y="914" fill="#5f6b69">Hanji · Kuru, in 5-minute buckets</text>
+      <text x="56" y="932" fill="#5f6b69">our own digester and pool trades</text>
+      <text x="56" y="950" fill="#5f6b69">are left out</text>
+
+      <rect x="420" y="834" width="400" height="128" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="436" y="858" font-weight="600">Pools the keeper prices against</text>
+      <text x="436" y="878" fill="#5f6b69">MON/USDC: Uniswap v4 0.05%, Uniswap v3 0.3%,</text>
+      <text x="436" y="896" fill="#5f6b69">PancakeSwap v3 0.05%; Hanji when no pool fills</text>
+      <text x="436" y="914" fill="#5f6b69">shMON/WMON for arbitrage: Curve MON LSTs,</text>
+      <text x="436" y="932" fill="#5f6b69">Uniswap v3 0.01% and 0.3%,</text>
+      <text x="436" y="950" fill="#5f6b69">PancakeSwap v3 0.01%</text>
+
+      <rect x="880" y="834" width="320" height="128" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="896" y="858" font-weight="600">Digester keeper</text>
+      <text x="896" y="876" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">key 0xEE51…c3A7</text>
+      <text x="896" y="892" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">router v2 0xe1fe…3776</text>
+      <text x="896" y="912" fill="#5f6b69">wakes on every swap (websocket)</text>
+      <text x="896" y="930" fill="#5f6b69">fills a rung an outside price passed</text>
+      <text x="896" y="948" fill="#5f6b69">by more than both fees</text>
+
+      <!-- numbers -->
+      <rect x="40" y="994" width="1160" height="116" rx="3" fill="none" stroke="#8a948f" stroke-dasharray="5 4"/>
+      <text x="56" y="1018" font-weight="600" fill="#5f6b69">Numbers</text>
+      <text x="56" y="1038" fill="#5f6b69">pool discount 0.30% · Curve limit 0.15% · pace share 25% of taker buys · chunk window 4 h · lenders' room used 92.15% · dust $10 · leftover floor $1,000</text>
+      <text x="56" y="1056" fill="#5f6b69">oracle floor 1% · rungs 5 per side · stale 20 ticks for 3 min · rested inside 5 min · pool ceiling 2%, reset 1% · WMON loan 93% of value, liquidation 95%</text>
+      <text x="56" y="1074" fill="#5f6b69">arbitrage: never while leavers wait; the WMON vault keeps half its cash, or the last leaver payout if larger · keeper fill minimum $0.01</text>
+      <text x="56" y="1092" fill="#5f6b69">v4 PoolManager 0x188d…Ea8e · v3 position manager 0x7197…4E53 · PancakeSwap position manager 0x46A1…4364</text>
+    </g>
+</svg>

@@ -64,6 +64,35 @@ nothing redeemable while a controller may veto. One desk serving both vaults was
 splitting every controller-bound path in the desk (deposit, `returnToController`, `leaversWaiting`, the pool hook) per
 vault, so the smaller change won.
 
+## Liquidity map
+
+![Exit desk liquidity map, from the production configs, the code and the chain, 2026-11-18](figures/exit-desk-liquidity-map.svg)
+
+Leavers' shMON sells on Curve first and the rest goes the borrow route. The desk sells WMON for USDC through its digester
+ladder at the market's own pace, and never more than 1% under the oracle. Both vaults share every venue.
+
+| Venue | Address or pool id | Pair, fee | What the desk does there |
+|---|---|---|---|
+| Curve MON LSTs | `0x74d80ee400d3026fdd2520265cc98300710b25d4` | WMON / shMON, 0.01% | The vault sells leavers' shMON here first, any amount over $10, while the average cost stays within 0.15% of the rate; the arbitrage also buys here. |
+| EulerSwap pool, Delta One | `0xA65De145091aaa6e4540830A34Fc098dE3E668a8` | shMON / WMON | Buys anyone's shMON at rate less 0.30%, paid with borrowed WMON. |
+| EulerSwap pool, Delta Neutral | `0x6e44D5d4c8a4dA51027A71789934bA33799ca8a8` | shMON / WMON | Same, for its desk. |
+| Digester | `0x3957bb3c02c319231713c06853de9bfc8e7d1aaa276873cd65fc028efc0b1314` | WMON / USDC, 0.01%, tick 1, hook `0x94Df2bffA788BBd918179f4CCB5A22DbAD7e1040` | Rests five sell rungs and five buy rungs; hits stray bids and asks. |
+| Exit bid pool, USDC | `0xEA93Cb7Af4bcdAfF8312BEe55dF369970070C4a9` | shMON / USDC, 0.01% | Would take shMON into standing bids; empty today. |
+| Exit bid pool, WMON | `0xB03b966811eBd2E481a77d2ce118f8fA2c5fD716` | shMON / WMON, 0.01% | Would take shMON into standing bids; empty today. |
+| Uniswap v4 MON/USDC 0.05% | `0x18a9fc874581f3ba12b7898f80a683c66fd5877fd74b26a85ba9a3a79c549954` | MON / USDC, 0.05%, tick 10 | The ladder's reference price; keeper prices fills here; flow counted. |
+| Uniswap v4 MON/USDC 0.001% | `0x77169f9b5da147c4952896072951e84e4f4aad7b4d68ebe626ba358ed4e9c1e6` | MON / USDC, 0.001%, tick 1 | Flow counted; rests here only without a digester. |
+| Uniswap v3 | `0x659bD0BC4167BA25c62E05656F78043E7eD4a9da` | WMON / USDC, 0.3% | Keeper prices fills here; flow counted. |
+| PancakeSwap v3 | `0x63e48B725540A3Db24ACF6682a29f877808C53F2` | WMON / USDC, 0.05% | Keeper prices fills here; flow counted. |
+| PancakeSwap v3 | `0xD5b70d70CBE6C42bCD1aaa662A21673A83f4615b` | AUSD / WMON | Flow counted; rests here only without a digester. |
+| Uniswap v3 shMON | `0x1f86a9F2441caC9B942CFb5445530CdBB28717eD`, `0xc27EEbd865051020F9BDEb12398790f356a7B684` | shMON / WMON, 0.01% and 0.3% | The arbitrage buys cheap shMON here. |
+| PancakeSwap v3 shMON | `0x66553f37ea7FdC092193dCeFaA7a32F94B1bE4d0` | shMON / WMON, 0.01% | The arbitrage buys cheap shMON here. |
+| Hanji book | `0xc35b1ca1a2c398a21df5783b3a5ea6a2d56f298f` | MON / USDC | Flow counted; keeper's last resort for a fill. |
+| Kuru book | `0xc9dE998e272d59a19CEA3783C8dd44f87A86405D` | MON / USDC | Flow counted only. |
+| Router v2 | `0xe1fe1ea6677ea56eefd381045aacf86d541c3776` | | Runs the keeper's fills and arbitrage in one call; fill gains to the vault, arbitrage gains to the desk. |
+| Stable desk pool | EulerSwap USDC/USDT0 on vaults `0x5aB0…0948` and `0xD664…963E` | USDC / USDT0 | Moves the vault's debt between the two stables; priced off Curve `0x9426…91ab`. |
+| Euler WMON vault | `0xE4522663752AC47516e39aD11d3780a116850eaf` | WMON | Lends the desk WMON against its ushMON at 93/95. |
+| shMonad | `0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c` | shMON | The slow unstake, about a day, and the rate. |
+
 ## The contract, by group (line numbers at `bd9a894`)
 
 | Group | Functions | Who |
@@ -86,16 +115,22 @@ held can pay (audit 2026-11-10 H2, H3, H10), plus `buyMonV4`; v1.7.0 the pool yi
 on the shared ushMON v3, plus `unparkShmon` (implementation 0xDF9515a5d2f68B12a4fAFc44e518B13751A1c3B2, both desks upgraded
 2026-11-17). The chain says v1.8.0 on both desks (`evidence/live-reads.md`).
 
-## What the bot decides each tick (`deskEulerStep`, planner lines 172-230; on the server since 2026-11-17)
+## The desk's step order, one step per tick
 
-1. Something matured, or WMON above $10 sits in ushMON, and there is a loan or parked shares: `settleEulerUnstake`.
-2. No loan and WMON above $10 on the desk: `restakeWmon`.
-3. A withdrawal batch is open and the desk holds shMON: `parkShmon(all, all)`, the exit chunk.
-4. Otherwise compute the loan's unbacked part (debt less pending MON and WMON held). Stop under $10.
-5. shMON already in ushMON (the pool's buys) backs it first: `parkShmon(0, min(held, need))`. Added 2026-11-16 for the
-   public buyer. On the shared v3 vault the reader counts only this desk's claim (`packages/shared/src/chain/exitDesk.ts`,
-   `ledgerOf` and `wmonRedeemable`).
-6. shMON on the desk: `parkShmon(min(shmon, need), same)`.
-7. No batch open and idle shMON at the controller: `deposit` it to the desk.
+Bot: `services/rebalancingBot/src/planner/exitDesk.ts`. Every step is gated by `DESK_DUST_USD = 10` (planner line 23):
+the bot leaves anything under $10 alone.
 
-Every step is gated by `DESK_DUST_USD = 10` (planner line 23): the bot leaves anything under $10 alone.
+| # | When | Step |
+|---|---|---|
+| 1 | an order filled, or every order past the panic line | close it |
+| 2 | the desk's own unstake matured | `completeUnstake` |
+| 3 | withdrawing | close a buy rung; send a leftover between $10 and $1,000 home with no rung open; send USDC home |
+| 4 | a ushMON unstake matured, or over $10 of WMON is back, with a loan or parked shMON | `settleEulerUnstake`: redeem the desk's own WMON, repay |
+| 5 | no loan and over $10 of WMON on the desk | `restakeWmon`: back to shMON, home |
+| 6 | a batch is open, or the loan has shMON not yet unstaking | `parkShmon`: deposit and unstake what the loan needs |
+| 7 | a rung is stale or rested inside the price | cancel it |
+| 8 | over $10 of WMON | sell into stray bids, else rest a sell rung |
+| 9 | over $10 of USDC to buy with | buy from stray asks, else rest a buy rung |
+| 10 | shMON on the desk and a bid standing | `sellShmonV4` into the exit pools, USDC first |
+| 11 | over $10 of shMON left | `requestUnstake` |
+| | paused | only steps 4 and 5 run |
