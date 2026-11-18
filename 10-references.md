@@ -47,7 +47,8 @@ Source: `alphastructures/deploy/deployments/production/*.json`, `deploy/configs/
 |---|---|---|
 | LimitOrderHook | [0x94Df2bffA788BBd918179f4CCB5A22DbAD7e1040](https://monadscan.com/address/0x94Df2bffA788BBd918179f4CCB5A22DbAD7e1040) | OpenZeppelin uniswap-hooks |
 | Digester pool | poolId `0x3957bb3c02c319231713c06853de9bfc8e7d1aaa276873cd65fc028efc0b1314` (WMON/USDC, fee 100, spacing 1) | `docs/Alpha_Structures_Digester.md:21` |
-| MonadRouter | [0x77eB1B6aab832f3aD11A216Dfcb8613fdA15A088](https://monadscan.com/address/0x77eB1B6aab832f3aD11A216Dfcb8613fdA15A088) | `alphastructures/contracts/digester/MonadRouter.sol` |
+| Digester router v2 (owner: the keeper key) | [0xE1fe1Ea6677Ea56eEFD381045AAcf86D541C3776](https://monadscan.com/address/0xE1fe1Ea6677Ea56eEFD381045AAcf86D541C3776) | read on chain 2026-11-18 |
+| MonadRouter v1 (replaced) | [0x77eB1B6aab832f3aD11A216Dfcb8613fdA15A088](https://monadscan.com/address/0x77eB1B6aab832f3aD11A216Dfcb8613fdA15A088) | `alphastructures/contracts/digester/MonadRouter.sol` |
 | Keeper wallet | 0xEE51d642304f8F0b272Fc79cf851CE76ee24c3A7 | `custody/deployments/exit-pool-143.json` |
 | ExitBidPool USDC | [0xEA93Cb7Af4bcdAfF8312BEe55dF369970070C4a9](https://monadscan.com/address/0xEA93Cb7Af4bcdAfF8312BEe55dF369970070C4a9) | `alphastructures/contracts/exit-pool/ExitBidPool.sol` |
 | ExitBidPool WMON | [0xB03b966811eBd2E481a77d2ce118f8fA2c5fD716](https://monadscan.com/address/0xB03b966811eBd2E481a77d2ce118f8fA2c5fD716) | same |

@@ -28,7 +28,7 @@ That needs no capital, and the gain goes to the vault whose order was filled." (
 |---|---|---|
 | Hook | [0x94Df2bffA788BBd918179f4CCB5A22DbAD7e1040](https://monadscan.com/address/0x94Df2bffA788BBd918179f4CCB5A22DbAD7e1040) | OpenZeppelin `LimitOrderHook` (uniswap-hooks 1.3.0), CREATE2 |
 | Pool | poolId `0x3957bb3c02c319231713c06853de9bfc8e7d1aaa276873cd65fc028efc0b1314` | WMON/USDC, fee 100, tick spacing 1, PoolManager `0x188d586Ddcf52439676Ca21A244753fA19F9Ea8e` |
-| Router | [0x77eB1B6aab832f3aD11A216Dfcb8613fdA15A088](https://monadscan.com/address/0x77eB1B6aab832f3aD11A216Dfcb8613fdA15A088) | `contracts/digester/MonadRouter.sol`, owner-only |
+| Router v2 | [0xE1fe1Ea6677Ea56eEFD381045AAcf86D541C3776](https://monadscan.com/address/0xE1fe1Ea6677Ea56eEFD381045AAcf86D541C3776) | owner the keeper key (read on chain 2026-11-18); fills orders and runs the shMON arbitrage. v1 was 0x77eB1B6aab832f3aD11A216Dfcb8613fdA15A088 (`contracts/digester/MonadRouter.sol`) |
 | Keeper wallet | 0xEE51d642304f8F0b272Fc79cf851CE76ee24c3A7 | container `digester-keeper`, min gain $0.01 |
 | Exit bid pools | 0xEA93Cb7Af4bcdAfF8312BEe55dF369970070C4a9 (USDC), 0xB03b966811eBd2E481a77d2ce118f8fA2c5fD716 (WMON) | `contracts/exit-pool/ExitBidPool.sol`, bids for shMON at a 30 bps discount, deployed 2026-11-12 |
 

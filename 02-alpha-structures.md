@@ -71,16 +71,30 @@ manifests also carry a `kyberswap` adapter proxy).
 Full addresses for the abbreviated rows are in the manifests. Both vaults are empty at the time of writing
 (`evidence/live-reads.md`).
 
-## Roles
+## Roles and permissions
 
-- **Admin.** `DEFAULT_ADMIN_ROLE` on every production vault is the admin Safe
-  `0xC94dd8e928D681bd85BeB94a8729709d189cCF9D`, a 1-of-1 Safe owned by the `custody-admin` keystore on the operator's
-  machine (`Threat_Model.md:181-186`). It upgrades contracts, moves the desk's Euler account, opens the EulerSwap pool.
-- **Executor.** One key per vault, drives the bot's actions. "No executor-callable function sends funds to an arbitrary
-  address" (`Threat_Model.md:149-164`).
-- **Oracle.** One key per vault, posts the share price.
-- **Guardian.** `pause`, `unpause` and `halt()` through a freeze module on the admin Safe (`Threat_Model.md:171-173`).
-- **Keeper.** `0xEE51d642304f8F0b272Fc79cf851CE76ee24c3A7` fills digester orders; it pays gas and never holds vault money.
+![shMON vault permissions, read on chain 2026-11-18 on Monad, HyperEVM and the Hyperliquid API](figures/vault-permissions.svg)
+
+One key, the custody-admin keystore on Root's Mac, stands behind every Safe. The server holds the keys that run the
+vaults each tick, and those keys can move money only inside the strategies and the hedges.
+
+| Key or Safe | Address | Where | What it can do |
+|---|---|---|---|
+| custody-admin key | `0xb9a86575182c0F0F07e8b7404612c8207c87681B` | Root's Mac | Sole owner of the admin Safe on Monad and on HyperEVM. |
+| Admin Safe | `0xC94dd8e928D681bd85BeB94a8729709d189cCF9D` | Monad and HyperEVM, 1 of 1 | Upgrade every contract, change settings and the 10% performance fee, halt, emergency withdraw, open or retire pools, own both hedge Safes. |
+| Freeze module | `0x6c3A2bE9c75b5ed1b8144EB970Bcd35A52F93D4d` | on the admin Safe | Lets the guardian key halt a vault without the admin key. |
+| Executor, Delta One | `0xC95F60fdE77ECEBf9DED1228A939ac8eDB2671D3` | server env | Supply, borrow, repay, swap, bridge, pay leavers, run the exit and stable desks, move hedge margin and trade through the Roles module. |
+| Executor, Delta Neutral | `0xF3206EfC847386E66043459832eDb74998C63669` | server env | Same, for its own vault. |
+| Oracle, Delta One | `0x77d550f9C11AAFC69Cb7651d7B2E405BE43Eb0B9` | server env | Publishes the share price, within the deviation budget. |
+| Oracle, Delta Neutral | `0x2ECF679c2DF38a758F365f1EEc7CD090567FD5e7` | server env | Same, for its own vault. |
+| Guardian | `0x868736358fA307d70b359BcaB2e92e6A7ED0734C` | server env | Pause and unpause both vaults, halt through the freeze module, top up gas. |
+| Digester keeper | `0xEE51d642304f8F0b272Fc79cf851CE76ee24c3A7` | server env | Owns digester router v2 `0xE1fe1Ea6677Ea56eEFD381045AAcf86D541C3776` (fills orders, gains go to the vault; runs the shMON arbitrage, gains go to the desk); keeper of the two exit bid pools. |
+| dev deployer | `0x501107fe590c8F9b81c00b81867fD19e0d9c0253` | Root's Mac | Governs the Euler cluster: prices, caps, loan lines. Lent the 929.88 WMON float. |
+| AlphaGrowth Euler Safe | `0x4f894Bfc9481110278C356adE1473eBe2127Fd3C` | theirs | Receives 10% of the cluster's interest; governs the empty first cluster. |
+| Hedge Safe, Delta One | `0x704f20644035b5fA822cC920a25C99F97BF7C6ed` | HyperEVM / HyperCore, 1 of 1 | The vault's Hyperliquid account. Owner: the admin Safe. Roles module `0x0253…0Cba` lets the executor move margin and trade. |
+| Hedge Safe, Delta Neutral | `0x213a4C29c42Bb956c34064750b689baB313561C3` | HyperEVM / HyperCore, 1 of 1 | Same. Roles module `0x0Aa4…9028`. |
+| API wallets | `0x1dE4…8435`, `0xeb12…142C` | Root's Mac env file, approved on Hyperliquid to Jan 2027 | Trading only, on the hedge accounts. Not on the server; the bot signs through the Roles module instead. |
+| ushMON operators | `0x37e07473F1F62CB071Db57440e242b320614A0ce`, operated by the two exit desks | contracts | The only addresses that can get ushMON shares or start an unstake; each desk's unstakes and WMON stay on its own ledger. |
 
 ## Where it runs
 
