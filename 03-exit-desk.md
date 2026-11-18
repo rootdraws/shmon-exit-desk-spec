@@ -3,26 +3,12 @@
 Contract: `alphastructures/contracts/adapters/venue/ShMonadExitAdapter.sol` at `be23722`, a UUPS proxy per vault,
 `VERSION = 1_08_00` (line 300), live on both production desks (`evidence/live-reads.md`). Bot: `services/rebalancingBot/src/planner/exitDesk.ts`.
 
-## Why it exists
-
-A leaver's shMON must become stablecoin to repay the vault's loan and pay the leaver. shMonad's instant exit costs
-0.41% to 0.73% (30 days of hourly reads, `evidence/data/shmonad-30d.md`); its slow unstake is free but takes about a
-day (`evidence/data/unstake-timing-30d.md`); DEX pairs for shMON carry about $2,700 a day of flow
-(`evidence/data/rate-30d.md`, 30 days of swaps to 2026-11-05, computed 2026-11-07). The instruction behind the desk (2026-11-03, quoted in `docs/shmon-exit-desk-plan.md:5-8`)
-was to build withdrawals on the one-day unstake and to sell with resting orders one tick above the price instead of
-taking a market. The withdrawal batch stays five minutes; the desk carries the day (`shmon-exit-desk-plan.md:46-47`).
-
 ## What it does
 
-"The vault's slow exit desk on Monad: shMON goes through shMonad's traditional unstake (about a day, no fee), and MON is
-sold (or bought) with resting orders one tick step beyond the price" (contract NatSpec, lines 265-268). It is reached
-through the controller's existing venue-margin path; funds leave it only to the controller, to shMonad's unstake, or
-into a resting order (`shmon-exit-desk-plan.md:36-43`).
+shMON to USDC needs a pathway with greater capacity and less slippage than what is currently available onchain. 
 
-**The digester.** "Each vault's exit desk rests small limit orders in our own Uniswap v4 pool, one tick off the market.
-Our keeper watches the other Monad pools. When one of them trades past one of our orders by more than both pools' fees,
-the keeper fills our order and trades it straight back into that pool, inside a single Uniswap v4 PoolManager unlock.
-That needs no capital, and the gain goes to the vault whose order was filled." (`docs/Alpha_Structures_Digester.md:3-7`.)
+Each vault has an Exit Desk, which rests small limit orders in our own Uniswap v4 pool, one tick off the market.
+wMON/USDC pools on Monad are monitored by websocket, so when they trade past our orders, Uniswap v4 Flash accounting is used to execute the trade.
 
 | Digester piece | Address | Note |
 |---|---|---|
