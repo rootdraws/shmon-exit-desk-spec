@@ -39,19 +39,34 @@ The exit fees, the pool margin, the arbitrage and the digester gains all raise t
 
 ## Where it goes at $2M TVL
 
-![Revenue flows at $1M per vault, 8% net carry, 150,000 MON of pool buys per 20 hours](figures/revenue-flows.svg)
+![Revenue flows at $1M per vault, live net carry, 150,000 MON of pool buys per 20 hours](figures/revenue-flows.svg)
 
 | Receiver | From | $ per year |
 |---|---|---|
-| Admin Safe, AlphaGrowth | performance fees, both vaults | 16,951 |
+| Admin Safe, AlphaGrowth | performance fees: 5,675 from Delta One, 18,375 from Delta Zero | 24,051 |
 | AlphaGrowth Euler Safe | Euler interest fee on WMON and USDC loans | 6,469 |
-| Holders, both vaults | carry, exit fees, pool margin, after the performance fee | 152,558 |
+| Holders, both vaults | carry, exit fees, pool margin, after the performance fee: 51,079 Delta One, 165,379 Delta Zero | 216,458 |
 | USDC lenders on Euler | vault loan interest, after the Euler fee | 57,711 |
 | WMON suppliers | desks' WMON interest, after the Euler fee | 512 |
 
-Inputs: $1M in each vault, 8% net carry, 10% of TVL withdrawn a month, 43% LTV, half the loan on Euler at 8.5%,
+Inputs: $1M in each vault, the live net carry below, 10% of TVL withdrawn a month, 43% LTV, half the loan on Euler at 8.5%,
 150,000 MON of pool buys per 20 hours split evenly, 170,000 MON of WMON supply, a 20-hour unstake and MON at $0.0146.
-The 8% carry is a placeholder, because the carry has not been measured.
+
+## Net carry, from live rates on 2026-11-18
+
+Per $1 deposited at the 43% target, the bot's book shape (`policy/base.ts`, with margin at 28.57% plus the fee, × 1.05)
+puts Delta One at $1.49 of shMON, a $0.64 loan and a $0.49 short, and Delta Zero at $1.15 of shMON, a $0.49 loan and a
+$1.15 short.
+
+| Per $1 deposited | Delta One | Delta Zero | Rate and where it was read |
+|---|---|---|---|
+| shMON staking on the collateral | +16.4% | +12.7% | 11.01% APR, shMonad's `convertToAssets` 30 days apart (1.6429 to 1.6542) |
+| MON funding paid to shorts | +3.5% | +8.1% | 7.03% a year, the 30-day mean of Hyperliquid's hourly MON funding (live hour 6.58%) |
+| USDC interest | −3.7% | −2.8% | 5.74% APR, Neverland's live variable rate; the Euler cluster has no USDC lenders yet |
+| Total in dollars | 16.2% | 17.9% | |
+| Net carry used above | **5.2%** | **17.9%** | Delta One's share price is counted in shMON, so its holders' own 11.0% staking yield is taken out |
+
+Neverland pays 0% for supplied shMON. Trading fees and the cost of entering the book are left out.
 
 ## Formulas
 
