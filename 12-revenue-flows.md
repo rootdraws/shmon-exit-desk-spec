@@ -6,7 +6,7 @@ Fees and receivers were read on chain on 2026-11-18 and read again on 2026-11-19
 ## What TVL means here
 
 TVL is the shMON that depositors put into the two vaults, valued in dollars. The bot then levers it to the 43% target
-([02-alpha-structures.md](02-operations.md)), so $2M of TVL becomes:
+([02-operations.md](02-operations.md)), so $2M of TVL becomes:
 
 | Piece | At $2M TVL | Formula |
 |---|---|---|
@@ -27,7 +27,7 @@ WMON lending is not part of TVL. It is sized by the EulerSwap pools' volume ([05
 | Performance fee, Delta Neutral | the same, counted in dollars | admin Safe | `getPerformanceFee()` on `0xC62D…F85a` returns 1000 bps to `0xC94d…9CfD` |
 | Exit fees, both vaults | 0.30% kept from every withdrawal | the holders who stay | `WithdrawalHandler.sol:281-283` |
 | EulerSwap pools | buy shMON 0.30% under shMonad's rate, pay about one day of WMON interest | the desk, then its vault | [05-eulerswap.md](05-eulerswap.md); EulerSwap's own protocol fee reads 0 for the pools |
-| shMON arbitrage | the keeper buys cheap shMON on outside pools and sells it into ours | the desk, then its vault | [02-alpha-structures.md](02-operations.md) permissions table |
+| shMON arbitrage | the keeper buys cheap shMON on outside pools and sells it into ours | the desk, then its vault | [02-operations.md](02-operations.md) permissions table |
 | Digester | the keeper's gain on each fill, plus the 0.01% pool fee on our own resting orders | the vault | `MonadRouter.sol:200` pays each cycle's gain to its vault |
 | WMON lending | 90% of the interest the desks pay on WMON | WMON suppliers, today the deployer key | the WMON vault's `interestFee()` reads 1000 |
 | Euler interest fee | 10% of all interest paid in the cluster, WMON and USDC alike | AlphaGrowth Euler Safe `0x4f89…Fd3C` | `interestFee()` 1000 and `feeReceiver()` `0x4f89…Fd3C` on the USDC, WMON and USDT0 vaults; `protocolFeeShare()` 0 |
