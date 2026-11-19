@@ -174,6 +174,16 @@ MON at $0.014455 (Hyperliquid mid). shMonad `convertToAssets(1e18)` = 1.654258 M
 | Curve `0x74d8…25d4` `get_dy(1,0)` | 3,000,000 shMON (~$71.7k) | 7.909% under the rate |
 | WMON vault `LTVFull(ushMON v3)` | | 93% borrow, 95% liquidation |
 
+## Curve, block 123482098 (2026-11-19)
+
+MON at $0.013806 (Hyperliquid mid). shMonad `convertToAssets(1e18)` = 1.654406 MON. The pool holds 3,945,042 WMON.
+
+| Read | Size | Result |
+|---|---|---|
+| Curve `0x74d8…25d4` `get_dy(1,0)` shMON to WMON | 1,000,000 shMON (~$22.8k) | 0.279% under the rate |
+| Curve `0x74d8…25d4` `get_dy(1,0)` | 2,000,000 shMON (~$45.7k) | 1.057% under the rate |
+| Curve `0x74d8…25d4` `get_dy(1,0)` | 3,000,000 shMON (~$68.5k) | 21.060% under the rate |
+
 ## Deposit cap, 2026-11-18
 
 Admin Safe `setDepositCap(84,000,000 shMON)` on both vaults' Settings, read back with `getDepositCap()`:

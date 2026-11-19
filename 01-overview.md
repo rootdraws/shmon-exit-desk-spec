@@ -21,12 +21,14 @@ itself.[^lenders]
 
 ## Increasing shMON to USDC Capacity
 
-The current onchain route from shMON to USDC (or USDT) is limited to ~$50k at 0.4% to 0.7%, and above that the slippage is much worse. A serious vault is not able to safely unwind or serve withdrawals, without holding a 20-28 hour duration risk for unstaking shMON.
+The current onchain route from shMON to USDC (or USDT) is limited to ~$25k at 0.3% to 0.6%, and above that the slippage is much worse. A serious vault is not able to safely unwind or serve withdrawals, without holding an 18 to 21 hour duration risk for unstaking shMON.
 
 There are three ways out of shMON:[^shmonad]
 
 - **The slow unstake.** Free, and it takes about a day: 19.6 hours typically, 18.2 to 21.3 hours for 8 in 10 requests.
-- **shMON/MON on Curve** can digest around $50k at ~0.4%, and there are no meaningful shMON/USDC pairs. 
+- **shMON/WMON on Curve** holds 3.9 million WMON (~$54k) on 2026-11-19, and there are no meaningful shMON/USDC pairs:
+  - $22.8k at 0.28% under the rate
+  - $45.7k at 1.06% under the rate
 - **Fastlane Instant Redemption** is an exhaustible / replenishable fund, holding 3.36 million MON (~$48.5k) on 2026-11-18:
   - $12.0k at 0.55% fee
   - $23.9k at 0.62% fee
@@ -41,12 +43,11 @@ Without an increase in capacity, depositors are exposed to liquidation risk and 
 The Exit Desk is an adapter, which is owned by the shMON vault. It enables resting limit orders of wMON through a Univ4
 Hook.
 
-ushMON represents a tokenized claim on the 20 to 28 hour process of unstaking shMON. wMON lenders provide a one day line of credit backed by the MON staking contracts, and receive a high lending APR whenever ushMON is active.
+ushMON represents a tokenized claim on the 18 to 21 hour process of unstaking shMON. wMON lenders provide a one day line of credit backed by the MON staking contracts, and receive a high lending APR whenever ushMON is active.
 
 The exit desk enables a metabolic rate of $6k to $15k of WMON an hour,[^rate] executed through Maker Orders, one tick above the market in the desk's own Uniswap v4 pool, and a keeper fills them from flow on other WMON/USDC venues. Capacity in this is limited to onchain demand, as well as depth of wMON lending -- rather than slippage in current shMON/wMON pools, or instant redemption limits.
 
-The Exit Desk will also become more efficient by integrating with Fastlane's soon to be released Monad Liquidity Router,
-Moose, as well as Kyber.
+The Exit Desk will also become more efficient by integrating with Kyber.
 
 ## Functionality
 
@@ -73,7 +74,7 @@ The 0.3% fee from these sales is absorbed as an additional yield source for the 
 You can read more about ushMON here.[04-ushmon.md](04-ushmon.md).
 
 [^lenders]: `alphastructures/CLAUDE.md:32`, `docs/Alpha_Structures_Architecture.md:10-11,29`.
-[^shmonad]: `evidence/data/unstake-timing-30d.md` (119 requests, read 2026-11-05); `evidence/data/shmonad-30d.md` (720 hourly reads to 2026-11-05); Curve and instant exit quotes and live fee `getCurrentUnstakeFeeRateRay() == 0.4949%` at block 123385653 in `evidence/live-reads.md`.
+[^shmonad]: `evidence/data/unstake-timing-30d.md` (119 requests, read 2026-11-05); `evidence/data/shmonad-30d.md` (720 hourly reads to 2026-11-05); instant exit quotes and live fee `getCurrentUnstakeFeeRateRay() == 0.4949%` at block 123385653, Curve quotes at block 123482098, in `evidence/live-reads.md`.
 [^desk]: `alphastructures/docs/Alpha_Structures_Digester.md:3-7,25,38-39`; `docs/shmon-exit-desk-plan.md:36-43`; exit fee `contracts/core/WithdrawalHandler.sol:34-35,283`.
 [^flow]: `evidence/data/instant-history.md`, monthly table (instant exits paid out 2025-12 to 2026-10).
 [^rate]: `evidence/data/rate-30d.md`: 30 days of real WMON/USDC swaps replayed with the keeper's fill rule; a $200k or $500k inventory sells in 13.5 to 35.5 hours if the keeper wins 25% of each trigger, 35.5 to 73.9 hours at 10%.

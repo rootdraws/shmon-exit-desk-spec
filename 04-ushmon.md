@@ -9,7 +9,7 @@ at `48d07b3` (2026-11-17) is v3, live on Monad since 2026-11-17 as the one vault
 ## What it is
 
 An ERC-4626 vault whose shares (ushMON) are denominated in shMON. "An operator sends the vault's shMON into shMonad's
-slow unstake (20 to 28 hours) and completes it; the MON that comes back is held as WMON. A holder redeems ushMON for WMON
+slow unstake (18 to 21 hours) and completes it; the MON that comes back is held as WMON. A holder redeems ushMON for WMON
 at shMonad's redemption rate with `redeemForWmon`, inside the same Euler EVC batch that repays a WMON loan. The vault
 runs the EVC account status checks that Euler's collateral vaults run, so a WMON vault can accept ushMON as collateral
 and liquidate it." (`README.md`.) Root's brief, quoted in the NatSpec: "Custom vault for shMON, which does
