@@ -39,7 +39,8 @@ The live curve, IRM `0xa359026aae6c26Ba90B3D3AB78Fc483Da09DBa8a`, read back on c
 | 90% (kink) | 30.00% | 24.30% | 7.2 bps | 24% |
 | 98% and above | 50.00% | 44.10% | 11.1 bps | 37% |
 
-The vault keeps 10% of interest as a fee. Today it holds no lender money and no loans.
+The vault keeps 10% of interest as a fee. On 2026-11-19 it holds the deployer key's 929.88 WMON, all of it lent to the
+Delta Neutral desk.
 
 ## 4. What is shMON's rate, per day?
 
@@ -114,8 +115,9 @@ lenders earn 9.7% instead of 24.3%, and the desk keeps 90% of each sale's margin
 
 ## Root's call on issue 6 (2026-11-16)
 
-**93 / 95 now.** "Move to 93/95 now. It's built for external lenders." The new ushMON vaults deploy at 93/95
-(`deploy.sh` `LTV_WMON_SH=(9300 9500)`), and the release parks 80 MON of headroom per desk, 7.2% of the first float.
+**93 / 95 now.** "Move to 93/95 now. It's built for external lenders." Every ushMON vault since deploys at 93/95
+(`deploy.sh` `LTV_WMON_SH=(9300 9500)`), and ushMON v4 reads 93/95 on chain (2026-11-19). Each desk parks 80 MON of
+headroom, more than the 67 MON (7.2%) the 929.88 WMON float needs.
 
 **The curve stays at 20 / 30 / 50.** "I want it to be expensive, to use, and attract resting capital. and i want that
 capital to be available for exits to take place, and i want basically to become the dominant exit path from shMON to
@@ -127,7 +129,7 @@ its day's sales parked as shMON, 3,600 to 10,800 MON. The desk's margin is 0.30%
 interest at the kink, about 0.23% per turn, roughly 340 MON a day at 150,000 MON of sales. Where the parked shMON
 comes from at that scale (the vault's own collateral or new MON) is the next decision.
 
-## The answer to post on issue 6
+## The answer posted on issue 6
 
 The LTV was tested on a fork against the live oracle. Interest over a 30-hour hold moves the loan 9 to 14 bps and
 never reaches the line at any pair from 97/98 to 87/90. The collateral and the debt are both priced from the same
