@@ -2,7 +2,7 @@
 
 Repo: [rootdraws/ushMON](https://github.com/rootdraws/ushMON) (public). Source
 [`src/UnstakingShMonVault.sol`](https://github.com/rootdraws/ushMON/blob/48d07b3/src/UnstakingShMonVault.sol)
-at `48d07b3` (2026-11-17) is v3, live on Monad since 2026-11-17 as the one vault in the table below; `4235998` is v2
+at `48d07b3` (2026-11-17) is v3. v4, live on Monad since 2026-11-18 as the one vault in the table below, adds one rule: the WMON a finished unstake returns follows the shares, so a liquidator can redeem shares it seized. `4235998` is v2
 (2026-11-16, one vault per desk, now empty) and `a7f4788` is v1, the replaced code. See [09-current-state-and-next.md](09-current-state-and-next.md). The same file is vendored at
 `ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol` (copy in [`sources/ag-euler/`](sources/ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol)), whose build artifact every deploy script reads.
 
@@ -117,7 +117,8 @@ pass on v3 (21 tests), and the desk-side fork test runs both live desks on one v
 
 | ushMON | Cluster | Operator (exit desk) | Version | Note |
 |---|---|---|---|---|
-| [0x37e07473F1F62CB071Db57440e242b320614A0ce](https://monadscan.com/address/0x37e07473F1F62CB071Db57440e242b320614A0ce) | second (live) | 0x02Df…c770 (usdc-hl) and 0xF460…6CdE (usdc-hl-d0), both operators | v3 | both desks' collateral since 2026-11-17; 48.38 shMON parked as headroom by each; source verified on Monadscan; `USHMON_USDC` in `deployed-143.env` |
+| [0xa753E24B0986567EDAd75f784664Ec11336f8C5e](https://monadscan.com/address/0xa753E24B0986567EDAd75f784664Ec11336f8C5e) | second (live) | 0x02Df…c770 (usdc-hl) and 0xF460…6CdE (usdc-hl-d0), both operators | v4 | both desks' collateral since 2026-11-18; 48.38 shMON parked as headroom by each; WMON vault lends 93/95 against it (read 2026-11-19); `USHMON_USDC4` in `deployed-143.env` |
+| [0x37e07473F1F62CB071Db57440e242b320614A0ce](https://monadscan.com/address/0x37e07473F1F62CB071Db57440e242b320614A0ce) | second (live) | 0x02Df…c770 (usdc-hl) and 0xF460…6CdE (usdc-hl-d0), both operators | v3 | both desks' collateral 2026-11-17 to 2026-11-18; empty, retired from the cluster 2026-11-18 (WMON vault LTV 0, read 2026-11-19); `USHMON_USDC` in `deployed-143.env` |
 | [0xC8f5023512c0618B754e03d675E3626a4A760092](https://monadscan.com/address/0xC8f5023512c0618B754e03d675E3626a4A760092) | second (live) | 0x02Df…c770 (usdc-hl) | v2 | the desk's collateral 2026-11-16 to 2026-11-17; emptied by `unparkShmon`; retired from the cluster 2026-11-17 (WMON vault LTV 0, unresolved on the router, read 2026-11-18); `V2_USHMON_USDC_HL` in `deployed-143.env` |
 | [0xa2F34235e4C3c0706B2d5B9170F924446b1Df664](https://monadscan.com/address/0xa2F34235e4C3c0706B2d5B9170F924446b1Df664) | second (live) | 0xF460…6CdE (usdc-hl-d0) | v2 | the desk's collateral 2026-11-16 to 2026-11-17; emptied by `unparkShmon`; retired from the cluster 2026-11-17 (WMON vault LTV 0, unresolved on the router, read 2026-11-18); `V2_USHMON_USDC_HL_D0` in `deployed-143.env` |
 | [0xa44220Ee57Cb879bd842a24696Df06e398601d8F](https://monadscan.com/address/0xa44220Ee57Cb879bd842a24696Df06e398601d8F) | second (live) | 0x02Df…c770 (usdc-hl) | v1 | replaced 2026-11-16, empty; retired from the cluster 2026-11-17 (WMON vault LTV 0, unresolved on the router, read 2026-11-18); `V1_USHMON_USDC_HL` in `deployed-143.env` |

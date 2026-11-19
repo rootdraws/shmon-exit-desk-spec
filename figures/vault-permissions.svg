@@ -92,7 +92,7 @@
       <text x="376" y="472" fill="#5f6b69">The dev deployer is the only lender, with 929.88 WMON.</text>
 
       <rect x="360" y="520" width="470" height="96" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="376" y="542" font-weight="600">ushMON 0x37e0…A0ce and the two EulerSwap pools</text>
+      <text x="376" y="542" font-weight="600">ushMON 0xa753…8C5e and the two EulerSwap pools</text>
       <text x="376" y="562" fill="#5f6b69">The two exit desks are its only operators.</text>
       <text x="376" y="580" fill="#5f6b69">Each pool trades from its own desk's account.</text>
       <text x="376" y="598" fill="#5f6b69">The admin Safe opens pools. The executor parks and borrows.</text>

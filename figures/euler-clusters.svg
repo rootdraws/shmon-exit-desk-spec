@@ -72,8 +72,8 @@
 
       <!-- the one ushMON vault -->
       <rect x="660" y="400" width="210" height="154" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="676" y="424" font-weight="600">ushMON v3, one vault</text>
-      <text x="676" y="444" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">0x37e0…A0ce</text>
+      <text x="676" y="424" font-weight="600">ushMON v4, one vault</text>
+      <text x="676" y="444" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">0xa753…8C5e</text>
       <text x="676" y="466" fill="#5f6b69">operators: both desks</text>
       <text x="676" y="484" fill="#5f6b69">each desk on its own ledger:</text>
       <text x="676" y="502" fill="#5f6b69">its unstakes, its WMON back</text>
@@ -96,13 +96,13 @@
       <!-- desks -->
       <rect x="960" y="400" width="300" height="64" rx="3" fill="#ffffff" stroke="#17201f"/>
       <text x="976" y="424" font-weight="600">Exit desk, Delta One</text>
-      <text x="1130" y="424" fill="#5f6b69" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">v1.8.0</text>
-      <text x="976" y="444" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">pool 0xA65D…68a8 · open</text>
+      <text x="1130" y="424" fill="#5f6b69" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">v1.10.0</text>
+      <text x="976" y="444" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">pool 0x56aE…28A8 · open</text>
 
       <rect x="960" y="490" width="300" height="64" rx="3" fill="#ffffff" stroke="#17201f"/>
       <text x="976" y="514" font-weight="600">Exit desk, Delta Neutral</text>
-      <text x="1130" y="514" fill="#5f6b69" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">v1.8.0</text>
-      <text x="976" y="534" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">pool 0x6e44…a8a8 · open</text>
+      <text x="1130" y="514" fill="#5f6b69" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">v1.10.0</text>
+      <text x="976" y="534" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">pool 0x1924…e8a8 · open</text>
 
       <!-- each desk deposits the shMON its pool bought into the ushMON vault -->
       <line x1="960" y1="432" x2="872" y2="432" stroke="#17201f" marker-end="url(#arrow)"/>

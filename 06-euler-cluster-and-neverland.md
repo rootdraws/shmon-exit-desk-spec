@@ -40,7 +40,7 @@ shMON/USD as a cross of the shMON/MON SVR rate and WMON/USD (`0x2B43…eAB6`), W
 
 **State on 2026-11-18, block 123,224,821.** The WMON vault holds 929.88 WMON lent by the deployer key and has nothing
 borrowed, so it charges 20% at zero use. The shMON, USDC and USDT0 vaults hold nothing. The one ushMON v3 vault holds
-48.38 shMON for each desk, and both desks run v1.8.0 with their pools open. The deployer key is still governor, and the
+48.38 shMON for each desk, and both desks run v1.8.0 with their pools open. Since 2026-11-18 the one vault is ushMON v4 0xa753…8C5e, and since 2026-11-19 both desks run v1.10.0. The deployer key is still governor, and the
 cluster's 33 configuration checks read ok. Caps were set on 2026-11-17.
 
 ## Neverland

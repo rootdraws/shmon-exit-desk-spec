@@ -98,7 +98,7 @@ old pair is retired; v1.6.0 `settleEulerUnstake` skips a reverting `completeUnst
 held can pay (audit 2026-11-10 H2, H3, H10), plus `buyMonV4`; v1.7.0 the pool yields to the vault's leavers (implementation
 0xBE243F5e4215720080929eeCfe77047D2Fd2a410, both desks upgraded 2026-11-16); v1.8.0 the settle redeems only the desk's own WMON
 on the shared ushMON v3, plus `unparkShmon` (implementation 0xDF9515a5d2f68B12a4fAFc44e518B13751A1c3B2, both desks upgraded
-2026-11-17). The chain says v1.8.0 on both desks (`evidence/live-reads.md`).
+2026-11-17); v1.9.0 the exits run while the vault is paused, and a taker sale may fill up to 2% under the oracle over 65% (implementation 0x959FA2e2ab953B1C2cCE71c036Aafbf584409c16, 2026-11-18); v1.10.0 the controller can park, borrow and sell in one call (implementation 0x74eCd223208D812098487D4090d964005370BDc7, both desks upgraded 2026-11-19). The chain says v1.10.0 on both desks (VERSION 11000, read 2026-11-19).
 
 ## The desk's step order, one step per tick
 
