@@ -1,0 +1,45 @@
+Compiling 5 files with Solc 0.8.27
+Solc 0.8.27 finished in 1.77s
+Compiler run successful!
+
+Ran 7 tests for test/UnstakingShMonVaultV4.t.sol:UnstakingShMonVaultV4Test
+[PASS] test_aSecondTransferCarriesItOnAgain() (gas: 423047)
+[PASS] test_creditAlreadyEarnedMovesWithTheShares() (gas: 283959)
+[PASS] test_holdersPotIsReservedNotShared() (gas: 311004)
+[PASS] test_manyDustHoldersDoNotBurdenCompleteUnstake() (gas: 16531574)
+[PASS] test_oneDeskStillCannotTakeTheOthersWmon() (gas: 232982)
+[PASS] test_onlyOperatorsGetNewSharesAndStartUnstakes() (gas: 74982)
+[PASS] test_seizerRedeemsTheWmonBehindItsShares() (gas: 366016)
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 3.83ms (4.32ms CPU time)
+
+Ran 16 tests for test/UnstakingShMonVault.t.sol:UnstakingShMonVaultTest
+[PASS] test_completeUnstakeNothingToDoIsNoOp() (gas: 274889)
+[PASS] test_completeUnstakeWrapsStrayMon() (gas: 322216)
+[PASS] test_depositByNonOperatorReverts() (gas: 21257)
+[PASS] test_happyPath() (gas: 334957)
+[PASS] test_issue1AttackRevertsAtDeposit() (gas: 336104)
+[PASS] test_maxRedeemForWmonMatchesPayable() (gas: 490784)
+[PASS] test_maxViewsZeroWithController() (gas: 195486)
+[PASS] test_maxWithdrawRedeemEqualClaimWhenHeld() (gas: 303607)
+[PASS] test_maxWithdrawRedeemZeroWhileInUnstake() (gas: 260492)
+[PASS] test_poolStyleDepositToOperatorFromAnotherCaller() (gas: 124160)
+[PASS] test_startUnstakeClampsToHeld() (gas: 244332)
+[PASS] test_startUnstakeOnlyOperator() (gas: 117810)
+[PASS] test_twoDesks_creditsFollowEachLedger() (gas: 3642659)
+[PASS] test_twoDesks_onlyTheUnstakerRedeemsItsWmon() (gas: 3602244)
+[PASS] test_twoDesks_outsiderStillShutOut() (gas: 3289049)
+[PASS] test_twoDesks_strayIsSharedProRata() (gas: 3676671)
+Suite result: ok. 16 passed; 0 failed; 0 skipped; finished in 4.32ms (9.49ms CPU time)
+
+Ran 3 tests for test/UnstakingShMonVault.donation.t.sol:UnstakingShMonVaultDonationTest
+[PASS] testFuzz_donationIsCountedOnceAndNeverMintsOrLowersPrice(uint8,uint96,uint8) (runs: 64, μ: 258955, ~: 252741)
+[PASS] testFuzz_firstDepositAfterDonationKeepsItsValue(uint96,uint96) (runs: 65, μ: 134933, ~: 136834)
+[PASS] test_donationGrid() (gas: 27240745)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 28.23ms (42.26ms CPU time)
+
+Ran 2 tests for test/UnstakingShMonVault.fork.t.sol:UnstakingShMonVaultForkTest
+[PASS] test_completeUnstakeWithNothingMaturedIsSwallowed() (gas: 346353)
+[PASS] test_cycleAgainstLiveShMonad() (gas: 653171)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 2.90s (3.22s CPU time)
+
+Ran 4 test suites in 2.90s (2.93s CPU time): 28 tests passed, 0 failed, 0 skipped (28 total tests)

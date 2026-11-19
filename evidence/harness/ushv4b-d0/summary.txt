@@ -1,0 +1,9 @@
+22:16:27Z INFO fork up at 123414852
+22:16:31Z INFO run ushv4b-d0: base shmon-desk-hl-d0, spread default, mode final, port 8630
+22:16:31Z INFO git 321a9f7, tree 37 files changed, 734 insertions(+), 416 deletions(-)
+22:19:13Z PASS build
+22:19:15Z PASS setup (port free, source answers, clock, keys funded, prices, image from this tree)
+22:21:17Z PASS deploy
+22:21:18Z PASS up
+23:00:00Z PASS scenario
+23:00:01Z DONE teardown

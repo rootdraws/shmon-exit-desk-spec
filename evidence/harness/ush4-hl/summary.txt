@@ -1,0 +1,9 @@
+19:09:44Z INFO fork up at 123378188
+19:09:48Z INFO run ush4-hl: base shmon-desk-hl, spread default, mode final, port 8628
+19:09:48Z INFO git 268892c, tree 
+19:12:16Z PASS build
+19:12:17Z PASS setup (port free, source answers, clock, keys funded, prices, image from this tree)
+19:14:14Z PASS deploy
+19:14:15Z PASS up
+22:15:00Z PASS scenario
+22:15:01Z DONE teardown

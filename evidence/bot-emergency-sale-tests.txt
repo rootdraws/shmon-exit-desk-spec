@@ -1,0 +1,53 @@
+▶ a market sale's fill record and alert
+  ✔ stores the label and the transaction, and raises PANIC_SALE with the cost in dollars and bps (4.564833ms)
+  ✔ a fill with no label is stored as before, with no alert (0.717291ms)
+✔ a market sale's fill record and alert (5.782083ms)
+▶ the instant redemption's limit binds only its own hop
+  ✔ with Uniswap the better first hop, the whole sale goes along the path, not the pool's limit (3.125791ms)
+  ✔ with the instant redemption the better first hop, it sells up to its limit this tick (1.614208ms)
+✔ the instant redemption's limit binds only its own hop (4.841625ms)
+▶ the short's money (Root 2026-11-18)
+  ✔ at 67% the first plans are the trim to target, the margin home, then the repay (32.926459ms)
+  ✔ profit comes home at 52%, under the controlled line (70.494084ms)
+  ✔ at 67% with no WMON, no WMON to borrow, and no cheap shMON exit, the bot plans nothing beyond the short's money (no half-close) (25.805041ms)
+✔ the short's money (Root 2026-11-18) (129.804042ms)
+▶ market sales start at 65% and stop at 55%
+  ✔ start at 65.0%, not at 64.9% (19.15525ms)
+  ✔ once on, run on above 55.0% and stop at 55.0%, where the passive tools take over (12.711375ms)
+  ✔ the monitor's pause over 55% keeps the market sales on (23.285917ms)
+✔ market sales start at 65% and stop at 55% (55.314834ms)
+▶ WMON is inventory, sold first
+  ✔ WMON left at the controller is sold the next round, before any new shMON is converted (3.959583ms)
+  ✔ desk WMON is sold before any new shMON is converted (5.38ms)
+  ✔ WMON no taker sale takes within 2% holds the round: no new shMON turns into WMON (3.261708ms)
+  ✔ a WMON sale fills at 1.9% and is refused at 2.1% (6.072542ms)
+  ✔ at 66% the desk's resting orders are cancelled and their WMON taker-sold; no resting order is placed (14.112583ms)
+  ✔ at 66% the desk's resting buy order is cancelled and its USDC goes home to repay (14.247875ms)
+✔ WMON is inventory, sold first (47.270583ms)
+▶ one slice of shMON, in Root's order
+  ✔ borrow-to-fill is used first while the WMON vault has WMON to lend (65.414333ms)
+  ✔ borrow-to-fill is one transaction: shMON from the lender to the desk, WMON borrowed and taker-sold, the loan repaid (546.363208ms)
+  ✔ borrow-to-fill sends its WMON home through the Uniswap v3 pool when the v4 pool cannot fill within 2% (3524.244417ms)
+  ✔ borrow-to-fill chains several Uniswap v3 rounds in one transaction when the v4 pool cannot fill (3564.755708ms)
+  ✔ borrow-to-fill uses the v4 pool until it stops filling within 2%, then Uniswap v3, in one transaction (867.707666ms)
+  ✔ borrow-to-fill shrinks its slice to what the pool fills within 2%, and skips when nothing does (1471.062125ms)
+  ✔ the instant redemption at 1.4% is used and at 1.6% skipped (41.222083ms)
+  ✔ Curve at 1.4% is used and at 1.6% skipped (33.623667ms)
+  ✔ the instant redemption comes before Curve, and each slice fits its limits short of the 55% aim (21.080084ms)
+✔ one slice of shMON, in Root's order (10135.82375ms)
+▶ a slice that cannot lower the loan is refused
+  ✔ the instant redemption's $1,500 slice cannot lower a 67% loan by 1% and is refused; a $5,000 slice is used (43.944166ms)
+  ✔ a repay owed in USDT0 converts on the market in the same transaction, and the slice is sold (35.703958ms)
+  ✔ no shMON is redeemed when the repay would land on the stable desk instead of the loan (36.423875ms)
+✔ a slice that cannot lower the loan is refused (116.2265ms)
+▶ the passive tools run while paused
+  ✔ Curve within 0.15% plans its chunk while the vault is paused (55.606667ms)
+✔ the passive tools run while paused (55.674792ms)
+ℹ tests 29
+ℹ suites 8
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10993.987417
