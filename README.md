@@ -15,7 +15,7 @@ disagree, the spec says so and says which one was checked on chain.
 |---|---|
 | [01-overview.md](01-overview.md) | What the product is, who it serves, why leaving shMON is the hard part, and the state today |
 | [02-operations.md](02-operations.md) | How a strategy vault works: settings, the bot's rules, the keys, the two production vaults |
-| [03-exit-desk.md](03-exit-desk.md) | Why the exit desk exists and what it does: the unstake, resting orders, the digester, the WMON route |
+| [03-exit-desk.md](03-exit-desk.md) | Why the exit desk exists and what it does: the unstake, resting orders, the digester, the WMON route, the emergency sale |
 | [04-ushmon.md](04-ushmon.md) | The unstaking shMON vault: what it holds, who may deposit, v1 to v4, the audit, the tests |
 | [05-eulerswap.md](05-eulerswap.md) | How EulerSwap works, the desk's pool, and what capital it needs |
 | [06-euler-cluster-and-neverland.md](06-euler-cluster-and-neverland.md) | The lenders: our Euler cluster on Monad and Neverland |
@@ -45,20 +45,25 @@ shMonad is Fastlane's liquid staking token on Monad, contract `0x1B68626dCa36c7f
 ## How to verify
 
 ```sh
-# the vault and its unit tests (public)
-git clone --recurse-submodules https://github.com/rootdraws/ushMON && cd ushMON && forge test -vv
+# the vault and its tests (public; the two fork tests skip without MONAD_RPC_URL)
+git clone --recurse-submodules https://github.com/rootdraws/ushMON && cd ushMON && MONAD_RPC_URL=<rpc> forge test -vv
 
-# the fork cycle test (needs the alphastructures repo and a Monad RPC)
+# the emergency sale fork test (needs the alphastructures repo and a Monad RPC)
 cd alphastructures/contracts && FORK_MONAD=true MONAD_RPC_URL=<rpc> MONAD_FORK_BLOCK=123554000 \
   npx hardhat test test/NeverlandMarketAdapter/ShMonadExitPanic.fork.test.ts
 
-# the live state the spec quotes, at the block named in evidence/live-reads.md
+# the live state the spec quotes; evidence/live-reads.md names each read's block
 cast call 0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770 'VERSION()(uint256)' -r https://rpc.monad.xyz
 ```
 
-The outputs recorded from 2026-11-16 to 2026-11-19 are in [`evidence/`](evidence/): `forge-test-v4-all.txt`, `hardhat-fork-panic.txt`, `hardhat-fork-desk-2026-11-19.txt`, `bot-emergency-sale-tests.txt`, the
-five-stage harness runs under `harness/`, the fork rehearsals of the releases in `rehearsal-fork*.log` and `release-ush3/rehearsal-ush3.log`, the mainnet release logs under `release-mainnet/` and `release-ush3/`, the audit report,
-the eleven GitHub issues open on the vault, the research data under `data/`, and `live-reads.md`.
+The recorded outputs, 2026-11-16 to 2026-11-19, are in [`evidence/`](evidence/):
+
+- **Tests:** `forge-test-v4-all.txt`, `hardhat-fork-panic.txt`, `hardhat-fork-desk-2026-11-19.txt`,
+  `bot-emergency-sale-tests.txt`, and the five-stage harness runs under `harness/`.
+- **Releases:** the fork rehearsals in `rehearsal-fork*.log` and `release-ush3/rehearsal-ush3.log`, and the mainnet
+  logs under `release-mainnet/` and `release-ush3/`.
+- **Audit:** the report, and the eleven GitHub issues on the vault under `issues/`, all closed.
+- **Data:** the research data under `data/`, and the chain reads in `live-reads.md`.
 
 ## For another Claude
 
