@@ -3,7 +3,7 @@
 All historical figures were read from Monad by the scripts in
 `alphastructures/services/rebalancingBot/test/sim/` (`instantExits.ts`, `instantExitHistory.ts`, `shmonadHistory.ts`,
 `unstakeTiming.ts`, `backfill.ts`, `replay.ts`, `exitMm.sim.ts`) and are copied under `evidence/data/` with their read
-dates. Live figures are from `evidence/live-reads.md` (2026-11-16, block 122821118). MON traded at about $0.0184 on
+dates. Live figures are from `evidence/live-reads.md` (2026-11-19, block 123490991, unless noted). MON traded at about $0.0184 on
 2026-11-04 (Uniswap v3 WMON/USDC); dollar figures use each day's price unless stated.
 
 ## The rate of shMON to MON consumption
@@ -64,15 +64,15 @@ MON/USDC flow as: Uniswap v4 0.05% $1.51M bought and $1.59M sold, PancakeSwap v3
 
 Hourly reads (`evidence/data/shmonad-30d.md`, 720 hours to 2026-11-05; `shmonad-1d.md`, 25 hours):
 
-| | 30d low (p10) | 30d typical | 30d high (p90) | Live 2026-11-16 |
+| | 30d low (p10) | 30d typical | 30d high (p90) | Live 2026-11-19 |
 |---|---|---|---|---|
-| MON payable at once | 1,691,332 | 2,962,823 | 3,889,584 | 3,923,398 |
+| MON payable at once | 1,691,332 | 2,962,823 | 3,889,584 | 3,420,528 |
 | Pool target | 6,053,067 (first row) | 6,412,155 (30-day average, `instant-exits-30d.json`) | 6,256,184 (last row) | 6,577,624 |
-| Instant-exit fee | 0.41% | 0.55% | 0.73% | 0.4085% |
+| Instant-exit fee | 0.41% | 0.55% | 0.73% | 0.4850% |
 | Refill after a drain, MON per hour | | 1,258 | 37,378 | |
 
-The desk's 0.30% discount sits under the instant exit's 10th-percentile hour of the last 30 days read (the file gives percentiles, not the lowest hour). shMonad holds 329.9M MON
-in total (`totalAssets`, live), and 1 shMON is worth 1.6533 MON.
+The desk's 0.30% discount sits under the instant exit's 10th-percentile hour of the last 30 days read (the file gives percentiles, not the lowest hour). shMonad holds 329.2M MON
+in total (`totalAssets`, live), and 1 shMON is worth 1.6544 MON.
 
 ## Capacities
 
@@ -96,13 +96,22 @@ from the MON/USDC flow of about $3.35M a day (`docs/Alpha_Structures_Digester.md
 digester's buy flow at $82,178 an hour, with 10% fills at $8,218 an hour
 (`alphastructures/services/rebalancingBot/test/sim/withdrawal-sim.md:1`, undated in the file).
 
+**Selling WMON as a taker within 2% (the emergency sale).** Each pool was measured alone on a copy of Monad at block
+123451592, with MON at $0.01407. About $27,000 of MON sells within 2% of the oracle across all WMON/USDC pools:
+* Uniswap v3 0.3%: 1,041,000 MON for $14,358.
+* Uniswap v4 0.05%, the desk's pool: 774,000 MON for $10,668.
+* PancakeSwap v3 0.05%: 132,000 MON for $1,820.
+* Every other pool took under $30. The Hanji book had almost no bids, and the Kuru book refused the test sales.
+
+One emergency transaction sells through the v4 pool, then Uniswap v3, so it can clear about $25,000 at that depth.
+
 **Borrowing USDC and USDT0 (what the vaults can raise against shMON).** Room before each lender's rate kink, live
-2026-11-16:
+2026-11-19:
 
 | Lender | USDC room | USDT0 room | Note |
 |---|---|---|---|
-| Neverland | 325,176 | 102,551 | 80.0% and 85.6% used, kink 90% |
-| Our Euler cluster | 0 | 0 | caps 4.5M borrow each since 2026-11-17, no lenders yet (read 2026-11-18) |
+| Neverland | 118,279 | 19,273 | 85.8% and 89.1% used, kink 90% |
+| Our Euler cluster | 0 | 0 | caps 4.5M borrow each since 2026-11-17, no lenders yet (`cash()` 0 on both) |
 
 **Moving USDC to USDT0 and back** (Curve, live quotes of 2026-11-09, `docs/Alpha_Structures_Rebalancing_Policy.md:278`):
 USDC to USDT0 pays a premium of +0.083% at $10k and +0.045% at $160k; USDT0 to USDC costs 0.10% at $10k and 0.19% at
@@ -117,12 +126,12 @@ and gets MON back after 19.6 hours. "Design 2" is the borrow-to-fill EulerSwap p
 borrowing at 7.78% (`exitMm.sim.ts:26-36`; the rates of Euler's deepest WMON vault on Monad that day; the md rounds it to 7.8%). Outside flow is filled only in hours
 when the discount beats the live instant-exit fee.
 
-| Discount | Vault's own exits per month | Outside flow share 0% / 50% / 100% | Design 2 return per year |
-|---|---|---|---|
-| 0.3% | $0 | | 0.1% / 1.8% / 3.4% |
-| 0.3% | $100k | | 3.8% / 5.4% / 7.1% |
-| 0.3% | $500k | | 18.4% / 20.0% / 21.7% |
-| 0.3% | $2M | | 73.2% / 74.8% / 76.5% |
+| Discount | Vault's own exits per month | Design 2 return per year, at 0% / 50% / 100% of outside flow |
+|---|---|---|
+| 0.3% | $0 | 0.1% / 1.8% / 3.4% |
+| 0.3% | $100k | 3.8% / 5.4% / 7.1% |
+| 0.3% | $500k | 18.4% / 20.0% / 21.7% |
+| 0.3% | $2M | 73.2% / 74.8% / 76.5% |
 
 The file's stated benchmark: "shMonad's instant exit, ~8% a year on its capital since launch." These are model outputs
 on 2026-11-05 data, not measured returns. The desk's own exits dominate the return; outside flow adds a few points.

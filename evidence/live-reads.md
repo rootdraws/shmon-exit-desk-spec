@@ -184,6 +184,23 @@ MON at $0.013806 (Hyperliquid mid). shMonad `convertToAssets(1e18)` = 1.654406 M
 | Curve `0x74d8…25d4` `get_dy(1,0)` | 2,000,000 shMON (~$45.7k) | 1.057% under the rate |
 | Curve `0x74d8…25d4` `get_dy(1,0)` | 3,000,000 shMON (~$68.5k) | 21.060% under the rate |
 
+## shMonad, block 123490991 (2026-11-19)
+
+| Read | Raw | Meaning |
+|---|---|---|
+| `getCurrentLiquidity()` | 3420528298964304841690147 | 3,420,528 MON payable at once |
+| `getTargetLiquidity()` | 6577623553940831597975256 | 6,577,624 MON target |
+| `getCurrentUnstakeFeeRateRay()` | 4849750592423347000000000 | 0.4850% |
+| `totalAssets()` | 329189588714759718976731198 | 329,189,589 MON staked through shMonad |
+| Cluster USDC and USDT0 vaults `cash()` | 0, 0 | no lenders yet |
+
+## WMON sold within 2% of the oracle, block 123451592 (2026-11-19)
+
+Each pool alone, on an anvil fork, MON at $0.01407 (Hyperliquid mid), selling WMON for USDC until the average fill is 2%
+under the oracle: Uniswap v3 0.3% 1,041,000 MON for $14,358; Uniswap v4 0.05% 774,000 MON for $10,668 (12,469 dollars at
+block 123450985); PancakeSwap v3 0.05% 132,000 MON for $1,820; Uniswap v3 0.01%, 0.05%, 1%, PancakeSwap v3 0.25%, 1% and
+Uniswap v4 0.01%, 0.025%, 0.3%, 1% under $30 each; Hanji 1,000 MON for $0.10; Kuru refused every market sell.
+
 ## Neverland, block 123490679 (2026-11-19)
 
 Pool `0x80F0…D585` `getReserveData`, the aToken and variable debt token `totalSupply()`, and the rate strategy's
