@@ -1,13 +1,13 @@
 # 6. The lenders: our Euler cluster on Monad, and Neverland
 
-![shMON Euler clusters, read on chain 2026-11-18 at block 123,224,821](figures/euler-clusters.svg)
+![shMON Euler clusters, read on chain 2026-11-18 at block 123,224,821, ushMON v4 and desk v1.10.0 updated 2026-11-19](figures/euler-clusters.svg)
 
 Two Euler clusters on Monad. The live one lends WMON to the two exit desks against their ushMON vaults; the first one
 was handed to AlphaGrowth and holds nothing.
 
 - **Cluster**: a set of Euler lending vaults that share one price router.
 - **Green**: the WMON loan. The vault lends at 93% of the ushMON's value and liquidates at 95%.
-- **ushMON v3**: one vault for both desks. Each desk's unstakes and the WMON they bring back sit on that desk's own
+- **ushMON v4**: one vault for both desks. Each desk's unstakes and the WMON they bring back sit on that desk's own
   ledger. Only the desks get shares.
 - **Caps**: 727M WMON supply with 654M borrow (about $10M), 5M USDC, 5M USDT0 (set 2026-11-17). LTVs read as
   borrow/liquidation percent.
@@ -26,7 +26,7 @@ would move governance to the Safe `0x4f894Bfc9481110278C356adE1473eBe2127Fd3C`, 
 |---|---|---|---|---|---|
 | shMON (eshMON-6) | [0xD81D3E243760eD23Ac3DEf2b08d4989bA2790Dfe](https://monadscan.com/address/0xD81D3E243760eD23Ac3DEf2b08d4989bA2790Dfe) | no (borrow cap 1) | 200M shMON (about $4.9M) | | |
 | USDC (eUSDC-26) | [0x5aB09A3EDbb0937Db454f54e6CF04Dd982c40948](https://monadscan.com/address/0x5aB09A3EDbb0937Db454f54e6CF04Dd982c40948) | yes | 5M / 4.5M | `0xe743…97c6` kinked: 8.5% at 80% use, 9.6% at 90% (`ag-euler/safe-payloads/monad-shmon-usdc-caps-rate.json:7`) | shMON 79/80, WMON shares 79/80, USDT0 shares 95/96 |
-| WMON (eWMON-16) | [0xE4522663752AC47516e39aD11d3780a116850eaf](https://monadscan.com/address/0xE4522663752AC47516e39aD11d3780a116850eaf) | yes | 727M / 654M (about $10M) | `0xa359…Ba8a`: 20% at 0, 30% at the 90% kink, 50% at 100% | shMON 97/98, **ushMON v3 93/95**, USDC shares 79/80 |
+| WMON (eWMON-16) | [0xE4522663752AC47516e39aD11d3780a116850eaf](https://monadscan.com/address/0xE4522663752AC47516e39aD11d3780a116850eaf) | yes | 727M / 654M (about $10M) | `0xa359…Ba8a`: 20% at 0, 30% at the 90% kink, 50% at 100% | shMON 97/98, **ushMON v4 93/95**, USDC shares 79/80 |
 | USDT0 (eUSDT0-15) | [0xD6645190976d456907c9807d08E4E4E220c96a3E](https://monadscan.com/address/0xD6645190976d456907c9807d08E4E4E220c96a3E) | yes | 5M / 4.5M | same as USDC | USDC shares 95/96 |
 
 Common settings: interest fee 10%, max liquidation discount 15%, liquidation cool-off 1 second, hooks off, fee receiver
@@ -38,10 +38,10 @@ shMON/USD as a cross of the shMON/MON SVR rate and WMON/USD (`0x2B43…eAB6`), W
 (`0x7459…8284`), USDT0/USD (`0xBD48…519F`). Each ushMON is a "resolved vault" on the router, priced through its
 `convertToAssets` into shMON (`deploy.sh:192`).
 
-**State on 2026-11-18, block 123,224,821.** The WMON vault holds 929.88 WMON lent by the deployer key and has nothing
-borrowed, so it charges 20% at zero use. The shMON, USDC and USDT0 vaults hold nothing. The one ushMON v3 vault holds
-48.38 shMON for each desk, and both desks run v1.8.0 with their pools open. Since 2026-11-18 the one vault is ushMON v4 0xa753…8C5e, and since 2026-11-19 both desks run v1.10.0. The deployer key is still governor, and the
-cluster's 33 configuration checks read ok. Caps were set on 2026-11-17.
+**State on 2026-11-19.** The WMON vault holds 929.88 WMON lent by the deployer key, none of it borrowed, so it charges
+20% at zero use. The shMON, USDC and USDT0 vaults hold nothing. ushMON v4 `0xa753…8C5e` holds 48.38 shMON for each desk,
+and both desks run v1.10.0 with their pools open. The deployer key is still governor; the cluster's 33 configuration
+checks read ok on 2026-11-18, and caps were set on 2026-11-17.
 
 ## Neverland
 
@@ -52,13 +52,13 @@ The config records the collateral's own yield at 12.26% a year (`collateralYield
 
 The bot reads a lender's room before its kink, "free cash, capped so its utilization stays at or under the kink"
 (`services/rebalancingBot/src/lenders.ts:128-166`): for Neverland, aToken supply × optimal usage ratio − variable debt.
-Read on 2026-11-16 (`evidence/live-reads.md`):
+Read on 2026-11-19 at block 123,490,679 (`evidence/live-reads.md`):
 
 | Reserve | Supplied | Borrowed | Utilization | Kink | Room before kink | Borrow rate |
 |---|---|---|---|---|---|---|
-| USDC | 3,241,762 | 2,592,410 | 80.0% | 90% | **325,176 USDC** | 5.33% |
-| USDT0 | 2,334,856 | 1,998,819 | 85.6% | 90% | **102,551 USDT0** | 5.71% |
+| USDC | 2,786,215 | 2,389,314 | 85.8% | 90% | **118,279 USDC** | 5.72% |
+| USDT0 | 2,042,831 | 1,819,275 | 89.1% | 90% | **19,273 USDT0** | 5.94% |
 
-Neverland holds 29.5M shMON in total (the shMON aToken's supply), about 15% of the 199.5M shMON outstanding (329.9M MON staked at 1.6533 MON per shMON). On 2026-11-09 the USDC reserve
-stood at 87.5% used (`docs/Alpha_Structures_Rebalancing_Policy.md:125`), which is what makes the stable desk's USDC to
-USDT0 debt move and the second lender necessary.
+Neverland holds 29.1M shMON (the shMON aToken's supply), about 15% of the 199.0M shMON outstanding (329.2M MON staked at
+1.6544 MON per shMON). On 2026-11-09 the USDC reserve stood at 87.5% used (`docs/Alpha_Structures_Rebalancing_Policy.md:125`),
+which is what makes the stable desk's USDC to USDT0 debt move and the second lender necessary.

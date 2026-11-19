@@ -184,6 +184,19 @@ MON at $0.013806 (Hyperliquid mid). shMonad `convertToAssets(1e18)` = 1.654406 M
 | Curve `0x74d8…25d4` `get_dy(1,0)` | 2,000,000 shMON (~$45.7k) | 1.057% under the rate |
 | Curve `0x74d8…25d4` `get_dy(1,0)` | 3,000,000 shMON (~$68.5k) | 21.060% under the rate |
 
+## Neverland, block 123490679 (2026-11-19)
+
+Pool `0x80F0…D585` `getReserveData`, the aToken and variable debt token `totalSupply()`, and the rate strategy's
+`OPTIMAL_USAGE_RATIO()` (90%).
+
+| Reserve | aToken supply | Variable debt | Utilization | Room before 90% | Borrow rate |
+|---|---|---|---|---|---|
+| USDC | 2,786,214.60 | 2,389,313.82 | 85.75% | 118,279.32 | 5.72% |
+| USDT0 | 2,042,830.86 | 1,819,274.66 | 89.06% | 19,273.12 | 5.94% |
+| shMON | 29,115,671.28 | 0 | | | |
+
+shMON `totalSupply()` 198,964,633.13; `convertToAssets(1e18)` 1.654419 MON.
+
 ## Deposit cap, 2026-11-18
 
 Admin Safe `setDepositCap(84,000,000 shMON)` on both vaults' Settings, read back with `getDepositCap()`:
