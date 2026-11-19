@@ -80,16 +80,16 @@
       <text x="400" y="414" fill="#5f6b69">outside venues, per hour, over the last day</text>
 
       <text x="400" y="448" font-weight="600" font-size="12">Oracle floor</text>
-      <text x="400" y="468" fill="#5f6b69">never sells more than 1% under the oracle price</text>
+      <text x="400" y="468" fill="#5f6b69">sells at most 1% under the oracle, 2% over 65%</text>
 
       <text x="400" y="502" font-weight="600" font-size="12">Its own EulerSwap pool</text>
       <text x="400" y="522" fill="#5f6b69">buys shMON at shMonad's rate less 0.30%</text>
       <text x="400" y="540" fill="#5f6b69">refuses WMON in; quotes nothing while a batch is unpaid</text>
       <text x="400" y="558" fill="#5f6b69">fixed price 2% over the rate, moved up at 1% drift</text>
-      <text x="400" y="578" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">pools 0xA65D…68a8 · 0x6e44…a8a8</text>
+      <text x="400" y="578" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">pools 0x56aE…28A8 · 0x1924…e8a8</text>
 
       <text x="400" y="612" font-weight="600" font-size="12">Paused</text>
-      <text x="400" y="632" fill="#5f6b69">only repays the loan and sends spare WMON home</text>
+      <text x="400" y="632" fill="#5f6b69">still parks, borrows, sells and rests orders</text>
 
       <!-- OUT, right column -->
       <text x="880" y="30" font-weight="600" font-size="13" fill="#8a5a0a">where it sells</text>
@@ -164,7 +164,7 @@
       <rect x="40" y="994" width="1160" height="116" rx="3" fill="none" stroke="#8a948f" stroke-dasharray="5 4"/>
       <text x="56" y="1018" font-weight="600" fill="#5f6b69">Numbers</text>
       <text x="56" y="1038" fill="#5f6b69">pool discount 0.30% · Curve limit 0.15% · pace share 25% of taker buys · chunk window 4 h · lenders' room used 92.15% · dust $10 · leftover floor $1,000</text>
-      <text x="56" y="1056" fill="#5f6b69">oracle floor 1% · rungs 5 per side · stale 20 ticks for 3 min · rested inside 5 min · pool ceiling 2%, reset 1% · WMON loan 93% of value, liquidation 95%</text>
+      <text x="56" y="1056" fill="#5f6b69">oracle floor 1%, 2% over 65% · rungs 5 per side · stale 20 ticks for 3 min · rested inside 5 min · pool ceiling 2%, reset 1% · WMON loan 93% of value, liquidation 95%</text>
       <text x="56" y="1074" fill="#5f6b69">arbitrage: never while leavers wait; the WMON vault keeps half its cash, or the last leaver payout if larger · keeper fill minimum $0.01</text>
       <text x="56" y="1092" fill="#5f6b69">v4 PoolManager 0x188d…Ea8e · v3 position manager 0x7197…4E53 · PancakeSwap position manager 0x46A1…4364</text>
     </g>
