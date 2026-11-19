@@ -30,14 +30,14 @@
       <text x="112" y="450">Below this, the bot borrows back to 43%.</text>
       <text x="420" y="30" font-weight="600" font-size="13">Each tick, the bot takes the first step with work.</text>
       <rect x="420" y="44" width="400" height="172" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="436" y="68" font-weight="600">0. First, the bot reads the vault's mode.</text>
-      <text x="436" y="88" fill="#5f6b69">•</text><text x="448" y="88" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Halted:</tspan> The admin Safe stopped it. The bot does nothing.</text>
-      <text x="436" y="106" fill="#5f6b69">•</text><text x="448" y="106" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Paused:</tspan> The bot only repays and sells to cut risk.</text>
-      <text x="436" y="124" fill="#5f6b69">•</text><text x="448" y="124" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Stale data:</tspan> The bot stops growth, new shorts and payouts.</text>
-      <text x="448" y="142" fill="#5f6b69">–</text><text x="460" y="142" fill="#5f6b69">A block 60 s old or a price 90 min old is stale.</text>
-      <text x="448" y="160" fill="#5f6b69">–</text><text x="460" y="160" fill="#5f6b69">A Hyperliquid outage also counts as stale.</text>
-      <text x="436" y="178" fill="#5f6b69">•</text><text x="448" y="178" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Withdrawing:</tspan> The bot pays waiting leavers and does not grow.</text>
-      <text x="436" y="196" fill="#5f6b69">•</text><text x="448" y="196" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">In flight:</tspan> A pending trade finishes before anything new.</text>
+      <text x="436" y="68" font-weight="600">0. First, the bot finishes any Hyperliquid margin transfer.</text>
+      <text x="436" y="88" font-weight="600">Then it reads the vault's mode.</text>
+      <text x="436" y="106" fill="#5f6b69">•</text><text x="448" y="106" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Halted:</tspan> The admin Safe stopped it. The bot does nothing.</text>
+      <text x="436" y="124" fill="#5f6b69">•</text><text x="448" y="124" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Paused:</tspan> The bot only repays and sells to cut risk.</text>
+      <text x="436" y="142" fill="#5f6b69">•</text><text x="448" y="142" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Stale data:</tspan> The bot stops growth, new shorts and payouts.</text>
+      <text x="448" y="160" fill="#5f6b69">–</text><text x="460" y="160" fill="#5f6b69">A block 60 s old or a price 90 min old is stale.</text>
+      <text x="448" y="178" fill="#5f6b69">–</text><text x="460" y="178" fill="#5f6b69">A Hyperliquid outage also counts as stale.</text>
+      <text x="436" y="196" fill="#5f6b69">•</text><text x="448" y="196" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Withdrawing:</tspan> The bot pays waiting leavers and does not grow.</text>
       <g font-size="11.5">
         <rect x="420" y="230" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="247">1. The exit desk and the stable desk take their step.</text>
         <rect x="420" y="262" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="279">2. Over 50%, the short's profit and spare margin repay.</text>
