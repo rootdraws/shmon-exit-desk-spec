@@ -1,0 +1,13 @@
+No files changed, compilation skipped
+
+Ran 7 tests for test/UnstakingShMonVaultV4.t.sol:UnstakingShMonVaultV4Test
+[PASS] test_aSecondTransferCarriesItOnAgain() (gas: 423047)
+[PASS] test_creditAlreadyEarnedMovesWithTheShares() (gas: 284223)
+[PASS] test_holdersPotIsReservedNotShared() (gas: 311702)
+[PASS] test_manyDustHoldersDoNotBurdenCompleteUnstake() (gas: 16532117)
+[PASS] test_oneDeskStillCannotTakeTheOthersWmon() (gas: 233525)
+[PASS] test_onlyOperatorsGetNewSharesAndStartUnstakes() (gas: 75320)
+[PASS] test_seizerRedeemsTheWmonBehindItsShares() (gas: 366280)
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 4.33ms (4.41ms CPU time)
+
+Ran 1 test suite in 133.84ms (4.33ms CPU time): 7 tests passed, 0 failed, 0 skipped (7 total tests)

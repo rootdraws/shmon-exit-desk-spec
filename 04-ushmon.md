@@ -1,10 +1,12 @@
 # 4. ushMON, the unstaking shMON vault
 
-Repo: [rootdraws/ushMON](https://github.com/rootdraws/ushMON) (public). Source
-[`src/UnstakingShMonVault.sol`](https://github.com/rootdraws/ushMON/blob/48d07b3/src/UnstakingShMonVault.sol)
-at `48d07b3` (2026-11-17) is v3. v4, live on Monad since 2026-11-18 as the one vault in the table below, adds one rule: the WMON a finished unstake returns follows the shares, so a liquidator can redeem shares it seized. `4235998` is v2
-(2026-11-16, one vault per desk, now empty) and `a7f4788` is v1, the replaced code. See [09-current-state-and-next.md](09-current-state-and-next.md). The same file is vendored at
-`ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol` (copy in [`sources/ag-euler/`](sources/ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol)), whose build artifact every deploy script reads.
+Live: v4, one vault for both desks since 2026-11-18. Its source is
+[`sources/ag-euler/.../UnstakingShMonVault.sol`](sources/ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol),
+copied from `ag-euler/contracts/eulerswap-mm-monad/src/exitmm/`, whose build every deploy script reads. The live code
+matches that build byte for byte, apart from constructor values and metadata (read 2026-11-19).
+
+The public repo [rootdraws/ushMON](https://github.com/rootdraws/ushMON) holds v3 at `48d07b3` (2026-11-17), v2 at
+`4235998` (2026-11-16) and v1 at `a7f4788`. v4 is not in it yet.
 
 ## What it is
 
@@ -16,25 +18,26 @@ and liquidate it." (`README.md`.) Root's brief, quoted in the NatSpec: "Custom v
 rehypothecation into slow redemption" (2026-11-05).
 
 Assets are counted in shMON units: shMON held + (MON pending in the unstake + WMON held) / shMonad's rate
-(`totalAssets`, line 118). The operators are fixed at construction and are the exit desks; since v3 one vault serves
-both desks, each on its own ledger.
+(`totalAssets`, line 129). The operators are fixed at construction and are the exit desks. One vault serves both desks,
+each on its own ledger.
 
-## Functions (v3 at `48d07b3`, live)
+## Functions (v4, live)
 
 | Function | Who | What |
 |---|---|---|
-| `startUnstake(shmon)` 193 | operator | sends shMON into shMonad's unstake, writes the MON owed on the caller's ledger, emits `UnstakeStarted` |
-| `completeUnstake()` 210 | anyone | completes matured requests, wraps the vault's MON into WMON, credits it to the operators whose matured entries it pays, oldest first; a refusal with nothing matured is a no-op |
-| `redeemForWmon(shares, receiver, owner)` 247 | holder or approved | burns shares, pays at most `wmonRedeemable(owner)` at `rate()`, then the EVC account check |
+| `startUnstake(shmon)` 215 | operator | sends shMON into shMonad's unstake and writes the MON owed on the caller's ledger |
+| `completeUnstake()` 232 | anyone | completes matured requests, wraps the MON into WMON, and credits it to the operators whose entries it pays, oldest first; it reserves other holders' part for them to claim |
+| `claimUnstaked(holder)` 267 | anyone | moves a non-operator's matured unstakes from the reserved pot to its own credit |
+| `redeemForWmon(shares, receiver, owner)` 330 | holder or approved | claims first, burns shares, pays at most `wmonRedeemable(owner)` at `rate()`, then the EVC account check |
 | `deposit` / `mint` (OpenZeppelin) | receiver must be an operator | shMON in, shares out |
-| `withdraw` / `redeem` 279, 284 | holder | shMON out, then the EVC account check |
-| `transfer` / `transferFrom` 267, 273 | holder | plus the EVC account check, so a controller can veto |
-| `maxDeposit`, `maxMint` 136, 140 | view | `type(uint256).max` for an operator, 0 for anyone else |
-| `maxWithdraw`, `maxRedeem` 146, 151 | view | 0 with a controller enabled, else the claim bounded by the shMON held |
-| `wmonRedeemable(owner)` 163, `maxRedeemForWmon(owner)` 171 | view | the owner's own WMON credit plus its share of the shared pot; `maxRedeemForWmon` is 0 with a controller |
-| `ledgerOf(operator)` 186, `wmonCredit(operator)` 72, `sharedWmon()` 158 | view | each desk's pending unstakes, its credited WMON, and the stray WMON every holder draws pro rata |
-| `isOperator` 67, `operators()` 109 | view | the desks |
-| `rate()` 114, `totalAssets()` 118, `pendingMon()` 180, `permit2Address()` 105 | view | |
+| `withdraw` / `redeem` 363, 368 | holder | shMON out, then the EVC account check |
+| `transfer` / `transferFrom` 351, 357 | holder | moves the same share of the sender's WMON credit and pending unstakes to the receiver, then the EVC account check, so a controller can veto |
+| `maxDeposit`, `maxMint` 147, 151 | view | `type(uint256).max` for an operator, 0 for anyone else |
+| `maxWithdraw`, `maxRedeem` 157, 162 | view | 0 with a controller enabled, else the claim bounded by the shMON held |
+| `wmonRedeemable(owner)` 174, `maxRedeemForWmon(owner)` 193 | view | the owner's own WMON credit, its claimable unstakes and its share of the shared pot; `maxRedeemForWmon` is 0 with a controller |
+| `ledgerOf(holder)` 208, `wmonCredit(holder)`, `sharedWmon()` 169 | view | each holder's pending unstakes, its credited WMON, and the stray WMON every holder draws pro rata |
+| `isOperator`, `operators()` 120 | view | the desks |
+| `rate()` 125, `totalAssets()` 129, `pendingMon()` 202 | view | |
 
 v2 at `4235998` had the same functions without the ledger: one operator, `redeemForWmon` paid from the whole WMON
 balance, and `maxRedeemForWmon` read that balance.
@@ -71,7 +74,7 @@ with Root; the calls below are his.
 | [#10](https://github.com/rootdraws/ushMON/issues/10) Low | `totalAssets` reads raw balances, so a transfer to the vault moves the share price | Closed after 189 test cases (`evidence/donation-tests.txt`, `evidence/UnstakingShMonVault.donation.t.sol`): a gift is counted once, mints nothing, never lowers the price, goes to the holders pro rata, and costs a later deposit at most one share's worth of rounding (gift / 1e6) |
 | [#11](https://github.com/rootdraws/ushMON/issues/11) Low | `redeemForWmon` emits no Withdraw event (the audit's I3) | Fixed in v2: `RedeemedForWmon(caller, receiver, owner, shares, wmon)`; wiring it into the Telegram announcements is item 12 of `alphastructures/audit/todo-before-launch.md` |
 
-## Tests (v2, `test/UnstakingShMonVault.t.sol`, output in `evidence/forge-test.txt`; v3 in `evidence/forge-test-v3.txt`)
+## Tests (v2, `test/UnstakingShMonVault.t.sol`, output in `evidence/forge-test.txt`; v3 in `evidence/forge-test-v3.txt`; v4 in `evidence/forge-test-v4.txt`)
 
 Seventeen tests in three files (output in `evidence/forge-test.txt`): twelve unit tests against a mock shMON that burns
 and refuses as live shMonad does, a mock WMON, the real Ethereum Vault Connector from `lib/` and a mock controller;
@@ -113,6 +116,19 @@ in `test/UnstakingShMonVault.t.sol` (A unstakes and only A can redeem the WMON; 
 WMON are shared pro rata with a liquidator; an outsider is still shut out), the donation grid and the fork tests all
 pass on v3 (21 tests), and the desk-side fork test runs both live desks on one vault ([08-testing.md](08-testing.md)).
 
+## v3 to v4: the WMON follows the shares (2026-11-18)
+
+Root, 2026-11-18: "yes, build the ushMON fix". In v3 a liquidator that seized a desk's shares got none of the WMON
+behind them, because that WMON was credited to the desk alone. v4 fixes this:
+
+- A transfer moves the same share of the sender's WMON credit and of each pending unstake to the receiver.
+- When those unstakes mature, `completeUnstake` reserves their WMON in a pot, and each holder claims its own part.
+- Claims run one holder at a time, so many small holders cannot make `completeUnstake` too costly for the desks.
+
+Tests: seven v4 cases in `evidence/UnstakingShMonVaultV4.t.sol` pass (`evidence/forge-test-v4.txt`, rerun 2026-11-19). A
+seizer redeems the WMON behind its shares, a second transfer carries the claim on, and one desk still cannot take the
+other's WMON.
+
 ## Deployed vaults
 
 | ushMON | Cluster | Operator (exit desk) | Version | Note |
@@ -128,8 +144,7 @@ pass on v3 (21 tests), and the desk-side fork test runs both live desks on one v
 | 0x59f7f897322D5FdEFCa38beB78137559eD985F80, 0xc0CA1086131046766956bBD030fe9595Cc8204a1 | the older setup on AlphaGrowth's eWMON-14 (0xfE26…e702), 2026-11-06 | usdc-hl, usdt0-hl desks | v1 | listed in the ushMON README; the usdc-hl desk's pool on this pair (0x9aF1…e8a8) was retired with desk v1.5.0; the usdt0-hl desk and its pool (0xeC6b…68A8) were retired with the usdt0 strategy |
 
 Operators are from the production and retired configs (`params.unstakeVault`), `docs/shmon-exit-desk-plan.md:186-204`
-and the live EVC collateral reads (`evidence/live-reads.md`). The ushMON README still lists only the first-cluster pair and says "Not yet audited"; it is
-updated with each release. A vault is approved on the cluster by two governor calls: the router resolves it to shMON
+and the live EVC collateral reads (`evidence/live-reads.md`). The ushMON README lists v3 as the live vault; v4 is not in that repo yet. A vault is approved on the cluster by two governor calls: the router resolves it to shMON
 (`govSetResolvedVault`) and the WMON vault lends 93% against it with a 95% liquidation threshold (`setLTV`), both in
 `ag-euler/contracts/shmon-cluster-monad/deploy.sh` (`desks`, which since v3 takes `DESKS="usdc=0xdesk+0xdesk"` and
 passes the list to the constructor).
