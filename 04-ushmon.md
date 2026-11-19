@@ -5,8 +5,8 @@ Live: v4, one vault for both desks since 2026-11-18. Its source is
 copied from `ag-euler/contracts/eulerswap-mm-monad/src/exitmm/`, whose build every deploy script reads. The live code
 matches that build byte for byte, apart from constructor values and metadata (read 2026-11-19).
 
-The public repo [rootdraws/ushMON](https://github.com/rootdraws/ushMON) holds v3 at `48d07b3` (2026-11-17), v2 at
-`4235998` (2026-11-16) and v1 at `a7f4788`. v4 is not in it yet.
+The public repo [rootdraws/ushMON](https://github.com/rootdraws/ushMON) holds v4 at `b3ba1bf` (pushed 2026-11-19), v3 at
+`48d07b3` (2026-11-17), v2 at `4235998` (2026-11-16) and v1 at `a7f4788`.
 
 ## What it is
 
@@ -144,7 +144,7 @@ other's WMON.
 | 0x59f7f897322D5FdEFCa38beB78137559eD985F80, 0xc0CA1086131046766956bBD030fe9595Cc8204a1 | the older setup on AlphaGrowth's eWMON-14 (0xfE26…e702), 2026-11-06 | usdc-hl, usdt0-hl desks | v1 | listed in the ushMON README; the usdc-hl desk's pool on this pair (0x9aF1…e8a8) was retired with desk v1.5.0; the usdt0-hl desk and its pool (0xeC6b…68A8) were retired with the usdt0 strategy |
 
 Operators are from the production and retired configs (`params.unstakeVault`), `docs/shmon-exit-desk-plan.md:186-204`
-and the live EVC collateral reads (`evidence/live-reads.md`). The ushMON README lists v3 as the live vault; v4 is not in that repo yet. A vault is approved on the cluster by two governor calls: the router resolves it to shMON
+and the live EVC collateral reads (`evidence/live-reads.md`). The ushMON README lists v4 as the live vault. A vault is approved on the cluster by two governor calls: the router resolves it to shMON
 (`govSetResolvedVault`) and the WMON vault lends 93% against it with a 95% liquidation threshold (`setLTV`), both in
 `ag-euler/contracts/shmon-cluster-monad/deploy.sh` (`desks`, which since v3 takes `DESKS="usdc=0xdesk+0xdesk"` and
 passes the list to the constructor).
