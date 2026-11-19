@@ -219,3 +219,18 @@ shMON `totalSupply()` 198,964,633.13; `convertToAssets(1e18)` 1.654419 MON.
 Admin Safe `setDepositCap(84,000,000 shMON)` on both vaults' Settings, read back with `getDepositCap()`:
 - Delta One `0xdE30…adEC`: 4,000 to 84,000,000 shMON, tx `0xf5bfe72beba23781ad1391409fa04c542c8a86b42c0c09b31834d51491e8563c`
 - Delta Neutral `0xC62D…F85a`: 4,000 to 84,000,000 shMON, tx `0x195450ea8041ebf1764658b8f02884120593ecc7222db04ad6c739616caf3f1b`
+
+## Exit desks and cluster, block 123614706 (2026-11-19 15:11Z)
+
+`cast call` on the paid Monad RPC at block 123614706:
+
+- ushMON v4 `0xa753…8C5e`: `totalAssets` and `totalSupply` 660.312276706987006172. `ledgerOf` is empty for both desks, and `wmonCredit` is 0.
+- Delta One desk `0x02Df…c770`: 48.378465460292174847 shares, WMON debt 0, `leaversWaiting()` false, `VERSION` 11000.
+- Delta Neutral desk `0xF460…6CdE`: 611.933811246694831325 shares, WMON debt 929.833599622410579106, `leaversWaiting()` false, `VERSION` 11000.
+- WMON vault `0xE452…6eaf`: cash 0.264184633672145389, total borrows 929.833599622410579106, `LTVFull(ushMON v4)` 9300/9500, caps 727M supply and 654M borrow.
+- USDC `0x5aB0…0948` and USDT0 `0xD664…a3E` vaults: cash 0, borrows 0, caps 5M supply and 4.5M borrow.
+- ushMON v3 `0x37e0…0ce`, v2 `0xC8f5…0092` and v1 `0xa442…d8F`: `totalSupply` 0, WMON vault borrow LTV 0.
+- Governor of all four cluster vaults: `0x501107fe590c8F9b81c00b81867fD19e0d9c0253`.
+- Both strategy vaults (`0xeEe3…31D3`, `0x187b…272C`): `totalSupply` 0, `totalAssets` 0. Both controllers `VERSION` 11500.
+- The float was borrowed in block 123554268 (2026-11-19 10:05:16Z), when the Delta Neutral pool bought shMON.
+- Server, 2026-11-19 15:1xZ over SSH: 12 containers up; `service:staging` is `5e5061eb8e16` (`panic-20261119`), created 2026-11-19 03:48:58Z.
