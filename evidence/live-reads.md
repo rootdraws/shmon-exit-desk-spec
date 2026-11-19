@@ -234,3 +234,4 @@ Admin Safe `setDepositCap(84,000,000 shMON)` on both vaults' Settings, read back
 - Both strategy vaults (`0xeEe3…31D3`, `0x187b…272C`): `totalSupply` 0, `totalAssets` 0. Both controllers `VERSION` 11500.
 - The float was borrowed in block 123554268 (2026-11-19 10:05:16Z), when the Delta Neutral pool bought shMON.
 - Server, 2026-11-19 15:1xZ over SSH: 12 containers up; `service:staging` is `5e5061eb8e16` (`panic-20261119`), created 2026-11-19 03:48:58Z.
+- 2026-11-19 15:19Z: image `unstake-20261119` (`29880497ea12`) on both shMON bots. The Delta Neutral bot's first tick sent `parkShmon(0, 562.656462745043)`, tx `0xe9ab4b9e6bbcd6df36093d7639614fadf7b9688d80bf2548186f2c14fcf8bec0`, status 1. `ledgerOf(0xF460…6CdE)` then read 930.972991390738848542 MON at completion epoch 1744.

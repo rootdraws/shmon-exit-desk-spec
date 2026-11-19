@@ -10,13 +10,13 @@ release records are listed in [08-testing.md](08-testing.md).
 | Strategy vaults `shmon-neverland-usdc-hl` and `-d0` | Deployed at the addresses in [02-operations.md](02-operations.md). Both hold zero shares and zero assets. Both controllers run v1.15.0, upgraded by the admin Safe on 2026-11-19. The 10% performance fee is charged on every gain ([12-revenue-flows.md](12-revenue-flows.md)). |
 | Exit desks | v1.10.0 on both (`0x74eCd223208D812098487D4090d964005370BDc7`), upgraded by the admin Safe on 2026-11-19. Each holds ushMON v4 as its only Euler collateral, and the cluster's WMON vault is its only lender. `leaversWaiting()` is false on both. |
 | Delta One desk | 48.38 shMON parked as headroom. No loan. |
-| Delta Neutral desk | 611.93 shMON parked: the 48.38 headroom and 563.55 its pool bought at 10:05Z (block 123,554,268). It owes 929.83 WMON for that buy. None of it is unstaking yet. |
+| Delta Neutral desk | 611.93 shMON parked: the 48.38 headroom and 563.55 its pool bought at 10:05Z (block 123,554,268). It owes 929.83 WMON for that buy. The bot started unstaking the 563.55 shMON at 15:19Z, for 930.97 MON at epoch 1744. |
 | ushMON v4 | `0xa753E24B0986567EDAd75f784664Ec11336f8C5e`, one vault for both desks. It holds 660.31 shMON, every share held by the desks. Both ledgers are empty. Source verified on Monadscan. |
 | EulerSwap pools | `0x56aEAB6F7a33573CdEF9B59a8d330F0e1b2128A8` (Delta One) and `0x19241Ff986e1dFE848A8C2a8AC2C21C0E7cFe8a8` (Delta Neutral), opened 2026-11-18 on the v4 vault. They buy shMON at shMonad's rate less 0.3% and refuse WMON in. |
 | Euler cluster | Four vaults live, governed by the deployer key. The WMON vault lends 93/95 against ushMON v4. Its 929.88 WMON float is lent out to the Delta Neutral desk, leaving 0.26 WMON. The USDC and USDT0 vaults have no lenders. Caps: USDC and USDT0 5M supply and 4.5M borrow; WMON 727M supply and 654M borrow. |
 | ushMON v1, v2 and v3 | Empty and retired from the cluster (WMON vault LTV 0). v1 and v2 went on 2026-11-17, and v3 (`0x37e07473F1F62CB071Db57440e242b320614A0ce`) on 2026-11-18. |
 | Audit issues | All 11 closed on 2026-11-16 with a reply on each ([04-ushmon.md](04-ushmon.md)). v4 keeps every v2 rule. |
-| Server | 3.211.84.65 (`monad.structures.gg`) runs 12 containers: the two shMON bots, oracle, monitor, digester keeper, funding feed, API, site, Caddy, research refresh, RPC meter and MongoDB. The bots run image `panic-20261119`, built 2026-11-19 03:48Z. `admin.structures.gg` serves the live revenue page behind a password. |
+| Server | 3.211.84.65 (`monad.structures.gg`) runs 12 containers: the two shMON bots, oracle, monitor, digester keeper, funding feed, API, site, Caddy, research refresh, RPC meter and MongoDB. The bots run image `unstake-20261119`, since 2026-11-19 15:19Z. `admin.structures.gg` serves the live revenue page behind a password. |
 
 ## Shipped on 2026-11-18 and 2026-11-19
 
