@@ -79,14 +79,13 @@ git clone --recurse-submodules https://github.com/rootdraws/ushMON && cd ushMON 
 
 The fork test that runs both live desks through the vault is in [08-testing.md](08-testing.md).
 
-## Holdings and approval
+## Approval
 
-The Delta One desk holds 48.37 shMON of ushMON and the Delta Neutral desk holds 611.86 shMON, read on 2026-11-20. Two
-Euler governor calls approve the vault on the cluster. The router prices ushMON as shMON, and the WMON vault lends 93%
+Two Euler governor calls approve the vault on the cluster. The router prices ushMON as shMON, and the WMON vault lends 93%
 against it with a 95% liquidation line.[^deploy]
 
 [^source]: [`sources/ag-euler/.../UnstakingShMonVault.sol`](sources/ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol), copied from `ag-euler/contracts/eulerswap-mm-monad/src/exitmm/`; the live code matches that build byte for byte apart from constructor values and metadata. Public repo [rootdraws/ushMON](https://github.com/rootdraws/ushMON) at `b3ba1bf`. Operators read on chain with `operators()`, and the WMON vault's lines with `LTVFull`, 2026-11-20.
 [^audit]: `evidence/audit-2026-11-15.md`: no high, one medium, three low, four informational.
 [^issues]: Issues 1 to 3 filed by FSoaresDev and issues 4 to 11 by ardey26, on 2026-11-16 (`evidence/issues/issue-1.md` to `issue-11.md`). Donation cases: `evidence/donation-tests.txt`, `evidence/UnstakingShMonVault.donation.t.sol`.
 [^tests]: `test/UnstakingShMonVault.t.sol` and `evidence/UnstakingShMonVaultV4.t.sol`; output in `evidence/forge-test-v4.txt`, rerun 2026-11-19.
-[^deploy]: `ag-euler/contracts/shmon-cluster-monad/deploy.sh`: `govSetResolvedVault` and `setLTV`. Holdings read on chain with `balanceOf` and `convertToAssets`.
+[^deploy]: `ag-euler/contracts/shmon-cluster-monad/deploy.sh`: `govSetResolvedVault` and `setLTV`.
