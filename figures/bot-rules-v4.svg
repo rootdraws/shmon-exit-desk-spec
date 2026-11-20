@@ -2,7 +2,7 @@
     <rect x="0" y="0" width="1240" height="982" fill="#f6f5f1"/>
     <g font-family="IBM Plex Sans, system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#17201f">
       <text x="40" y="30" font-weight="600" font-size="13">Loan-to-value lines</text>
-      <rect x="40" y="44" width="340" height="426" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <rect x="40" y="44" width="340" height="458" rx="3" fill="#ffffff" stroke="#17201f"/>
         <text x="56" y="72" font-weight="600" fill="#8a2b2b">70%</text>
       <text x="112" y="72">Neverland liquidation threshold.</text>
         <text x="56" y="104" font-weight="600" fill="#8a2b2b">66.5%</text>
@@ -11,23 +11,25 @@
         <text x="56" y="154" font-weight="600" fill="#8a2b2b">65%</text>
       <text x="112" y="154">Taker sales start here.</text>
       <text x="112" y="172" fill="#5f6b69">They run until the loan is at 55%.</text>
-        <text x="56" y="204" font-weight="600" fill="#8a2b2b">58%</text>
-      <text x="112" y="204">With no short profit, it sells to 56%.</text>
-        <text x="56" y="236" font-weight="600" fill="#8a2b2b">55%</text>
-      <text x="112" y="236">Taker sales stop here.</text>
-      <text x="112" y="254" fill="#5f6b69">The controlled unwind starts here.</text>
-        <text x="56" y="286" font-weight="600" fill="#5f6b69">50%</text>
-      <text x="112" y="286">Above it, the short's profit repays the loan.</text>
-      <text x="112" y="304" fill="#5f6b69">The unwind stops here.</text>
-      <text x="112" y="322" fill="#5f6b69">The monitor unpauses here.</text>
-        <text x="56" y="354" font-weight="600" fill="#17201f">45%</text>
-      <text x="112" y="354">Hedge margin can borrow up to here.</text>
-        <text x="56" y="386" font-weight="600" fill="#0a7f6a">43%</text>
-      <text x="112" y="386">Target LTV.</text>
-        <text x="56" y="418" font-weight="600" fill="#0a7f6a">42%</text>
-      <text x="112" y="418">The first build stops here.</text>
-        <text x="56" y="450" font-weight="600" fill="#0a7f6a">33%</text>
-      <text x="112" y="450">Below this, the bot borrows back to 43%.</text>
+        <text x="56" y="204" font-weight="600" fill="#8a2b2b">60%</text>
+      <text x="112" y="204">The controlled unwind starts here.</text>
+        <text x="56" y="236" font-weight="600" fill="#8a2b2b">58%</text>
+      <text x="112" y="236">With no short profit, it sells to 56%.</text>
+        <text x="56" y="268" font-weight="600" fill="#8a2b2b">55%</text>
+      <text x="112" y="268">Taker sales stop here.</text>
+      <text x="112" y="286" fill="#5f6b69">Above it, the short's profit repays the loan.</text>
+        <text x="56" y="318" font-weight="600" fill="#5f6b69">52.5%</text>
+      <text x="112" y="318">The unwind stops here.</text>
+      <text x="112" y="336" fill="#5f6b69">Patient sales and repays run down to it.</text>
+      <text x="112" y="354" fill="#5f6b69">The monitor unpauses here.</text>
+        <text x="56" y="386" font-weight="600" fill="#17201f">45%</text>
+      <text x="112" y="386">Hedge margin can borrow up to here.</text>
+        <text x="56" y="418" font-weight="600" fill="#0a7f6a">43%</text>
+      <text x="112" y="418">Target LTV.</text>
+        <text x="56" y="450" font-weight="600" fill="#0a7f6a">42%</text>
+      <text x="112" y="450">The first build stops here.</text>
+        <text x="56" y="482" font-weight="600" fill="#0a7f6a">33%</text>
+      <text x="112" y="482">Below this, the bot borrows back to 43%.</text>
       <text x="420" y="30" font-weight="600" font-size="13">Each tick, the bot takes the first step with work.</text>
       <rect x="420" y="44" width="400" height="172" rx="3" fill="#ffffff" stroke="#17201f"/>
       <text x="436" y="68" font-weight="600">0. First, the bot finishes any Hyperliquid margin transfer.</text>
@@ -40,8 +42,8 @@
       <text x="436" y="196" fill="#5f6b69">•</text><text x="448" y="196" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Withdrawing:</tspan> The bot pays waiting leavers and does not grow.</text>
       <g font-size="11.5">
         <rect x="420" y="230" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="247">1. The exit desk and the stable desk take their step.</text>
-        <rect x="420" y="262" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="279">2. Over 50%, the short's profit and spare margin repay.</text>
-        <rect x="420" y="294" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="311">3. It sells as a taker from 65%, or unwinds over 55%.</text>
+        <rect x="420" y="262" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="279">2. Over 55%, the short's profit and spare margin repay.</text>
+        <rect x="420" y="294" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="311">3. It sells as a taker from 65%, or unwinds from 60%.</text>
         <rect x="420" y="326" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="343">4. The bot sweeps bridge refunds, harvests and conversions.</text>
         <rect x="420" y="358" width="400" height="26" rx="2" fill="#dfeaf2" stroke="#0a5f8f"/><text x="434" y="375">5. A short more than 1% too small is topped up.</text>
         <rect x="420" y="390" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="407">6. Deposits settle, stable debt moves, and leavers get paid.</text>
@@ -57,7 +59,7 @@
       <text x="436" y="628" fill="#5f6b69">•</text><text x="448" y="628" fill="#5f6b69">When paused, the bot still repays, sells, hedges and settles.</text>
       <text x="436" y="646" fill="#5f6b69">•</text><text x="448" y="646" fill="#5f6b69">Paused, it cannot supply, borrow USDC or pay leavers.</text>
       <text x="436" y="664" fill="#5f6b69">•</text><text x="448" y="664" fill="#5f6b69">The monitor pauses the vault at 66.5%.</text>
-      <text x="436" y="682" fill="#5f6b69">•</text><text x="448" y="682" fill="#5f6b69">It unpauses after 30 min at or under 50%.</text>
+      <text x="436" y="682" fill="#5f6b69">•</text><text x="448" y="682" fill="#5f6b69">It unpauses after 30 min at or under 52.5%.</text>
       <text x="436" y="700" fill="#5f6b69">•</text><text x="448" y="700" fill="#5f6b69">A manual pause stays until someone lifts it.</text>
       <text x="436" y="718" fill="#5f6b69">•</text><text x="448" y="718" fill="#5f6b69">The share price is in shMON and moves at most 3% an hour.</text>
       <text x="436" y="736" fill="#5f6b69">•</text><text x="448" y="736" fill="#5f6b69">The oracle posts every 30 min, or on a 1% move.</text>
@@ -89,12 +91,12 @@
       <text x="876" y="474" fill="#5f6b69">•</text><text x="888" y="474" fill="#5f6b69">The rest reopens at +8% or after 48 hours.</text>
       <rect x="860" y="510" width="340" height="190" rx="3" fill="#f3e1e1" stroke="#8a2b2b" stroke-width="2"/>
       <text x="876" y="534" font-weight="600">Unwinding</text>
-      <text x="876" y="554" fill="#5f6b69">•</text><text x="888" y="554" fill="#5f6b69">Over 50%, the short's profit repays the loan first.</text>
+      <text x="876" y="554" fill="#5f6b69">•</text><text x="888" y="554" fill="#5f6b69">Over 55%, the short's profit repays the loan first.</text>
       <text x="876" y="572" fill="#5f6b69">•</text><text x="888" y="572" fill="#5f6b69">From 65% down to 55%, the bot sells as a taker.</text>
       <text x="876" y="590" fill="#5f6b69">•</text><text x="888" y="590" fill="#5f6b69">First it borrows WMON and sells it on v4, then v3.</text>
       <text x="876" y="608" fill="#5f6b69">•</text><text x="888" y="608" fill="#5f6b69">Then the instant redemption, then Curve, within 1.5%.</text>
       <text x="876" y="626" fill="#5f6b69">•</text><text x="888" y="626" fill="#5f6b69">Each WMON sale fills at most 2% under the oracle.</text>
-      <text x="876" y="644" fill="#5f6b69">•</text><text x="888" y="644" fill="#5f6b69">The controlled unwind sells from 55% to 54%.</text>
+      <text x="876" y="644" fill="#5f6b69">•</text><text x="888" y="644" fill="#5f6b69">The controlled unwind sells from 60% to 59%.</text>
       <text x="876" y="662" fill="#5f6b69">•</text><text x="888" y="662" fill="#5f6b69">Each of its steps trims the short by up to a quarter.</text>
       <text x="876" y="680" fill="#5f6b69">•</text><text x="888" y="680" fill="#5f6b69">Euler liquidates at 80%, so it carries more loan.</text>
       <rect x="860" y="716" width="340" height="226" rx="3" fill="#f3e1e1" stroke="#8a2b2b" stroke-width="2"/>

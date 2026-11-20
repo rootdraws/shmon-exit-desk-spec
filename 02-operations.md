@@ -34,11 +34,11 @@ The bot takes one step every 30 seconds. Each row is one rule, read from the two
 | First build | 42% | Builds the whole book in one go before the first short. | `planner/growth.ts` |
 | Re-lever | below 33%, or idle shMON over $1 | Borrows back to 43%. | `planner/growth.ts` |
 | Margin loan cap | 45% | Borrows for hedge margin up to here, then sells shMON. | `planner/growth.ts` |
-| The short's money | over 50% | Trims the short to its target, brings spare margin and profit home, and repays. | `planner/panic.ts` |
+| The short's money | over 55% | Trims the short to its target, brings spare margin and profit home, and repays. | `planner/panic.ts` |
 | Taker sales | from 65% down to 55% | Leftover WMON sells first. Then the bot borrows WMON against shMON and sells it on the v4 pool, then Uniswap v3, in one transaction. Then the instant redemption, then Curve. Each shMON swap costs at most 1.5%, and each WMON sale fills at most 2% under the oracle. The short is never half-closed. | `planner/panic.ts` |
-| Controlled unwind | 55%, sells to 54%, stops at 50% | Repays, supplies idle shMON, then sells. Each step trims the short by up to a quarter, so the vault keeps its delta. | `planner.ts`, `planner/unwind.ts` |
+| Controlled unwind | 60%, sells to 59%, stops at 52.5% | Repays, supplies idle shMON, then sells. Each step trims the short by up to a quarter, so the vault keeps its delta. | `planner.ts`, `planner/unwind.ts` |
 | Profit band | over 58%, sells to 56% | Sells shMON when there is no profit to take and the unwind found nothing to do. | `planner.ts` |
-| Breaker | pause at 66.5%, unpause 30 min at 50% | The monitor pauses the vault. Taker sales keep running while paused. | monitor `checkStrategy.ts` |
+| Breaker | pause at 66.5%, unpause 30 min at 52.5% | The monitor pauses the vault. Taker sales keep running while paused. | monitor `checkStrategy.ts` |
 | Short size | (C + idle + desk shMON − d·E) / price | Opens or trims when off by 1% of equity and $10 or more. | `policy/base.ts`, `planner/hedge.ts` |
 | Margin | 28.57% + 0.05%, × 1.05; top up under 80% | Tops up from idle cash, a loan to 45%, or a shMON sale. | `planner/growth.ts` |
 | Rebound reopen | +4% half, +8% or 48 h all | Reopens the short after a pay-down. | `planner/unwind.ts` |
