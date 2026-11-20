@@ -30,10 +30,10 @@ it.[^digester]
 
 - **Public buyer.** The desk owns an EulerSwap pool that buys anyone's shMON at shMonad's live rate less 0.30%. See
   [05-eulerswap.md](05-eulerswap.md).
-- **Leavers first.** While the vault has an unpaid withdrawal batch, the pool quotes nothing. The desk's borrowing room
-  serves the vault's own leavers first.
-- **One ushMON for both desks.** Both desks park in one ushMON. Each desk's unstakes and returned WMON stay on its own
-  ledger, so one desk never takes the other's WMON. See [04-ushmon.md](04-ushmon.md).
+- **Leavers first.** While the vault has an unpaid withdrawal batch, the pool quotes nothing, so the desk's borrowing
+  room goes to the vault's own leavers.
+- **One ushMON for both desks.** Each desk's unstakes and returned WMON stay on its own ledger, so one desk never takes
+  the other's WMON. See [04-ushmon.md](04-ushmon.md).
 - **Emergency sale.** While the loan is at or over 65%, the desk's WMON sale may fill up to 2% under the oracle, instead
   of 1%. The controller can hand the desk shMON, have it borrow and sell WMON, and repay the loan, all in one transaction.
 - **During a pause.** The desk still parks, unstakes, borrows and places orders. It stops selling shMON into bids and
