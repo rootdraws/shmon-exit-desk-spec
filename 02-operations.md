@@ -13,7 +13,7 @@ The vault earns shMON's staking yield on the levered collateral, plus the fundin
 
 | Setting | Value |
 |---|---|
-| Target loan-to-value (LTV) | 43%, two points under the 45% margin loan cap[^target] |
+| Target loan-to-value (LTV) | 43%, two points under the 45% growth cap[^target] |
 | Worst 24-hour fall used | 34.48%, Binance MONUSDT futures |
 | Hedge margin | 28.57% of the short (3.5x) |
 | Resting delta | 1 on Delta One, 0 on Delta Neutral, fixed on chain with no setter |
@@ -35,14 +35,14 @@ The figure gives each loan line for both lenders. Euler liquidates at 80% and Ne
 | Liquidation | each lender's own line | The bot splits the loan so both lenders sit the same share of the way to their own line. A line read under 50% counts as 50% and alerts. | `lenders.ts`, `observe.ts` |
 | First build | 42% | Builds the whole book in one go before the first short. | `planner/growth.ts` |
 | Re-lever | below 33%, or idle shMON over $1 | Borrows back to 43%. | `planner/growth.ts` |
-| Margin loan cap | 45% | Borrows for hedge margin up to here, then sells shMON. | `planner/growth.ts` |
+| Margin loan cap | 55% | Borrows for hedge margin up to here, then sells shMON. Growth borrows only to 45%. | `planner/growth.ts`, `actions/system.ts` |
 | The short's money | over 55% | Trims the short to its target, brings spare margin and profit home, and repays. | `planner/panic.ts` |
 | Taker sales | from 65% down to 55% | Leftover WMON sells first. Then the bot borrows WMON against shMON and sells it on the v4 pool, then Uniswap v3, in one transaction. Then the instant redemption, then Curve. Each shMON swap costs at most 1.5%, and each WMON sale fills at most 2% under the oracle. The short is never half-closed. | `planner/panic.ts` |
 | Controlled unwind | 60%, sells to 59%, stops at 52.5% | Repays, supplies idle shMON, then sells. Each step trims the short by up to a quarter, so the vault keeps its delta. | `planner.ts`, `planner/unwind.ts` |
 | Profit band | over 58%, sells to 56% | Sells shMON when there is no profit to take and the unwind found nothing to do. | `planner.ts` |
 | Breaker | pause at 66.5%, unpause 30 min at 52.5% | The monitor pauses the vault. Taker sales keep running, and deposits still come in as collateral with no borrowing. shMON owed to leavers stays in the vault. | monitor `checkStrategy.ts` |
 | Short size | (C + idle + desk shMON − d·E) / price | Opens or trims when off by 1% of equity and $10 or more. An open rests as a maker order one tick over mid and moves with mid each tick. A trim sells at market. | `policy/base.ts`, `planner/hedge.ts`, `actions/venue.ts` |
-| Margin | 28.57% + 0.05%, × 1.05; top up under 80% | Tops up from idle cash, a loan to 45%, or a shMON sale. | `planner/growth.ts` |
+| Margin | 28.57% + 0.05%, × 1.05; top up under 80% | Tops up from idle cash, a loan to 55%, or a shMON sale. | `planner/growth.ts` |
 | Rebound reopen | +4% half, +8% or 48 h all | Reopens the short after a pay-down. | `planner/unwind.ts` |
 | Cost gate | loop ≥ $10, drag ≤ 0.35%, payback ≤ 10 d | Skips an uneconomic loop, except the first build. | `policy/costGate.ts` |
 | Lender balance | risk spread 0.5 pt | Moves shMON toward the lender further from its liquidation. | `lenders.ts` |

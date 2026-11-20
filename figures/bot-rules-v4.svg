@@ -2,7 +2,7 @@
     <rect x="0" y="0" width="1320" height="982" fill="#f6f5f1"/>
     <g font-family="IBM Plex Sans, system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#17201f">
       <text x="40" y="30" font-weight="600" font-size="13">Loan-to-value lines</text>
-      <rect x="40" y="44" width="420" height="496" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <rect x="40" y="44" width="420" height="514" rx="3" fill="#ffffff" stroke="#17201f"/>
       <text x="56" y="64" font-weight="600" font-size="11" fill="#5f6b69">Euler</text><text x="124" y="64" font-weight="600" font-size="11" fill="#5f6b69">Neverland</text>
         <text x="56" y="92" font-weight="600" fill="#8a2b2b">80%</text><text x="124" y="92" font-weight="600" fill="#8a2b2b">70%</text>
       <text x="192" y="92">Liquidation threshold.</text>
@@ -20,18 +20,19 @@
         <text x="56" y="306" font-weight="600" fill="#8a2b2b">62.85%</text><text x="124" y="306" font-weight="600" fill="#8a2b2b">55%</text>
       <text x="192" y="306">Taker sales stop here.</text>
       <text x="192" y="324" fill="#5f6b69">Above it, the short's profit repays the loan.</text>
-        <text x="56" y="356" font-weight="600" fill="#5f6b69">60%</text><text x="124" y="356" font-weight="600" fill="#5f6b69">52.5%</text>
-      <text x="192" y="356">The unwind stops here.</text>
-      <text x="192" y="374" fill="#5f6b69">Patient sales and repays run down to it.</text>
-      <text x="192" y="392" fill="#5f6b69">The monitor unpauses here.</text>
-        <text x="56" y="424" font-weight="600" fill="#17201f">51.42%</text><text x="124" y="424" font-weight="600" fill="#17201f">45%</text>
-      <text x="192" y="424">Hedge margin can borrow up to here.</text>
-        <text x="56" y="456" font-weight="600" fill="#0a7f6a">49.14%</text><text x="124" y="456" font-weight="600" fill="#0a7f6a">43%</text>
-      <text x="192" y="456">Target LTV.</text>
-        <text x="56" y="488" font-weight="600" fill="#0a7f6a">48%</text><text x="124" y="488" font-weight="600" fill="#0a7f6a">42%</text>
-      <text x="192" y="488">The first build stops here.</text>
-        <text x="56" y="520" font-weight="600" fill="#0a7f6a">37.71%</text><text x="124" y="520" font-weight="600" fill="#0a7f6a">33%</text>
-      <text x="192" y="520">Below this, the bot borrows back to target.</text>
+      <text x="192" y="342" fill="#5f6b69">Hedge margin can borrow up to here.</text>
+        <text x="56" y="374" font-weight="600" fill="#5f6b69">60%</text><text x="124" y="374" font-weight="600" fill="#5f6b69">52.5%</text>
+      <text x="192" y="374">The unwind stops here.</text>
+      <text x="192" y="392" fill="#5f6b69">Patient sales and repays run down to it.</text>
+      <text x="192" y="410" fill="#5f6b69">The monitor unpauses here.</text>
+        <text x="56" y="442" font-weight="600" fill="#17201f">51.42%</text><text x="124" y="442" font-weight="600" fill="#17201f">45%</text>
+      <text x="192" y="442">Growth borrows up to here.</text>
+        <text x="56" y="474" font-weight="600" fill="#0a7f6a">49.14%</text><text x="124" y="474" font-weight="600" fill="#0a7f6a">43%</text>
+      <text x="192" y="474">Target LTV.</text>
+        <text x="56" y="506" font-weight="600" fill="#0a7f6a">48%</text><text x="124" y="506" font-weight="600" fill="#0a7f6a">42%</text>
+      <text x="192" y="506">The first build stops here.</text>
+        <text x="56" y="538" font-weight="600" fill="#0a7f6a">37.71%</text><text x="124" y="538" font-weight="600" fill="#0a7f6a">33%</text>
+      <text x="192" y="538">Below this, the bot borrows back to target.</text>
       <g transform="translate(80,0)">
       <text x="420" y="30" font-weight="600" font-size="13">Each tick, the bot takes the first step with work.</text>
       <rect x="420" y="44" width="400" height="172" rx="3" fill="#ffffff" stroke="#17201f"/>
@@ -89,7 +90,7 @@
       <text x="876" y="384" fill="#5f6b69">•</text><text x="888" y="384" fill="#5f6b69">The bot resizes when off by 1% of equity and $10.</text>
       <text x="876" y="402" fill="#5f6b69">•</text><text x="888" y="402" fill="#5f6b69">Margin is 28.57% plus fees, with a 5% buffer.</text>
       <text x="876" y="420" fill="#5f6b69">•</text><text x="888" y="420" fill="#5f6b69">Margin tops up when it falls under 80% of need.</text>
-      <text x="876" y="438" fill="#5f6b69">•</text><text x="888" y="438" fill="#5f6b69">Margin comes from cash, a loan to 45%, or a sale.</text>
+      <text x="876" y="438" fill="#5f6b69">•</text><text x="888" y="438" fill="#5f6b69">Margin comes from cash, a loan to 55%, or a sale.</text>
       <text x="876" y="456" fill="#5f6b69">•</text><text x="888" y="456" fill="#5f6b69">After a cut, half the short reopens at +4%.</text>
       <text x="876" y="474" fill="#5f6b69">•</text><text x="888" y="474" fill="#5f6b69">The rest reopens at +8% or after 48 hours.</text>
       <rect x="860" y="510" width="340" height="190" rx="3" fill="#f3e1e1" stroke="#8a2b2b" stroke-width="2"/>
