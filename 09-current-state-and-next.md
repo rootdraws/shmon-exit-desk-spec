@@ -28,11 +28,18 @@ Read on chain and on the server on 2026-11-20 at 05:22Z, block 123,782,520.
 
 ## Open decisions
 
-- **The desks' collateral cushion at scale.** 80 MON per desk covers about 1,100 MON of pool buys a day. At the target
-  of 50k to 150k MON every 20 hours, the desks need 3,600 to 10,800 MON parked. Whether that comes from the vaults' own
-  shMON or new MON is still open.
-- **WMON lenders.** The pools can buy only as much as lenders supply. The full instant-exit flow, about 120,000 to
-  310,000 MON a day, needs WMON supply of that size, about $1,800 to $4,500.
+**How much capital to beat shMonad's instant exit.** On price the desks already win: they pay the rate less 0.30%, and
+the instant exit charges 0.41% to 0.73%. On capacity, the instant exit can usually pay about 3M MON at once, and its
+pool holds up to 6.5M. To match it, at $0.0146 per MON:
+
+| To match | WMON from lenders | shMON cushion, both desks | Total |
+|---|---|---|---|
+| What it can usually pay at once, 3M MON | 3.3M WMON, about $48k | 216k MON, about $3.2k | about $51k |
+| Its full pool target, 6.5M MON | 7.2M WMON, about $105k | 470k MON, about $6.9k | about $112k |
+
+- The WMON is sized 10% over the payout, so borrowing stays at 30% a year instead of 50%.
+- Our capacity comes back each day as the unstakes finish. The instant exit's pool refills at about 1,300 MON an hour.
+- Still open: who lends the WMON, and whether the cushion comes from the vaults' own shMON or new MON.
 
 ## Known risks
 
