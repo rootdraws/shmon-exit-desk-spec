@@ -28,7 +28,7 @@ Every hedge order is a CoreWriter call from a Safe to Hyperliquid, through its R
 
 The bot takes one step every 30 seconds. Each row is one rule, read from the two production configs, the bot's code and the chain.
 
-The loan lines are Neverland's, which liquidates at 70%. Euler liquidates at 80%, so each of its lines is the Neverland line × 80/70: the 60% unwind is 68.57% on Euler.
+The figure gives each loan line for both lenders. Euler liquidates at 80% and Neverland at 70%, so each Euler line is the Neverland line × 80/70. The table's numbers are Neverland's.
 
 | Rule | Number | Fires | Source |
 |---|---|---|---|

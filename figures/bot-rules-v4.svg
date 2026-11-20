@@ -1,35 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="982" viewBox="0 0 1240 982" role="img" aria-label="The bot's loan-to-value lines, the order it tries steps each tick, and its rules for growing, the Hyperliquid short, unwinding, and paying leavers." style="color:#17201f">
-    <rect x="0" y="0" width="1240" height="982" fill="#f6f5f1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="982" viewBox="0 0 1320 982" role="img" aria-label="The bot's loan-to-value lines, the order it tries steps each tick, and its rules for growing, the Hyperliquid short, unwinding, and paying leavers." style="color:#17201f">
+    <rect x="0" y="0" width="1320" height="982" fill="#f6f5f1"/>
     <g font-family="IBM Plex Sans, system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#17201f">
-      <text x="40" y="30" font-weight="600" font-size="13">Loan-to-value lines on Neverland (Euler: each × 80/70)</text>
-      <rect x="40" y="44" width="340" height="458" rx="3" fill="#ffffff" stroke="#17201f"/>
-        <text x="56" y="72" font-weight="600" fill="#8a2b2b">70%</text>
-      <text x="112" y="72">Neverland liquidation threshold.</text>
-        <text x="56" y="104" font-weight="600" fill="#8a2b2b">66.5%</text>
-      <text x="112" y="104">The monitor pauses the vault here.</text>
-      <text x="112" y="122" fill="#5f6b69">Taker sales keep running while paused.</text>
-        <text x="56" y="154" font-weight="600" fill="#8a2b2b">65%</text>
-      <text x="112" y="154">Taker sales start here.</text>
-      <text x="112" y="172" fill="#5f6b69">They run until the loan is at 55%.</text>
-        <text x="56" y="204" font-weight="600" fill="#8a2b2b">60%</text>
-      <text x="112" y="204">The controlled unwind starts here.</text>
-        <text x="56" y="236" font-weight="600" fill="#8a2b2b">58%</text>
-      <text x="112" y="236">With no short profit, it sells to 56%.</text>
-        <text x="56" y="268" font-weight="600" fill="#8a2b2b">55%</text>
-      <text x="112" y="268">Taker sales stop here.</text>
-      <text x="112" y="286" fill="#5f6b69">Above it, the short's profit repays the loan.</text>
-        <text x="56" y="318" font-weight="600" fill="#5f6b69">52.5%</text>
-      <text x="112" y="318">The unwind stops here.</text>
-      <text x="112" y="336" fill="#5f6b69">Patient sales and repays run down to it.</text>
-      <text x="112" y="354" fill="#5f6b69">The monitor unpauses here.</text>
-        <text x="56" y="386" font-weight="600" fill="#17201f">45%</text>
-      <text x="112" y="386">Hedge margin can borrow up to here.</text>
-        <text x="56" y="418" font-weight="600" fill="#0a7f6a">43%</text>
-      <text x="112" y="418">Target LTV.</text>
-        <text x="56" y="450" font-weight="600" fill="#0a7f6a">42%</text>
-      <text x="112" y="450">The first build stops here.</text>
-        <text x="56" y="482" font-weight="600" fill="#0a7f6a">33%</text>
-      <text x="112" y="482">Below this, the bot borrows back to 43%.</text>
+      <text x="40" y="30" font-weight="600" font-size="13">Loan-to-value lines</text>
+      <rect x="40" y="44" width="420" height="496" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="56" y="64" font-weight="600" font-size="11" fill="#5f6b69">Euler</text><text x="124" y="64" font-weight="600" font-size="11" fill="#5f6b69">Neverland</text>
+        <text x="56" y="92" font-weight="600" fill="#8a2b2b">80%</text><text x="124" y="92" font-weight="600" fill="#8a2b2b">70%</text>
+      <text x="192" y="92">Liquidation threshold.</text>
+        <text x="56" y="124" font-weight="600" fill="#8a2b2b">76%</text><text x="124" y="124" font-weight="600" fill="#8a2b2b">66.5%</text>
+      <text x="192" y="124">The monitor pauses the vault here.</text>
+      <text x="192" y="142" fill="#5f6b69">Taker sales keep running while paused.</text>
+        <text x="56" y="174" font-weight="600" fill="#8a2b2b">74.28%</text><text x="124" y="174" font-weight="600" fill="#8a2b2b">65%</text>
+      <text x="192" y="174">Taker sales start here.</text>
+      <text x="192" y="192" fill="#5f6b69">They run down to the taker-stop line.</text>
+        <text x="56" y="224" font-weight="600" fill="#8a2b2b">68.57%</text><text x="124" y="224" font-weight="600" fill="#8a2b2b">60%</text>
+      <text x="192" y="224">The controlled unwind starts here.</text>
+        <text x="56" y="256" font-weight="600" fill="#8a2b2b">66.28%</text><text x="124" y="256" font-weight="600" fill="#8a2b2b">58%</text>
+      <text x="192" y="256">With no short profit, it sells shMON.</text>
+      <text x="192" y="274" fill="#5f6b69">It sells to 56% on Neverland, 64% on Euler.</text>
+        <text x="56" y="306" font-weight="600" fill="#8a2b2b">62.85%</text><text x="124" y="306" font-weight="600" fill="#8a2b2b">55%</text>
+      <text x="192" y="306">Taker sales stop here.</text>
+      <text x="192" y="324" fill="#5f6b69">Above it, the short's profit repays the loan.</text>
+        <text x="56" y="356" font-weight="600" fill="#5f6b69">60%</text><text x="124" y="356" font-weight="600" fill="#5f6b69">52.5%</text>
+      <text x="192" y="356">The unwind stops here.</text>
+      <text x="192" y="374" fill="#5f6b69">Patient sales and repays run down to it.</text>
+      <text x="192" y="392" fill="#5f6b69">The monitor unpauses here.</text>
+        <text x="56" y="424" font-weight="600" fill="#17201f">51.42%</text><text x="124" y="424" font-weight="600" fill="#17201f">45%</text>
+      <text x="192" y="424">Hedge margin can borrow up to here.</text>
+        <text x="56" y="456" font-weight="600" fill="#0a7f6a">49.14%</text><text x="124" y="456" font-weight="600" fill="#0a7f6a">43%</text>
+      <text x="192" y="456">Target LTV.</text>
+        <text x="56" y="488" font-weight="600" fill="#0a7f6a">48%</text><text x="124" y="488" font-weight="600" fill="#0a7f6a">42%</text>
+      <text x="192" y="488">The first build stops here.</text>
+        <text x="56" y="520" font-weight="600" fill="#0a7f6a">37.71%</text><text x="124" y="520" font-weight="600" fill="#0a7f6a">33%</text>
+      <text x="192" y="520">Below this, the bot borrows back to target.</text>
+      <g transform="translate(80,0)">
       <text x="420" y="30" font-weight="600" font-size="13">Each tick, the bot takes the first step with work.</text>
       <rect x="420" y="44" width="400" height="172" rx="3" fill="#ffffff" stroke="#17201f"/>
       <text x="436" y="68" font-weight="600">0. First, the bot finishes any Hyperliquid margin transfer.</text>
@@ -111,5 +114,6 @@
       <text x="876" y="886" fill="#5f6b69">•</text><text x="888" y="886" fill="#5f6b69">It is also capped at 92% of the lender's room.</text>
       <text x="876" y="904" fill="#5f6b69">•</text><text x="888" y="904" fill="#5f6b69">Any leftover under $1,000 is sold at market.</text>
       <text x="876" y="922" fill="#5f6b69">•</text><text x="888" y="922" fill="#5f6b69">Holders who stay keep the 0.30% exit fee.</text>
+      </g>
     </g>
 </svg>
