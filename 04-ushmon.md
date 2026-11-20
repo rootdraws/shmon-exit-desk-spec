@@ -84,7 +84,7 @@ The fork test that runs both live desks through the vault is in [08-testing.md](
 Two Euler governor calls approve the vault on the cluster. The router prices ushMON as shMON, and the WMON vault lends 93%
 against it with a 95% liquidation line.[^deploy]
 
-[^source]: [`sources/ag-euler/.../UnstakingShMonVault.sol`](sources/ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol), copied from `ag-euler/contracts/eulerswap-mm-monad/src/exitmm/`; the live code matches that build byte for byte apart from constructor values and metadata. Public repo [rootdraws/ushMON](https://github.com/rootdraws/ushMON) at `b3ba1bf`. Operators read on chain with `operators()`, and the WMON vault's lines with `LTVFull`, 2026-11-20.
+[^source]: [`sources/ag-euler/.../UnstakingShMonVault.sol`](sources/ag-euler/contracts/eulerswap-mm-monad/src/exitmm/UnstakingShMonVault.sol), copied from `ag-euler/contracts/eulerswap-mm-monad/src/exitmm/`; the live code matches that build byte for byte apart from constructor values and metadata. Private repo [rootdraws/ushMON](https://github.com/rootdraws/ushMON) at `b3ba1bf`. Operators read on chain with `operators()`, and the WMON vault's lines with `LTVFull`, 2026-11-20.
 [^audit]: `evidence/audit-2026-11-15.md`: no high, one medium, three low, four informational.
 [^issues]: Issues 1 to 3 filed by FSoaresDev and issues 4 to 11 by ardey26, on 2026-11-16 (`evidence/issues/issue-1.md` to `issue-11.md`). Donation cases: `evidence/donation-tests.txt`, `evidence/UnstakingShMonVault.donation.t.sol`.
 [^tests]: Four suites, output in `evidence/forge-test-v4-all.txt`: unit, two-desk and v4 cases, the donation tests (a 60-case grid and fuzz runs of 64 and 65), and two fork tests against live shMonad.

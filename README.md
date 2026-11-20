@@ -30,9 +30,9 @@ disagree, the spec says so and says which one was checked on chain.
 
 | Repo | What it holds | Commit used | Access |
 |---|---|---|---|
-| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) | The vault system: contracts, bot, oracle, keeper, docs, fork harness | branch `shmon-release-2026-11-18` at `0572c2a` (2026-11-19) | private |
-| [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) | The Euler cluster on Monad, the EulerSwap v2 deployment, the deploy scripts | local working tree on 2026-11-19 (last commit `6ecd9ad`, 2026-11-12, with uncommitted edits since); the remote is behind it, so the cited files are copied under [`sources/ag-euler/`](sources/ag-euler/) | private |
-| [rootdraws/ushMON](https://github.com/rootdraws/ushMON) | The unstaking shMON vault, its tests, its issues | `b3ba1bf` (v4, live 2026-11-18) | public |
+| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) | The vault system: contracts, bot, oracle, keeper, docs, fork harness | branch `shmon-release-2026-11-18` at `a539a19` | private |
+| Our Euler deploy scripts | The scripts that deployed the cluster, EulerSwap and ushMON | copied under [`sources/ag-euler/`](sources/ag-euler/) | in this repo |
+| [rootdraws/ushMON](https://github.com/rootdraws/ushMON) | The unstaking shMON vault, its tests, its issues | `b3ba1bf` | private |
 | [rootdraws/shmon-exit-desk-spec](https://github.com/rootdraws/shmon-exit-desk-spec) | This spec and its evidence | this repo | private |
 
 Upstream code the system is built on: [euler-xyz/ethereum-vault-connector](https://github.com/euler-xyz/ethereum-vault-connector),

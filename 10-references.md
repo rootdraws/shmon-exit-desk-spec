@@ -1,20 +1,25 @@
 # 10. References
 
-## Repositories and commits
+## Code
 
-| Repo | Commit | Used for |
+| Repo | Version | Used for |
 |---|---|---|
-| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures) (private) | branch `shmon-release-2026-11-18` at `0572c2a` (2026-11-19, not yet merged into master; master is at `268892c`) | the vault system, exit desk, bot, harness, docs, audit |
-| [KyrilVlasenko/ag-euler](https://github.com/KyrilVlasenko/ag-euler) (private) | local working tree on 2026-11-19 (last commit `6ecd9ad`, 2026-11-12, with uncommitted edits since); the remote lacks the cited projects, which are copied in this repo under [`sources/ag-euler/`](sources/ag-euler/) | the Euler cluster, EulerSwap v2 deployment, ushMON build artifact |
-| [rootdraws/ushMON](https://github.com/rootdraws/ushMON) (public) | [`b3ba1bf`](https://github.com/rootdraws/ushMON/tree/b3ba1bf) (v4, live 2026-11-18) | the unstaking shMON vault |
-| [euler-xyz/ethereum-vault-connector](https://github.com/euler-xyz/ethereum-vault-connector) | v1.0.1 | EVC, account status checks |
-| [euler-xyz/euler-vault-kit](https://github.com/euler-xyz/euler-vault-kit) | vendored in ag-euler | the cluster's vaults; `maxRedeem` rule at `src/EVault/modules/Vault.sol:234-248` |
-| [euler-xyz/euler-price-oracle](https://github.com/euler-xyz/euler-price-oracle) | `63f20a4` | the Chainlink SVR adapters and the router |
-| [euler-xyz/euler-swap](https://github.com/euler-xyz/euler-swap) | [`a8493f8`](https://github.com/euler-xyz/euler-swap/tree/a8493f89764ce69a05915559d9061781b9a96f24), 2026-10-25; the vendored copy in `ag-euler/contracts/eulerswap-mm-monad/src/` matches it byte for byte (28 files) | the public buyer |
-| [OpenZeppelin/openzeppelin-contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) | 5.2.0 | ERC4626 base of ushMON |
-| [OpenZeppelin/uniswap-hooks](https://github.com/OpenZeppelin/uniswap-hooks) | 1.3.0 | the digester's LimitOrderHook |
-| [Uniswap/v4-core](https://github.com/Uniswap/v4-core), [Uniswap/v4-periphery](https://github.com/Uniswap/v4-periphery) | 1.0.1 | the PoolManager and hook base |
-| [foundry-rs/forge-std](https://github.com/foundry-rs/forge-std) | 1.9.4 / 1.17 | tests |
+| [alphagrowth/alphastructures](https://github.com/alphagrowth/alphastructures), private | branch `shmon-release-2026-11-18` at `a539a19`, not yet merged into `master` (`268892c`) | the vaults, the exit desk, the bot, the tests and the docs |
+| [rootdraws/ushMON](https://github.com/rootdraws/ushMON), private | `b3ba1bf` | the unstaking shMON vault |
+| Our Euler deploy scripts | copied in this repo under [`sources/ag-euler/`](sources/ag-euler/) | deploying the cluster, EulerSwap and ushMON |
+
+The cluster and pools are built from Euler's open-source contracts and other standard libraries:
+
+| Repo | Version | Used for |
+|---|---|---|
+| [euler-xyz/ethereum-vault-connector](https://github.com/euler-xyz/ethereum-vault-connector) | v1.0.1 | account checks across vaults |
+| [euler-xyz/euler-vault-kit](https://github.com/euler-xyz/euler-vault-kit) | | the cluster's lending vaults |
+| [euler-xyz/euler-price-oracle](https://github.com/euler-xyz/euler-price-oracle) | `63f20a4` | the price router and Chainlink SVR adapters |
+| [euler-xyz/euler-swap](https://github.com/euler-xyz/euler-swap) | [`a8493f8`](https://github.com/euler-xyz/euler-swap/tree/a8493f89764ce69a05915559d9061781b9a96f24) | the EulerSwap pools |
+| [OpenZeppelin/openzeppelin-contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) | 5.2.0 | ushMON's ERC-4626 base |
+| [OpenZeppelin/uniswap-hooks](https://github.com/OpenZeppelin/uniswap-hooks) | 1.3.0 | the digester's limit order hook |
+| [Uniswap/v4-core](https://github.com/Uniswap/v4-core), [v4-periphery](https://github.com/Uniswap/v4-periphery) | | the v4 pool manager and hooks |
+| [foundry-rs/forge-std](https://github.com/foundry-rs/forge-std) | 1.17 | ushMON's tests |
 
 ## Contracts on Monad (chain 143)
 
@@ -30,16 +35,18 @@ Links go to Monadscan.
 | WithdrawalHandler | [0xFb78583f6D8A9F6c2cCae6111e2817AC9824162a](https://monadscan.com/address/0xFb78583f6D8A9F6c2cCae6111e2817AC9824162a) | [0x4B821aFd90eF4F5a35Dec5e4AeeA7C00c7d90Af2](https://monadscan.com/address/0x4B821aFd90eF4F5a35Dec5e4AeeA7C00c7d90Af2) |
 | Exit desk proxy (`ShMonadExitAdapter`) | [0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770](https://monadscan.com/address/0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770) | [0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE](https://monadscan.com/address/0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE) |
 | Stable desk proxy (`StableDeskAdapter`) | [0xc19aa853D2a300462Cf558EB16397de35702599a](https://monadscan.com/address/0xc19aa853D2a300462Cf558EB16397de35702599a) | [0x2dCDEB8BBdF3F0D8b89A373bFcc3C4B2eBAF28f1](https://monadscan.com/address/0x2dCDEB8BBdF3F0D8b89A373bFcc3C4B2eBAF28f1) |
-| Stable desk implementation v1.3.0 | [0x640c3af4878961d461ddd2dde508641d6464a501](https://monadscan.com/address/0x640c3af4878961d461ddd2dde508641d6464a501) | same |
-| StrategyController implementation 1.15 | [0x77799C4BEE051d22a75Db768364DEBC24df9297E](https://monadscan.com/address/0x77799C4BEE051d22a75Db768364DEBC24df9297E) | same |
-| Exit desk implementation v1.10.0 | [0x74eCd223208D812098487D4090d964005370BDc7](https://monadscan.com/address/0x74eCd223208D812098487D4090d964005370BDc7) | same |
-| Settings implementation 1.16 | [0x6B25C62bB8732669174E42CD571839b4AAa3C113](https://monadscan.com/address/0x6B25C62bB8732669174E42CD571839b4AAa3C113) | same |
-| ushMON v4 (one vault for both desks) | [0xa753E24B0986567EDAd75f784664Ec11336f8C5e](https://monadscan.com/address/0xa753E24B0986567EDAd75f784664Ec11336f8C5e) | same |
-| EulerSwap pool (the public buyer) | [0x56aEAB6F7a33573CdEF9B59a8d330F0e1b2128A8](https://monadscan.com/address/0x56aEAB6F7a33573CdEF9B59a8d330F0e1b2128A8) | [0x19241Ff986e1dFE848A8C2a8AC2C21C0E7cFe8a8](https://monadscan.com/address/0x19241Ff986e1dFE848A8C2a8AC2C21C0E7cFe8a8) |
+| Vault implementation 1.12.0 | [0xBB3008d28Fe70607fD09385bA9f9De9669da3898](https://monadscan.com/address/0xBB3008d28Fe70607fD09385bA9f9De9669da3898) | same |
+| StrategyController implementation 1.16.0 | [0x2cE43698496BB52E2ce3aD506e7367a02b7A6aE6](https://monadscan.com/address/0x2cE43698496BB52E2ce3aD506e7367a02b7A6aE6) | same |
+| Settings implementation 1.16.0 | [0x6B25C62bB8732669174E42CD571839b4AAa3C113](https://monadscan.com/address/0x6B25C62bB8732669174E42CD571839b4AAa3C113) | same |
+| WithdrawalHandler implementation 1.11.0 | [0xA26047836A996d81bEA2b3A017E99825Db3D0b9d](https://monadscan.com/address/0xA26047836A996d81bEA2b3A017E99825Db3D0b9d) | same |
+| Exit desk implementation 1.10.0 | [0x74eCd223208D812098487D4090d964005370BDc7](https://monadscan.com/address/0x74eCd223208D812098487D4090d964005370BDc7) | same |
+| Stable desk implementation 1.3.0 | [0x640c3af4878961d461ddd2dde508641d6464a501](https://monadscan.com/address/0x640c3af4878961d461ddd2dde508641d6464a501) | same |
+| ushMON, one vault for both desks | [0xa753E24B0986567EDAd75f784664Ec11336f8C5e](https://monadscan.com/address/0xa753E24B0986567EDAd75f784664Ec11336f8C5e) | same |
+| EulerSwap pool, the public buyer | [0x56aEAB6F7a33573CdEF9B59a8d330F0e1b2128A8](https://monadscan.com/address/0x56aEAB6F7a33573CdEF9B59a8d330F0e1b2128A8) | [0x19241Ff986e1dFE848A8C2a8AC2C21C0E7cFe8a8](https://monadscan.com/address/0x19241Ff986e1dFE848A8C2a8AC2C21C0E7cFe8a8) |
 | Admin Safe | [0xC94dd8e928D681bd85BeB94a8729709d189cCF9D](https://monadscan.com/address/0xC94dd8e928D681bd85BeB94a8729709d189cCF9D) | same |
 
 Source: `alphastructures/deploy/deployments/production/*.json`. Every implementation was read from its proxy on chain
-on 2026-11-19.
+on 2026-11-20.
 
 **Keys and roles** (from [02-operations.md](02-operations.md))
 
@@ -79,7 +86,7 @@ on 2026-11-19.
 | ExitBidPool WMON | [0xB03b966811eBd2E481a77d2ce118f8fA2c5fD716](https://monadscan.com/address/0xB03b966811eBd2E481a77d2ce118f8fA2c5fD716) | same |
 | Uniswap v4 PoolManager | [0x188d586Ddcf52439676Ca21A244753fA19F9Ea8e](https://monadscan.com/address/0x188d586Ddcf52439676Ca21A244753fA19F9Ea8e) | |
 
-**The Euler cluster**, `ag-euler/contracts/shmon-cluster-monad/deployed-143.env`
+**The Euler cluster**, from `sources/ag-euler/contracts/shmon-cluster-monad/deployed-143.env`
 
 | Contract | Address |
 |---|---|
@@ -94,17 +101,22 @@ on 2026-11-19.
 | AlphaGrowth Euler Safe (fee receiver, governor after handover) | 0x4f894Bfc9481110278C356adE1473eBe2127Fd3C |
 | Ethereum Vault Connector | [0x7a9324E8f270413fa2E458f5831226d99C7477CD](https://monadscan.com/address/0x7a9324E8f270413fa2E458f5831226d99C7477CD) |
 
-**EulerSwap v2 on Monad**, `ag-euler/contracts/eulerswap-mm-monad/deployed-143.env`: factory
+**EulerSwap on Monad**, from the deploy scripts' `eulerswap-mm-monad/deployed-143.env`: factory
 [0xDD13DCECd0Da21158507385867d24ec56BF80484](https://monadscan.com/address/0xDD13DCECd0Da21158507385867d24ec56BF80484), periphery
 [0xA4cBd6e277B7a531fF8525877a17bD31Cf28619B](https://monadscan.com/address/0xA4cBd6e277B7a531fF8525877a17bD31Cf28619B), implementation
 0xdEDc0388113450eb380817a8770c853C660Caf6d, fee config 0x53fBE13F8852cc9AcB5750375112346EC76532d7, management
 0xA25142Fc5d24675C1A72f418a3239782F85E4533.
 
-**Tokens and outside protocols**: shMON (shMonad, Fastlane) [0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c](https://monadscan.com/address/0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c);
-WMON 0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A; USDC 0x754704Bc059F8C67012fEd69BC8A327a5aafb603; USDT0
-0xe7cd86e13AC4309349F30B3435a9d337750fC82D; Neverland pool [0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585](https://monadscan.com/address/0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585)
-with aTokens shMON 0xC64d73Bb8748C6fA7487ace2D0d945B6fBb2EcDe, USDC 0x38648958836eA88b368b4ac23b86Ad44B0fe7508, USDT0
-0x39F901c32b2E0d25AE8DEaa1ee115C748f8f6bDf.
+**Tokens and outside protocols**
+
+| Contract | Address |
+|---|---|
+| shMON, Fastlane's shMonad | [0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c](https://monadscan.com/address/0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c) |
+| WMON | 0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A |
+| USDC | 0x754704Bc059F8C67012fEd69BC8A327a5aafb603 |
+| USDT0 | 0xe7cd86e13AC4309349F30B3435a9d337750fC82D |
+| Neverland pool | [0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585](https://monadscan.com/address/0x80F00661b13CC5F6ccd3885bE7b4C9c67545D585) |
+| Neverland aTokens: shMON, USDC, USDT0 | 0xC64d73Bb8748C6fA7487ace2D0d945B6fBb2EcDe, 0x38648958836eA88b368b4ac23b86Ad44B0fe7508, 0x39F901c32b2E0d25AE8DEaa1ee115C748f8f6bDf |
 
 ## Files cited, by component
 
@@ -120,15 +132,16 @@ with aTokens shMON 0xC64d73Bb8748C6fA7487ace2D0d945B6fBb2EcDe, USDC 0x3864895883
   `custody/deployments/exit-pool-143.json`.
 - Emergency sale: `contracts/core/StrategyController.sol` (`deskFill`), `ShMonadExitAdapter.sol` (`fillFromController`),
   `services/rebalancingBot/src/planner/panic.ts`, `custody/release-panic-143.ts`, `custody/deployments/release-panic-143.json`.
+- Loan lines, pause and hedge orders: `custody/set-ltv-lines-143.ts`, `custody/release-pause-143.ts`,
+  `contracts/core/Vault.sol`, `packages/shared/src/modes.ts`, `services/rebalancingBot/src/actions/venue.ts`.
 - Tests: `contracts/test/NeverlandMarketAdapter/ShMonadExit*.fork.test.ts`, `services/rebalancingBot/test/planner/marketSell.test.ts`,
   `services/rebalancingBot/test/panicFills.test.ts`,
   `services/rebalancingBot/test/sim/multi/final.ts`, `services/rebalancingBot/test/sim/multi/harness/*`,
   `docs/testbook.md`, `docs/audits/2026_11_15_Unstaking_shMON_Vault_Audit/report.md`.
 - Research data: `services/rebalancingBot/test/sim/{instantExits,instantExitHistory,shmonadHistory,unstakeTiming,backfill,replay}.ts`,
   `exitMm.sim.ts`, with outputs under this repo's `evidence/data/`.
-- Euler cluster and EulerSwap: `ag-euler/contracts/shmon-cluster-monad/deploy.sh`, `deployed-143.env`,
-  `ag-euler/contracts/eulerswap-mm-monad/deploy-mm.sh`, `deployed-143.env`, `src/exitmm/UnstakingShMonVault.sol` (copies
-  under `sources/ag-euler/`); EulerSwap itself at upstream `a8493f8`: `src/EulerSwap.sol`, `src/EulerSwapFactory.sol`,
+- Euler cluster and EulerSwap: `sources/ag-euler/contracts/shmon-cluster-monad/deploy.sh` and `deployed-143.env`,
+  `sources/ag-euler/contracts/eulerswap-mm-monad/deploy-mm.sh` and `deployed-143.env`, `src/exitmm/UnstakingShMonVault.sol`; EulerSwap itself at upstream `a8493f8`: `src/EulerSwap.sol`, `src/EulerSwapFactory.sol`,
   `src/EulerSwapManagement.sol`, `src/EulerSwapPeriphery.sol`, `src/UniswapHook.sol`, `src/libraries/FundsLib.sol`,
   `src/libraries/QuoteLib.sol`, `src/libraries/SwapLib.sol`, `src/interfaces/*.sol`.
 - ushMON: `ushMON/src/UnstakingShMonVault.sol`, `test/UnstakingShMonVault.t.sol`, `test/UnstakingShMonVaultV4.t.sol`,
