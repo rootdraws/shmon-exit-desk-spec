@@ -44,14 +44,14 @@ it.[^digester]
 ![Exit desk liquidity map, from the production configs, the code and the chain, 2026-11-19](figures/exit-desk-liquidity-map.svg)
 
 Leavers' shMON sells on Curve first, and the rest goes the borrow route. The desk sells WMON for USDC at the market's own
-pace, never more than 1% under the oracle, or 2% while the loan is at or over 65%. Both vaults share every venue.
+pace. Both vaults share every venue.
 
 | Venue | Address or pool id | Pair, fee | What the desk does there |
 |---|---|---|---|
-| Curve MON LSTs | `0x74d80ee400d3026fdd2520265cc98300710b25d4` | WMON / shMON, 0.01% | The vault sells leavers' shMON here first, any amount over $10, while the average cost stays within 0.15% of the rate. The arbitrage also buys here. |
+| Curve MON LSTs | `0x74d80ee400d3026fdd2520265cc98300710b25d4` | WMON / shMON, 0.01% | Takes leavers' shMON, any amount over $10, while the average cost stays within 0.15% of the rate. The arbitrage also buys here. |
 | EulerSwap pool, Delta One | `0x56aEAB6F7a33573CdEF9B59a8d330F0e1b2128A8` | shMON / WMON | Buys anyone's shMON at the rate less 0.30%, paid with borrowed WMON. |
 | EulerSwap pool, Delta Neutral | `0x19241Ff986e1dFE848A8C2a8AC2C21C0E7cFe8a8` | shMON / WMON | The same, for its desk. |
-| Digester | `0x3957bb3c02c319231713c06853de9bfc8e7d1aaa276873cd65fc028efc0b1314` | WMON / USDC, 0.01% | Rests five sell orders and five buy orders, and takes stray bids and asks. In the emergency sale it takes borrowed WMON as a taker. |
+| Digester | `0x3957bb3c02c319231713c06853de9bfc8e7d1aaa276873cd65fc028efc0b1314` | WMON / USDC, 0.01% | Holds the desk's orders, and the desk takes stray bids and asks here. In the emergency sale it takes borrowed WMON as a taker. |
 | Exit bid pool, USDC | `0xEA93Cb7Af4bcdAfF8312BEe55dF369970070C4a9` | shMON / USDC, 0.01% | Would sell shMON into standing bids. Empty today. |
 | Exit bid pool, WMON | `0xB03b966811eBd2E481a77d2ce118f8fA2c5fD716` | shMON / WMON, 0.01% | Would sell shMON into standing bids. Empty today. |
 | Uniswap v4 MON/USDC 0.05% | `0x18a9fc874581f3ba12b7898f80a683c66fd5877fd74b26a85ba9a3a79c549954` | MON / USDC, 0.05% | Sets the digester's reference price. The keeper prices fills here, and its flow is counted. |
@@ -83,7 +83,7 @@ and out.[^lines]
 | Trading in the digester with the desk's own WMON and USDC | `sellMonV4`, `buyMonV4` | bot |
 | Emergency sale in one call | `fillFromController` | controller |
 | EulerSwap pool | `deployMmPool`, `getFee`, `leaversWaiting`, `afterSwap` | admin Safe, the pool |
-| Halts | A full halt stops every bot and controller call. A pause stops only `sellShmonV4` and `buyMonV4`. | guardian |
+| Halts | `whenNotHalted`, `whenNotPaused` | guardian |
 
 ## The desk's steps
 
@@ -102,8 +102,6 @@ The bot takes one desk step per tick, the first that has work. It leaves anythin
 | 9 | Over $10 of USDC to buy with | Buy from stray asks, or rest a buy order. |
 | 10 | shMON on the desk and a bid standing | Sell into the exit bid pools, USDC first. |
 | 11 | Over $10 of shMON left | Start the unstake. |
-
-During a pause every step runs, except selling shMON into bids and buying from stray asks.
 
 [^contract]: `alphastructures/contracts/adapters/venue/ShMonadExitAdapter.sol`, a UUPS proxy per vault, `VERSION = 1_10_00` (line 307); `VERSION()` reads 11000 on both live desks, 2026-11-20.
 [^digester]: `alphastructures/docs/Alpha_Structures_Digester.md:31-57`; the router's owner read on chain 2026-11-20.
