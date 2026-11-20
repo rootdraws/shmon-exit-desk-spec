@@ -53,24 +53,24 @@ pace. Both vaults share every venue.
 
 | Venue | Address or pool id | Pair, fee | What the desk does there |
 |---|---|---|---|
-| Curve MON LSTs | `0x74d80ee400d3026fdd2520265cc98300710b25d4` | WMON / shMON, 0.01% | Takes leavers' shMON, any amount over $10, while the average cost stays within 0.15% of the rate. The arbitrage also buys here. |
-| EulerSwap pool, Delta One | `0x56aEAB6F7a33573CdEF9B59a8d330F0e1b2128A8` | shMON / WMON | Buys anyone's shMON at the rate less 0.30%, paid with borrowed WMON. |
-| EulerSwap pool, Delta Neutral | `0x19241Ff986e1dFE848A8C2a8AC2C21C0E7cFe8a8` | shMON / WMON | The same, for its desk. |
-| Digester | `0x3957bb3c02c319231713c06853de9bfc8e7d1aaa276873cd65fc028efc0b1314` | WMON / USDC, 0.01% | Holds the desk's orders, and the desk takes stray bids and asks here. In the emergency sale it takes borrowed WMON as a taker. |
-| Exit bid pool, USDC | `0xEA93Cb7Af4bcdAfF8312BEe55dF369970070C4a9` | shMON / USDC, 0.01% | Would sell shMON into standing bids. Empty today. |
-| Exit bid pool, WMON | `0xB03b966811eBd2E481a77d2ce118f8fA2c5fD716` | shMON / WMON, 0.01% | Would sell shMON into standing bids. Empty today. |
-| Uniswap v4 MON/USDC 0.05% | `0x18a9fc874581f3ba12b7898f80a683c66fd5877fd74b26a85ba9a3a79c549954` | MON / USDC, 0.05% | Sets the digester's reference price. The keeper prices fills here, and its flow is counted. |
-| Uniswap v4 MON/USDC 0.001% | `0x77169f9b5da147c4952896072951e84e4f4aad7b4d68ebe626ba358ed4e9c1e6` | MON / USDC, 0.001% | Flow is counted. |
-| Uniswap v3 | `0x659bD0BC4167BA25c62E05656F78043E7eD4a9da` | WMON / USDC, 0.3% | The keeper prices fills here, and its flow is counted. In the emergency sale the vault sells borrowed WMON here when the v4 pool falls 2% short. |
-| PancakeSwap v3 | `0x63e48B725540A3Db24ACF6682a29f877808C53F2` | WMON / USDC, 0.05% | The keeper prices fills here, and its flow is counted. |
-| PancakeSwap v3 | `0xD5b70d70CBE6C42bCD1aaa662A21673A83f4615b` | AUSD / WMON | Flow is counted. |
-| Uniswap v3 shMON | `0x1f86a9F2441caC9B942CFb5445530CdBB28717eD`, `0xc27EEbd865051020F9BDEb12398790f356a7B684` | shMON / WMON, 0.01% and 0.3% | The arbitrage buys cheap shMON here. |
-| PancakeSwap v3 shMON | `0x66553f37ea7FdC092193dCeFaA7a32F94B1bE4d0` | shMON / WMON, 0.01% | The arbitrage buys cheap shMON here. |
-| Hanji book | `0xc35b1ca1a2c398a21df5783b3a5ea6a2d56f298f` | MON / USDC | Flow is counted. The keeper fills here as a last resort. |
-| Kuru book | `0xc9dE998e272d59a19CEA3783C8dd44f87A86405D` | MON / USDC | Flow is counted. |
-| Stable desk pool | EulerSwap USDC/USDT0 on vaults `0x5aB0…0948` and `0xD664…963E` | USDC / USDT0 | Moves the vault's debt between the two stablecoins, priced off Curve `0x9426…91ab`. |
-| Euler WMON vault | `0xE4522663752AC47516e39aD11d3780a116850eaf` | WMON | Lends the desk WMON against its ushMON, borrowing at 93% and liquidating at 95%. |
-| shMonad | `0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c` | shMON | The slow unstake, about a day, and the rate. |
+| Curve MON LSTs | `0x74d80ee400d3026fdd2520265cc98300710b25d4` | WMON / shMON, 0.01% | The vault sells leavers' shMON here first, any amount over $10, while the average cost stays within 0.15% of shMonad's rate. The WMON goes to the desk. The arbitrage keeper also buys cheap shMON here. |
+| EulerSwap pool, Delta One | `0x56aEAB6F7a33573CdEF9B59a8d330F0e1b2128A8` | shMON / WMON | The Delta One desk's pool. It buys anyone's shMON at shMonad's rate less 0.30% and pays in WMON. |
+| EulerSwap pool, Delta Neutral | `0x19241Ff986e1dFE848A8C2a8AC2C21C0E7cFe8a8` | shMON / WMON | The Delta Neutral desk's pool. It works the same way. |
+| Digester | `0x3957bb3c02c319231713c06853de9bfc8e7d1aaa276873cd65fc028efc0b1314` | WMON / USDC, 0.01% | The desk's own pool. Its buy and sell orders rest here. The desk also fills other traders' stray orders here. |
+| Exit bid pool, USDC | `0xEA93Cb7Af4bcdAfF8312BEe55dF369970070C4a9` | shMON / USDC, 0.01% | Holds standing bids for shMON. The desk would sell shMON into them, this pool first. It holds no bids today. |
+| Exit bid pool, WMON | `0xB03b966811eBd2E481a77d2ce118f8fA2c5fD716` | shMON / WMON, 0.01% | Holds standing bids for shMON. The desk would sell shMON into them after the USDC pool. It holds no bids today. |
+| Uniswap v4 MON/USDC 0.05% | `0x18a9fc874581f3ba12b7898f80a683c66fd5877fd74b26a85ba9a3a79c549954` | MON / USDC, 0.05% | The digester's orders are priced off this pool. The keeper fills against it. In the emergency sale the desk sells borrowed WMON here. Its trades count toward the desk's selling pace. |
+| Uniswap v4 MON/USDC 0.001% | `0x77169f9b5da147c4952896072951e84e4f4aad7b4d68ebe626ba358ed4e9c1e6` | MON / USDC, 0.001% | Its trades count toward the desk's selling pace. |
+| Uniswap v3 | `0x659bD0BC4167BA25c62E05656F78043E7eD4a9da` | WMON / USDC, 0.3% | The keeper fills against it. In the emergency sale the vault sells borrowed WMON here when it pays more than the v4 pool. Its trades count toward the desk's selling pace. |
+| PancakeSwap v3 | `0x63e48B725540A3Db24ACF6682a29f877808C53F2` | WMON / USDC, 0.05% | The keeper fills against it. Its trades count toward the desk's selling pace. |
+| PancakeSwap v3 | `0xD5b70d70CBE6C42bCD1aaa662A21673A83f4615b` | AUSD / WMON | Its trades count toward the desk's selling pace. |
+| Uniswap v3 shMON | `0x1f86a9F2441caC9B942CFb5445530CdBB28717eD`, `0xc27EEbd865051020F9BDEb12398790f356a7B684` | shMON / WMON, 0.01% and 0.3% | The arbitrage keeper buys cheap shMON here. |
+| PancakeSwap v3 shMON | `0x66553f37ea7FdC092193dCeFaA7a32F94B1bE4d0` | shMON / WMON, 0.01% | The arbitrage keeper buys cheap shMON here. |
+| Hanji book | `0xc35b1ca1a2c398a21df5783b3a5ea6a2d56f298f` | MON / USDC | The keeper fills against it when no pool can. Its trades count toward the desk's selling pace. |
+| Kuru book | `0xc9dE998e272d59a19CEA3783C8dd44f87A86405D` | MON / USDC | Its trades count toward the desk's selling pace. |
+| Stable desk pool | EulerSwap USDC/USDT0 on vaults `0x5aB0…0948` and `0xD664…963E` | USDC / USDT0 | Moves the vault's debt between USDC and USDT0. Its price comes from Curve `0x9426…91ab`. |
+| Euler WMON vault | `0xE4522663752AC47516e39aD11d3780a116850eaf` | WMON | Lends the desk WMON against its ushMON. It lends up to 93% of value and liquidates at 95%. |
+| shMonad | `0x1B68626dCa36c7fE922fD2d55E4f631d962dE19c` | shMON | Unstakes shMON to MON in about a day, and sets shMON's rate. |
 
 ## The contract
 
