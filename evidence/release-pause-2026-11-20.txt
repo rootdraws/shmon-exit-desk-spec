@@ -1,0 +1,30 @@
+custody/release-pause-143.ts: Vault 1.12.0 and StrategyController 1.16.0 on both shMON vaults (deposits and collateral supply while paused; borrowing stays paused).
+
+Rehearsal: RPC=http://127.0.0.1:8700 FORK=1 (anvil fork of Monad)
+2 vaults: shmon-neverland-usdc-hl-d0, shmon-neverland-usdc-hl
+shmon-neverland-usdc-hl-d0: Vault 0x187bEF1d746350B22e0Ab1FAfA2A96a6F4aF272C VERSION 11100
+  storage shape 1_11_00 -> 1_12_00 ok
+  shmon-neverland-usdc-hl-d0: Vault 11100 -> 11200: ok
+shmon-neverland-usdc-hl-d0: StrategyController 0x13B7aF96a7f1F7E0A4E228CcC0e437389492F5Ae VERSION 11500
+  storage shape 1_15_00 -> 1_16_00 ok
+  shmon-neverland-usdc-hl-d0: StrategyController 11500 -> 11600: ok
+  read back: vault VERSION 11200, controller VERSION 11600; asset, supply and settings unchanged: yes
+shmon-neverland-usdc-hl: Vault 0xeEe3dAb9fc5d3833aE219F87A1Fbb68F3d4431D3 VERSION 11100
+  storage shape 1_11_00 -> 1_12_00 ok
+  shmon-neverland-usdc-hl: Vault 11100 -> 11200: ok
+shmon-neverland-usdc-hl: StrategyController 0xc27A2eA394c1499FA6261bd12f38D813C2DecB51 VERSION 11500
+  storage shape 1_15_00 -> 1_16_00 ok
+  shmon-neverland-usdc-hl: StrategyController 11500 -> 11600: ok
+  read back: vault VERSION 11200, controller VERSION 11600; asset, supply and settings unchanged: yes
+done (fork: nothing written)
+
+Mainnet: RPC=https://rpc.monad.xyz NET=production
+Vault 1_12_00 implementation 0xBB3008d28Fe70607fD09385bA9f9De9669da3898
+StrategyController 1_16_00 implementation 0x2cE43698496BB52E2ce3aD506e7367a02b7A6aE6
+shmon-neverland-usdc-hl-d0: Vault 11100 -> 11200: ok 0x8e94e5ded24a85ae984b58bf2b6240d0d4a09e075927dbe03504022280f42969
+shmon-neverland-usdc-hl-d0: StrategyController 11500 -> 11600: ok 0xae6b14435543670e73595f4025b591ca6c3871b005151a2226f51c329d3633d8
+  read back: vault VERSION 11200, controller VERSION 11600; asset, supply and settings unchanged: yes
+shmon-neverland-usdc-hl: Vault 11100 -> 11200: ok 0xfb39165572e0895657db3308fc2591627473e5869fd7b4c4aac254f85f4cf820
+shmon-neverland-usdc-hl: StrategyController 11500 -> 11600: ok 0xae46f974bdd0d10c360fb3c1edff7cc55c6d99031c211b3b417854387792595a
+  read back: vault VERSION 11200, controller VERSION 11600; asset, supply and settings unchanged: yes
+done; record custody/deployments/release-pause-143.json

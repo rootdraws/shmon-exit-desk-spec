@@ -1,0 +1,20 @@
+custody/set-ltv-lines-143.ts through the admin Safe, both shMON vaults. Each change rehearsed first on an anvil fork of Monad.
+
+Unwind line 55% -> 60% (shared lines; Neverland):
+shmon-neverland-usdc-hl    4500/5500/6650 -> 4500/6000/6650  tx 0xf9989b16bbdfbbc02f569ab55b1fb7cf1a16ac128b4f1099cbf7f53183af68b3
+shmon-neverland-usdc-hl-d0 4500/5500/6650 -> 4500/6000/6650  tx 0x8fec025074f2f5bd8d20a376c10c9213a4333f84b14bae594930a38731b73cc9
+
+Euler's own unwind line 62.85% -> 68.57% (MARKET=euler-market):
+shmon-neverland-usdc-hl    5142/6285/7600 -> 5142/6857/7600  tx 0x4f01cc6e1e1b4597a63058ade5383c213ae60cd8079866aba2cb36c7751bce76
+shmon-neverland-usdc-hl-d0 5142/6285/7600 -> 5142/6857/7600  tx 0xae7ddc380f1a077a1ac83adf77a1e2cb2379d25f08c3b5440b340a8c9211b7e1
+
+Borrow ceiling 45% -> 55%, for hedge margin (TARGET):
+shmon-neverland-usdc-hl    4500/6000/6650 -> 5500/6000/6650  tx 0xc1d58cd1152043acd19a00c7cf408cce0ab17beb624f7419916b5f8e1fc00d9b
+shmon-neverland-usdc-hl    euler 5142/6857/7600 -> 6285/6857/7600  tx 0xf6913986cb244bca3f862860da1db3e2e2a387c78d2ba9267e0edb59a47abe5a
+shmon-neverland-usdc-hl-d0 4500/6000/6650 -> 5500/6000/6650  tx 0x4d24056f59d2341c57d49293e04c839517535e9592ff87a684f0838b5adf3a5b
+shmon-neverland-usdc-hl-d0 euler 5142/6857/7600 -> 6285/6857/7600  tx 0x8d48b39f01d399c937358f674fd0f8f86134563bea5e1edf8c20da9228290330
+
+Share price limit, fork of Delta Neutral settings 0xC62D354c3B8fbBEEA9Bee2D35Da38e015770F85a, as its oracle:
+post 1 (sets the dollar reference): success
+post 2, MON -34.48%, share +52.6% in shMON, dollar value flat: success; share price 1526000000000000000, converging: false
+control, the same +52.6% posted without the dollar price: reverted
