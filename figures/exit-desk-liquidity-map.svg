@@ -115,8 +115,8 @@
       <text x="896" y="402" fill="#5f6b69">Neither holds a bid, so nothing sells.</text>
 
       <rect x="880" y="434" width="320" height="110" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="896" y="458" font-weight="600">Resting venues</text>
-      <text x="896" y="478" fill="#5f6b69">Only a desk with no digester uses these.</text>
+      <text x="896" y="458" font-weight="600">Old resting venues</text>
+      <text x="896" y="478" fill="#5f6b69">Both desks use the digester, never these.</text>
       <text x="896" y="496" fill="#5f6b69">Uniswap v3 0.3% · PancakeSwap v3 0.05%</text>
       <text x="896" y="514" fill="#5f6b69">PancakeSwap AUSD/WMON · v4 0.05%, 0.001%</text>
       <text x="896" y="532" fill="#5f6b69">Hanji MON/USDC book</text>

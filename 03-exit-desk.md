@@ -60,10 +60,10 @@ pace. Both vaults share every venue.
 | Exit bid pool, USDC | `0xEA93Cb7Af4bcdAfF8312BEe55dF369970070C4a9` | shMON / USDC, 0.01% | Would sell shMON into standing bids. Empty today. |
 | Exit bid pool, WMON | `0xB03b966811eBd2E481a77d2ce118f8fA2c5fD716` | shMON / WMON, 0.01% | Would sell shMON into standing bids. Empty today. |
 | Uniswap v4 MON/USDC 0.05% | `0x18a9fc874581f3ba12b7898f80a683c66fd5877fd74b26a85ba9a3a79c549954` | MON / USDC, 0.05% | Sets the digester's reference price. The keeper prices fills here, and its flow is counted. |
-| Uniswap v4 MON/USDC 0.001% | `0x77169f9b5da147c4952896072951e84e4f4aad7b4d68ebe626ba358ed4e9c1e6` | MON / USDC, 0.001% | Flow is counted. The desk rests orders here only without a digester. |
+| Uniswap v4 MON/USDC 0.001% | `0x77169f9b5da147c4952896072951e84e4f4aad7b4d68ebe626ba358ed4e9c1e6` | MON / USDC, 0.001% | Flow is counted. The desks never rest orders here, because both use the digester. |
 | Uniswap v3 | `0x659bD0BC4167BA25c62E05656F78043E7eD4a9da` | WMON / USDC, 0.3% | The keeper prices fills here, and its flow is counted. In the emergency sale the vault sells borrowed WMON here when the v4 pool falls 2% short. |
 | PancakeSwap v3 | `0x63e48B725540A3Db24ACF6682a29f877808C53F2` | WMON / USDC, 0.05% | The keeper prices fills here, and its flow is counted. |
-| PancakeSwap v3 | `0xD5b70d70CBE6C42bCD1aaa662A21673A83f4615b` | AUSD / WMON | Flow is counted. The desk rests orders here only without a digester. |
+| PancakeSwap v3 | `0xD5b70d70CBE6C42bCD1aaa662A21673A83f4615b` | AUSD / WMON | Flow is counted. The desks never rest orders here, because both use the digester. |
 | Uniswap v3 shMON | `0x1f86a9F2441caC9B942CFb5445530CdBB28717eD`, `0xc27EEbd865051020F9BDEb12398790f356a7B684` | shMON / WMON, 0.01% and 0.3% | The arbitrage buys cheap shMON here. |
 | PancakeSwap v3 shMON | `0x66553f37ea7FdC092193dCeFaA7a32F94B1bE4d0` | shMON / WMON, 0.01% | The arbitrage buys cheap shMON here. |
 | Hanji book | `0xc35b1ca1a2c398a21df5783b3a5ea6a2d56f298f` | MON / USDC | Flow is counted. The keeper fills here as a last resort. |
