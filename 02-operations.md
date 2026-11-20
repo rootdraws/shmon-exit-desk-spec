@@ -49,7 +49,7 @@ The figure gives each loan line for both lenders. Euler liquidates at 80% and Ne
 | Curve first | over $10, average cost ≤ 0.15% | Sells leavers' shMON for WMON on Curve before the desk route. | `planner/exitDesk.ts` |
 | Desk chunk | min(owed, 4 h × 25% taker buys, room × 92%) | Parks, borrows and sells in the digester. | `planner/exitDesk.ts` |
 | Leftover | $10 to $1,000 | Swaps at market after Curve declines. | `planner/exitDesk.ts` |
-| Share price limit | 3% an hour | The contract refuses a bigger move in the share price. | `StrategyControllerSettings.sol` |
+| Share price limit | 3% an hour | The contract refuses a bigger move in the share price. It measures Delta One in shMON and Delta Neutral in dollars, so a MON crash barely moves either; a fork post of the 34.48% worst day passed in one step on Delta Neutral (2026-11-20). A bigger real move posts in 3% steps, and deposits and payouts wait until it catches up. | `StrategyControllerSettings.sol`, navOracle `tick.ts` |
 | Modes | block 60 s, price 90 min, venue health | Stale data blocks growth, new shorts and payouts. | `state/modeMachine.ts`, `staleness.ts` |
 | Hedge drift warning | 3% of target, $10 or more | The monitor warns. The bot itself moves at 1%. | monitor `checkStrategy.ts` |
 | Idle | 5 min tick | An empty vault's cadence. | `idle.ts` |
