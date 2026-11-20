@@ -85,7 +85,7 @@ and out.[^lines]
 | Resting orders, each checked against the oracle | place and close on Uniswap v3, Uniswap v4, Hanji and the digester | bot |
 | Selling shMON into bids, never under the oracle less the swap limit | `sellShmonV4` | bot |
 | Euler account | `parkShmon`, `unparkShmon`, `borrowWmon`, `repayWmon`, `settleEulerUnstake`, `restakeWmon` | bot |
-| Trading in the digester with the desk's own WMON and USDC | `sellMonV4`, `buyMonV4` | bot |
+| Selling the desk's WMON into the digester or the Uniswap v4 0.05% pool, and buying WMON in the digester | `sellMonV4`, `buyMonV4` | bot |
 | Emergency sale in one call | `fillFromController` | controller |
 | EulerSwap pool | `deployMmPool`, `getFee`, `leaversWaiting`, `afterSwap` | admin Safe, the pool |
 | Halts | `whenNotHalted`, `whenNotPaused` | guardian |
@@ -110,5 +110,5 @@ The bot takes one desk step per tick, the first that has work. It leaves anythin
 
 [^contract]: `alphastructures/contracts/adapters/venue/ShMonadExitAdapter.sol`, a UUPS proxy per vault, `VERSION = 1_10_00` (line 307); `VERSION()` reads 11000 on both live desks, 2026-11-20.
 [^digester]: `alphastructures/docs/Alpha_Structures_Digester.md:31-57`; the router's owner read on chain 2026-11-20.
-[^lines]: Line numbers in the live 1.10.0 source: `initialize` 449, `moveEulerAccount` 510, `deposit` 582, `requestUnstake` 594, `placeLimitOrder` 1109, `sellShmonV4` 755, `parkShmon` 790, `settleEulerUnstake` 920, `sellMonV4` 826, `fillFromController` 860, `deployMmPool` 952, `leaversWaiting` 979, `whenNotHalted` 552, `whenNotPaused` 557; version history at lines 285-306.
+[^lines]: Line numbers in the live 1.10.0 source: `initialize` 449, `moveEulerAccount` 510, `deposit` 582, `requestUnstake` 594, `placeLimitOrder` 1109, `sellShmonV4` 755, `parkShmon` 790, `settleEulerUnstake` 920, `sellMonV4` 826, `fillFromController` 860, `deployMmPool` 952, `leaversWaiting` 979, `whenNotHalted` 552, `whenNotPaused` 557.
 [^steps]: `alphastructures/services/rebalancingBot/src/planner/exitDesk.ts`; `DESK_DUST_USD = 10` at line 24.
