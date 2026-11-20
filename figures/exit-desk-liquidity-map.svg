@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="994" viewBox="0 0 1240 994" role="img" aria-label="The exit desk takes shMON from the vault's leavers, from anyone selling into its EulerSwap pool and from the arbitrage keeper; leavers' shMON sells on Curve first, the rest goes the borrow route through the WMON vault and shMonad's one-day unstake; the desk sells WMON for USDC through its digester ladder, which the keeper fills against outside pools." style="color:#17201f">
-    <rect x="0" y="0" width="1240" height="994" fill="#f6f5f1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="806" viewBox="0 0 1240 806" role="img" aria-label="The exit desk takes shMON from the vault's leavers, from anyone selling into its EulerSwap pool and from the arbitrage keeper; leavers' shMON sells on Curve first, the rest goes the borrow route through the WMON vault and shMonad's one-day unstake; the desk sells WMON for USDC through its digester ladder, which the keeper fills against outside pools." style="color:#17201f">
+    <rect x="0" y="0" width="1240" height="806" fill="#f6f5f1"/>
     <defs>
       <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#17201f"/></marker>
       <marker id="arrow-in" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0a7f6a"/></marker>
@@ -18,8 +18,7 @@
         <line x1="820" y1="222" x2="878" y2="222" stroke="#8a5a0a" stroke-width="2" marker-end="url(#arrow-out)"/>
         <line x1="820" y1="366" x2="878" y2="366" stroke="#8a5a0a" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow-out)"/>
         <line x1="600" y1="652" x2="600" y2="680" stroke="#8a5a0a" stroke-width="2" marker-end="url(#arrow-out)"/>
-        <path d="M880,850 H866 V288 H878" fill="none" stroke="#17201f" marker-end="url(#arrow)"/>
-        <line x1="880" y1="900" x2="822" y2="900" stroke="#17201f" marker-end="url(#arrow)"/>
+        <path d="M880,562 H866 V288 H878" fill="none" stroke="#17201f" marker-end="url(#arrow)"/>
       </g>
 
       <!-- IN, left column -->
@@ -128,30 +127,14 @@
       <text x="56" y="744" fill="#5f6b69">The pool's 0.30% and the arbitrage gain come home as shMON once the loan is repaid.</text>
       <text x="56" y="762" fill="#5f6b69">The keeper's gain on each digester fill goes to the vault's controller.</text>
 
-      <!-- the keeper, bottom -->
-      <text x="40" y="822" font-weight="600" font-size="13">Who fills the digester, and what prices the fills</text>
-      <rect x="40" y="834" width="360" height="128" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="56" y="858" font-weight="600">Flow venues the pace counts</text>
-      <text x="56" y="878" fill="#5f6b69">Uniswap v3 0.3% · PancakeSwap v3 0.05%</text>
-      <text x="56" y="896" fill="#5f6b69">PancakeSwap AUSD/WMON · v4 0.05%, 0.001%</text>
-      <text x="56" y="914" fill="#5f6b69">Hanji · Kuru, in 5-minute buckets</text>
-      <text x="56" y="932" fill="#5f6b69">Our own trades are left out.</text>
-
-      <rect x="420" y="834" width="400" height="128" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="436" y="858" font-weight="600">Pools the keeper prices against</text>
-      <text x="436" y="878" fill="#5f6b69">MON/USDC: Uniswap v4 0.05%, Uniswap v3 0.3%,</text>
-      <text x="436" y="896" fill="#5f6b69">PancakeSwap v3 0.05%; Hanji when no pool fills</text>
-      <text x="436" y="914" fill="#5f6b69">shMON/WMON for arbitrage: Curve MON LSTs,</text>
-      <text x="436" y="932" fill="#5f6b69">Uniswap v3 0.01% and 0.3%,</text>
-      <text x="436" y="950" fill="#5f6b69">PancakeSwap v3 0.01%</text>
-
-      <rect x="880" y="834" width="320" height="128" rx="3" fill="#ffffff" stroke="#17201f"/>
-      <text x="896" y="858" font-weight="600">Digester keeper</text>
-      <text x="896" y="876" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">key 0xEE51…c3A7</text>
-      <text x="896" y="892" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">router 0xe1fe…3776</text>
-      <text x="896" y="912" fill="#5f6b69">It wakes on every swap by websocket.</text>
-      <text x="896" y="930" fill="#5f6b69">It fills orders outside prices have passed.</text>
-      <text x="896" y="948" fill="#5f6b69">The gap must beat both pools' fees.</text>
+      <rect x="880" y="546" width="320" height="146" rx="3" fill="#ffffff" stroke="#17201f"/>
+      <text x="896" y="570" font-weight="600">Digester keeper</text>
+      <text x="896" y="588" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">key 0xEE51…c3A7</text>
+      <text x="896" y="604" font-family="IBM Plex Mono, Menlo, monospace" font-size="11">router 0xe1fe…3776</text>
+      <text x="896" y="624" fill="#5f6b69">It wakes on every WMON/USDC swap.</text>
+      <text x="896" y="642" fill="#5f6b69">When a swap passes our order, it fills it.</text>
+      <text x="896" y="660" fill="#5f6b69">It checks Uniswap, PancakeSwap and Hanji.</text>
+      <text x="896" y="678" fill="#5f6b69">It fills only when the gain beats fees.</text>
 
     </g>
 </svg>
