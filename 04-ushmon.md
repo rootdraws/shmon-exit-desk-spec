@@ -14,8 +14,7 @@ An ERC-4626 vault whose shares (ushMON) are denominated in shMON. "An operator s
 slow unstake (18 to 21 hours) and completes it; the MON that comes back is held as WMON. A holder redeems ushMON for WMON
 at shMonad's redemption rate with `redeemForWmon`, inside the same Euler EVC batch that repays a WMON loan. The vault
 runs the EVC account status checks that Euler's collateral vaults run, so a WMON vault can accept ushMON as collateral
-and liquidate it." (`README.md`.) Root's brief, quoted in the NatSpec: "Custom vault for shMON, which does
-rehypothecation into slow redemption" (2026-11-05).
+and liquidate it." (`README.md`.)
 
 Assets are counted in shMON units: shMON held + (MON pending in the unstake + WMON held) / shMonad's rate
 (`totalAssets`, line 129). The operators are fixed at construction and are the exit desks. One vault serves both desks,
@@ -58,16 +57,16 @@ The audit's other findings stand as accepted: M1 a shMonad freeze strands the co
 chunk above shMonad's no-delay allowance waits two more epochs (the bot should split it); L3 a liquidator receives a
 share that pays out a day later.
 
-## Eight more issues, worked through with Root on 2026-11-16
+## Eight more issues (2026-11-16)
 
-Filed by ardey26 on 2026-11-16 at 17:58Z (`evidence/issues/issue-4.md` to `issue-11.md`). Each was taken one at a time
-with Root; the calls below are his.
+Filed by ardey26 on 2026-11-16 at 17:58Z (`evidence/issues/issue-4.md` to `issue-11.md`). Each has its decision
+below.
 
 | Issue | Finding | Call |
 |---|---|---|
 | [#4](https://github.com/rootdraws/ushMON/issues/4) Medium | No tests in the repo, and the fork stand-in behaves differently from live shMonad | Fixed in v2: the stand-in is deleted, the unit tests use a mock that burns shMON as shMonad does and refuses when nothing is matured, the constructor's approval to the unstaker is gone, and a fork test runs the cycle against live shMonad |
 | [#5](https://github.com/rootdraws/ushMON/issues/5) Low | The operator is a single immutable address with no rotation | Closed by design: the operator is the exit desk, an upgradeable contract under the admin Safe whose own keys rotate; a changeable operator would reopen the door issue 1 closed |
-| [#6](https://github.com/rootdraws/ushMON/issues/6) Medium | A 98% liquidation LTV leaves about 2% for an exit that takes a day or more | Studied in [11-ltv-study.md](11-ltv-study.md); the new vaults deploy at 93/95 ("move to 93/95 now. It's built for external lenders.") |
+| [#6](https://github.com/rootdraws/ushMON/issues/6) Medium | A 98% liquidation LTV leaves about 2% for an exit that takes a day or more | Studied in [11-ltv-study.md](11-ltv-study.md); the new vaults deploy at 93/95 |
 | [#7](https://github.com/rootdraws/ushMON/issues/7) Low | A 1-wei withdrawal makes an exact-balance `startUnstake` revert | Fixed in v2: `startUnstake` sends what is held, up to the amount asked, and is a no-op with nothing to send |
 | [#8](https://github.com/rootdraws/ushMON/issues/8) Low | `completeUnstake` reverts when nothing is matured, so a settle batch can be griefed | Fixed in v2: shMonad's refusal is swallowed and the call returns what it wrapped; the desk's settle already guarded its own call since v1.6.0 |
 | [#9](https://github.com/rootdraws/ushMON/issues/9) Low | Assets in the unstake earn nothing, and every holder shares that cost | Closed by purpose: ushMON is the desk's collateral wrapper with one holder, so the day of lost yield is the exit's own cost; the audit's L3 covers a liquidator's day |
@@ -95,8 +94,7 @@ The fork cycle test that drives v2 through the live desk, the pool and a matured
 
 ## v2 to v3: one vault for both desks (2026-11-17)
 
-Root, 2026-11-17: "it looks suspicious enough having ushMON as collateral, But ushMONdo and ushMONdn Seems like a bit
-excessive." v3 lets several exit desks share one vault without sharing each other's money:
+v3 lets several exit desks share one vault without sharing each other's money:
 
 - The constructor takes a list of operators (`isOperator`, `operators()`); only an operator receives shares or starts an
   unstake, as in v2.
@@ -118,7 +116,7 @@ pass on v3 (21 tests), and the desk-side fork test runs both live desks on one v
 
 ## v3 to v4: the WMON follows the shares (2026-11-18)
 
-Root, 2026-11-18: "yes, build the ushMON fix". In v3 a liquidator that seized a desk's shares got none of the WMON
+In v3 a liquidator that seized a desk's shares got none of the WMON
 behind them, because that WMON was credited to the desk alone. v4 fixes this:
 
 - A transfer moves the same share of the sender's WMON credit and of each pending unstake to the receiver.

@@ -1,6 +1,6 @@
 # 11. How much the WMON vault may lend against ushMON (issue 6 study)
 
-Root's seven questions of 2026-11-16, each answered from a measurement or a fork simulation under
+Seven questions of 2026-11-16, each answered from a measurement or a fork simulation under
 [`evidence/ltv-study/`](evidence/ltv-study/). Blocks and dates are in each file.
 
 ## 1. What oracle tracks WMON against shMON?
@@ -113,18 +113,16 @@ read back (`curve-proposal.md`, `curve-proposal-readback.txt`):
 Factory arguments: `deploy(1847694955732363770, 451674395, 5, 3865470565, 8319516250237539940)`. Cost: at the kink
 lenders earn 9.7% instead of 24.3%, and the desk keeps 90% of each sale's margin instead of 76%.
 
-## Root's call on issue 6 (2026-11-16)
+## The decision on issue 6 (2026-11-16)
 
-**93 / 95 now.** "Move to 93/95 now. It's built for external lenders." Every ushMON vault since deploys at 93/95
+**93 / 95 now, built for external lenders.** Every ushMON vault since deploys at 93/95
 (`deploy.sh` `LTV_WMON_SH=(9300 9500)`), and ushMON v4 reads 93/95 on chain (2026-11-19). Each desk parks 80 MON of
 headroom, more than the 67 MON (7.2%) the 929.88 WMON float needs.
 
-**The curve stays at 20 / 30 / 50.** "I want it to be expensive, to use, and attract resting capital. and i want that
-capital to be available for exits to take place, and i want basically to become the dominant exit path from shMON to
-wMON, facilitated through these debt swaps." The lower curve in section 7 was proposed and dropped.
+**The curve stays at 20 / 30 / 50.** A high borrow rate draws resting WMON that is there when exits need it, so the
+debt swaps can become the main exit from shMON to WMON. The lower curve in section 7 was proposed and dropped.
 
-**The target scale.** "We should assume that this thing will eventually be digesting like 50k to 150k every 20 hours."
-At that scale the vault needs about a day's flow in resting WMON, 50,000 to 150,000 WMON, and each desk needs 7.2% of
+**The target scale** is 50k to 150k MON every 20 hours. At that scale the vault needs about a day's flow in resting WMON, 50,000 to 150,000 WMON, and each desk needs 7.2% of
 its day's sales parked as shMON, 3,600 to 10,800 MON. The desk's margin is 0.30% per sale less 7.2 bps a day of
 interest at the kink, about 0.23% per turn, roughly 340 MON a day at 150,000 MON of sales. Where the parked shMON
 comes from at that scale (the vault's own collateral or new MON) is the next decision.

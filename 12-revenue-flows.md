@@ -1,7 +1,7 @@
 # 12. Revenue flows: what makes money, how much, and where it goes
 
-Fees and receivers were read on chain on 2026-11-18 and read again on 2026-11-19, unchanged. Root, 2026-11-18: "the admin safe will be handed over to them"
-(AlphaGrowth), so both the admin Safe's performance fees and the Euler interest fee count as AlphaGrowth's below.
+Fees and receivers were read on chain on 2026-11-18 and read again on 2026-11-19, unchanged. The admin Safe will be handed
+over to AlphaGrowth, so both the admin Safe's performance fees and the Euler interest fee count as AlphaGrowth's below.
 
 ## What TVL means here
 
@@ -39,8 +39,7 @@ The exit fees, the pool margin, the arbitrage and the digester gains all raise t
 10% of every rise through the performance fee, including rises that only win back a dip. Measured against what the
 holders net, that is about 21% on Delta One and 14% on Delta Neutral.
 
-Settings 1.16 charges 10% of every rise over the last published price, up or down (Root, 2026-11-18: "change the
-contract to charge 10% on every gain"). Both vaults run it since 2026-11-18 (implementation
+Settings 1.16 charges 10% of every rise over the last published price, up or down. Both vaults run it since 2026-11-18 (implementation
 `0x6B25C62bB8732669174E42CD571839b4AAa3C113`, released by the admin Safe with `custody/release-settings-116.ts`).
 `VERSION()` reads 11600 on both Settings proxies, and the fee reads 1000 bps to the admin Safe.
 
@@ -73,8 +72,8 @@ $1.15 short.
 | Total in dollars | 14.7% | 16.7% | |
 | Net carry used above | **3.7%** | **16.7%** | Delta One's share price is counted in shMON, so its holders' own 11.0% staking yield is taken out |
 
-The 60% Euler share assumes the $1M of USDC lending about to arrive on the Euler cluster for these vaults (Root,
-2026-11-18: "we are about to get 1m in USDC lending on euler just for this vault"). The bot borrows up to the curve's
+The 60% Euler share assumes the $1M of USDC lending about to arrive on the Euler cluster for these vaults (expected
+as of 2026-11-18). The bot borrows up to the curve's
 90% kink, so $900k of the $1.5M loan at $2M TVL. With only Neverland the loan costs 5.74%, and the net carry is 5.2% and
 17.9%.
 

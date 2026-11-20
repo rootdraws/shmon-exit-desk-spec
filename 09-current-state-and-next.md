@@ -20,21 +20,20 @@ release records are listed in [08-testing.md](08-testing.md).
 
 ## Shipped on 2026-11-18 and 2026-11-19
 
-1. **ushMON v4** (Root 2026-11-18: "yes, build the ushMON fix"): the WMON a finished unstake returns follows the shares,
+1. **ushMON v4:** the WMON a finished unstake returns follows the shares,
    so a liquidator can redeem what it seized ([04-ushmon.md](04-ushmon.md)).
 2. **Desk v1.9.0** and the move onto v4: both desks moved their accounts, opened the two new pools and parked the
    headroom again.
 3. **The deposit cap:** 84M shMON (about $2M) on both shMON vaults, set through the admin Safe.
 4. **The monitor** unpauses a vault after 30 minutes at or under 52.5%, the bot's unwind stop.
-5. **The emergency sale** (Root 2026-11-18: "if you are pressed to the wall, you should avail yourself of every
-   shMON/wMON opportunity available"): controller v1.15.0 and desk v1.10.0. Over 65% the bot sells MON as a taker
+5. **The emergency sale:** controller v1.15.0 and desk v1.10.0. Over 65% the bot sells MON as a taker
    within 2% of the oracle, and borrow-to-fill runs in one transaction ([03-exit-desk.md](03-exit-desk.md)).
 
-## Pending for Root
+## Open decisions
 
 | Step | State |
 |---|---|
-| Headroom at scale | 80 MON per desk covers about 1,100 MON of pool buys a day at the 93% borrow LTV (7.2% of a day's sales). At Root's target of 50k to 150k MON every 20 hours, the desks need 3,600 to 10,800 MON parked. Whether that comes from the vaults' own shMON or new MON is Root's call. |
+| Headroom at scale | 80 MON per desk covers about 1,100 MON of pool buys a day at the 93% borrow LTV (7.2% of a day's sales). At the target of 50k to 150k MON every 20 hours, the desks need 3,600 to 10,800 MON parked. Whether that comes from the vaults' own shMON or new MON is still open. |
 | Lenders | The whole 929.88 WMON float is lent out, so the two pools can pay out only 0.26 WMON until the loan is repaid. Taking the public flow (about 160,000 MON a day lately) needs WMON lenders of that order. The curve charges borrowers 20% at zero use and 30% at the 90% kink, and lenders get 90% of what is paid. |
 
 ## Known risks

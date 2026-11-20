@@ -68,7 +68,7 @@ The parameters below were read from both pools on 2026-11-19 (`getDynamicParams`
 | hooked operations | 6 (getFee, afterSwap) | |
 
 `getFee` (line 970) charges shMON in whatever brings the fixed ceiling down to **the live rate less 0.30%**
-(`MM_DISCOUNT_BPS = 30`, "Root 2026-11-06: 'charges .3% less'"), and returns 1e18 for WMON in, so the pool only buys.
+(`MM_DISCOUNT_BPS = 30`), and returns 1e18 for WMON in, so the pool only buys.
 Since v1.7.0 it also returns 1e18 for every sale while the vault has an unpaid withdrawal batch, so the vault's own
 leavers get the borrowing room first and outside sellers are routed to shMonad's instant exit for those minutes.
 `afterSwap` (line 987) moves the ceiling to 2% over the live rate when the rate has come within 1% of it, re-anchoring the
@@ -100,7 +100,7 @@ first attempt) and the releases now park 80 MON of shMON (48.38 shMON) per desk 
 So the capital is:
 
 - **Lenders' WMON in the cluster's WMON vault.** This is the float the pool draws on. On 2026-11-19 the vault
-  holds 929.88 WMON lent by the deployer key, none of it borrowed, from the 1,100 MON Root sent (the rest is headroom and gas). With 9 in
+  holds 929.88 WMON lent by the deployer key, none of it borrowed, from 1,100 MON sent to that key (the rest is headroom and gas). With 9 in
   10 shMonad instant exits under 220 MON (`evidence/data/instant-exits-30d.json`), that float serves a typical sale once
   per cycle; to carry the whole public flow at the recent 160,000 MON a day it would need lenders of that order, and
   they earn the WMON vault's rate (20% at zero use, 30% at the 90% kink, `deploy.sh:49`).
@@ -132,7 +132,7 @@ The keeper buys shMON wherever it sells for less than our pools pay, and sells i
 * It always leaves the WMON vault a reserve, the larger of half its unlent WMON or the last leaver payout.
 * It sends each trade to the desk whose pool can take more, and that desk keeps the profit as WMON.
 
-[^arb]: `alphastructures/services/digesterKeeper/src/arb.ts:4-13,42-46`; Root 2026-11-17: "send it to the desk as WMON".
+[^arb]: `alphastructures/services/digesterKeeper/src/arb.ts:4-13,42-46`.
 
 ## How a pool is retired
 
