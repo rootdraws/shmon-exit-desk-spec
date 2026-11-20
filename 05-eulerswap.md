@@ -51,11 +51,12 @@ On a fork, a seller of 60.48 shMON worth 99.99 MON was quoted 99.69 WMON, 0.30% 
 
 ## What the pool needs to keep buying
 
-The pool pays sellers with WMON it borrows from lenders. Two things limit how much it can buy:
+The pool pays sellers with borrowed WMON. It keeps buying as long as two things hold:
 
-- **Lenders' WMON.** The pool can only pay out WMON that lenders have put in and nobody has borrowed yet.
-- **A cushion of the desk's own shMON.** Each sale borrows 99.7% of the shMON's value, but the lender lends only 93%.
-  The desk covers the gap with its own shMON, about 7.2% of what it buys. Each desk keeps 80 MON of shMON for this.
+- **Lenders have WMON to lend.** When all of it is lent out, the pool stops buying.
+- **The desk has enough collateral.** Buying 100 shMON adds a loan of 99.7 WMON. The lender lends only 93% against
+  collateral, so those 100 shMON back just 93 of it. The desk's own parked shMON backs the rest: about 7.2 shMON for
+  every 100 it buys. Each desk keeps 80 MON of shMON parked for this.
 
 To buy $100k of shMON in one unstake cycle:
 
