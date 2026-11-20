@@ -78,7 +78,7 @@ A redemption request joins a batch that settles about 5 minutes later, plus the 
 
 ## The two production vaults
 
-Both run on Monad (chain 143) with the same eight adapters.[^configs] Both are empty: zero shares and zero assets at block 123,484,165.
+Both run on Monad (chain 143) with the same eight adapters.[^configs] Both are empty: zero shares and zero assets at block 123,749,078.
 
 | Contract | shmon-neverland-usdc-hl (delta one) | shmon-neverland-usdc-hl-d0 (delta neutral) |
 |---|---|---|
@@ -88,6 +88,7 @@ Both run on Monad (chain 143) with the same eight adapters.[^configs] Both are e
 | StrategyControllerSettings | 0xdE30DFdC5107D52c1Dec101db4afDC6a7372adEC | 0xC62D354c3B8fbBEEA9Bee2D35Da38e015770F85a |
 | WithdrawalHandler | 0xFb78583f6D8A9F6c2cCae6111e2817AC9824162a | 0x4B821aFd90eF4F5a35Dec5e4AeeA7C00c7d90Af2 |
 | Exit desk (`shmonad-exit` proxy) | [0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770](https://monadscan.com/address/0x02Df7fb3b4535361EE10C391e3bDDAEe9001c770) | [0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE](https://monadscan.com/address/0xF460C4C68704Da32Ba3cefC2feEcaA3C3f3d6CdE) |
+| Vault and controller versions | Vault 1.12.0, StrategyController 1.16.0 (upgraded 2026-11-20, read on chain) | same |
 | Exit desk implementation | 0x74eCd223208D812098487D4090d964005370BDc7 (v1.10.0, upgraded 2026-11-19, read on chain) | same |
 | Neverland adapter | 0x56251dbe…61C5 | 0xF79E5fA8…DC7D |
 | Euler adapter | 0xa4a912E0…384d | 0x071b7277…5ABB |
@@ -123,7 +124,7 @@ inside the strategies and the hedges.
 
 ## Where it runs
 
-One server, `3.211.84.65`, runs 12 containers for monad.structures.gg (`docker ps`, 2026-11-19):
+One server, `3.211.84.65`, runs 12 containers for monad.structures.gg (`docker ps`, 2026-11-20):
 * one bot per vault, the NAV oracle and the monitor
 * the digester keeper, the funding feed and the research refresh
 * the API, the website, Caddy, the RPC meter and MongoDB
