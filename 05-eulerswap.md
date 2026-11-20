@@ -61,18 +61,19 @@ The parameters below were read from both pools on 2026-11-19 (`getDynamicParams`
 | asset1 / supplyVault1 = borrowVault1 | WMON / the cluster's WMON vault `0xE452…0eaf` | WMON paid from the desk's WMON supply, then borrowed |
 | borrowVault0 | none | the pool never borrows shMON |
 | eulerAccount, swapHook | the desk | the desk's collateral and loan; the desk prices every sale |
-| priceX | shMonad rate × 1.02 | a fixed ceiling 2% over the live rate |
+| priceX | shMonad rate × 1.02 | the base price, 2% above the rate |
 | concentrationX = concentrationY = 1e18 | | a constant-price line |
 | equilibriumReserve1, initial reserve1 | 100,000,000 WMON | the most the pool may ever pay out |
 | fee0 = 0, fee1 = 1e18 | | shMON in priced by the hook; WMON in refused |
 | hooked operations | 6 (getFee, afterSwap) | |
 
-`getFee` (line 970) charges shMON in whatever brings the fixed ceiling down to **the live rate less 0.30%**
-(`MM_DISCOUNT_BPS = 30`), and returns 1e18 for WMON in, so the pool only buys.
+**How the price is set.** The pool's base price sits 2% above shMonad's rate. On every sale the desk charges a fee that
+brings the price down to **the rate less 0.30%**, so a seller always gets that price (`getFee`, line 970,
+`MM_DISCOUNT_BPS = 30`). The pool refuses WMON in, so it only buys.
 Since v1.7.0 it also returns 1e18 for every sale while the vault has an unpaid withdrawal batch, so the vault's own
 leavers get the borrowing room first and outside sellers are routed to shMonad's instant exit for those minutes.
-`afterSwap` (line 987) moves the ceiling to 2% over the live rate when the rate has come within 1% of it, re-anchoring the
-curve at the current reserves (`CEILING_BPS = 200`, `RESET_BPS = 100`). On the fork a seller of 60.48 shMON (99.99 MON
+shMON's rate rises every day with staking yield. When it comes within 1% of the base price, the pool resets the base to
+2% above the rate again (`afterSwap`, line 987, `CEILING_BPS = 200`, `RESET_BPS = 100`). On the fork a seller of 60.48 shMON (99.99 MON
 of value) was quoted 99.69 WMON, 0.30% under (`evidence/rehearsal-fork.log`).
 
 A seller's shMON lands in ushMON as the desk's collateral; the WMON the pool pays raises the desk's loan. The bot then

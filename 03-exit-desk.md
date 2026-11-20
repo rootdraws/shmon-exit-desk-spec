@@ -28,8 +28,9 @@ it.[^digester]
 
 ## What else the desk does
 
-- **Public buyer.** The desk owns an EulerSwap pool that buys anyone's shMON at shMonad's live rate less 0.30%. See
-  [05-eulerswap.md](05-eulerswap.md).
+- **Public buyer.** The desk owns an EulerSwap pool that buys anyone's shMON for WMON at shMonad's rate less 0.30%.
+  Routers and aggregators reach it as an ordinary Uniswap v4 pool. It pays with WMON the desk borrows against the shMON
+  it just bought. See [05-eulerswap.md](05-eulerswap.md).
 - **Leavers first.** While the vault has an unpaid withdrawal batch, the pool quotes nothing, so the desk's borrowing
   room goes to the vault's own leavers.
 - **One ushMON for both desks.** Each desk's unstakes and returned WMON stay on its own ledger, so one desk never takes
