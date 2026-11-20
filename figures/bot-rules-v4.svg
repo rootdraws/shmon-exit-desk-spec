@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1240" height="982" viewBox="0 0 1240 982" role="img" aria-label="The bot's loan-to-value lines, the order it tries steps each tick, and its rules for growing, the Hyperliquid short, unwinding, and paying leavers." style="color:#17201f">
     <rect x="0" y="0" width="1240" height="982" fill="#f6f5f1"/>
     <g font-family="IBM Plex Sans, system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#17201f">
-      <text x="40" y="30" font-weight="600" font-size="13">Loan-to-value lines</text>
+      <text x="40" y="30" font-weight="600" font-size="13">Loan-to-value lines on Neverland (Euler: each × 80/70)</text>
       <rect x="40" y="44" width="340" height="458" rx="3" fill="#ffffff" stroke="#17201f"/>
         <text x="56" y="72" font-weight="600" fill="#8a2b2b">70%</text>
       <text x="112" y="72">Neverland liquidation threshold.</text>
