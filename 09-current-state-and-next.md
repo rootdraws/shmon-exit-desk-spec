@@ -8,11 +8,9 @@ Read on chain and on the server on 2026-11-20 at 05:22Z, block 123,782,520.
 |---|---|
 | Strategy vaults | Both are deployed and empty, with zero shares. Each takes up to 84M shMON, about $2M. They run Vault 1.12.0, controller 1.16.0 and settings 1.16.0. Addresses are in [02-operations.md](02-operations.md). |
 | Exit desks | Both run 1.10.0. Each borrows only from the cluster's WMON vault, against its ushMON. No leavers are waiting. |
-| Delta One desk | It has 48.37 shMON parked as its collateral cushion, and no loan. |
-| Delta Neutral desk | It has 611.85 shMON parked: its 48.37 cushion and 563.48 its pool bought. It owes about 930.4 WMON for that buy. The shMON is unstaking for 930.97 MON, due at epoch 1744; shMonad is at epoch 1742. |
-| ushMON | One vault for both desks, `0xa753E24B0986567EDAd75f784664Ec11336f8C5e`, holding 660.22 shMON. Only the desks hold shares. |
+| ushMON | One vault for both desks, `0xa753E24B0986567EDAd75f784664Ec11336f8C5e`. Only the desks hold shares. |
 | EulerSwap pools | Delta One `0x56aE…28A8` and Delta Neutral `0x1924…e8a8`. Each buys shMON at shMonad's rate less 0.30% and refuses WMON. |
-| Euler cluster | Four vaults, governed by the deployer key. The WMON vault's 930.7 WMON is almost all lent to the Delta Neutral desk, so 0.26 WMON is free. The USDC and USDT0 vaults have no lenders. |
+| Euler cluster | Four vaults, governed by the deployer key. The WMON vault holds only a small test float, and the USDC and USDT0 vaults have no lenders. |
 | Server | `3.211.84.65` runs 12 containers for `monad.structures.gg`. The two bots run image `bandsale-20261120`. |
 
 ## Shipped from 2026-11-18 to 2026-11-20
