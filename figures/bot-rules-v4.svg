@@ -45,7 +45,7 @@
         <rect x="420" y="262" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="279">2. Over 55%, the short's profit and spare margin repay.</text>
         <rect x="420" y="294" width="400" height="26" rx="2" fill="#f3e1e1" stroke="#8a2b2b"/><text x="434" y="311">3. It sells as a taker from 65%, or unwinds from 60%.</text>
         <rect x="420" y="326" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="343">4. The bot sweeps bridge refunds, harvests and conversions.</text>
-        <rect x="420" y="358" width="400" height="26" rx="2" fill="#dfeaf2" stroke="#0a5f8f"/><text x="434" y="375">5. A short more than 1% too small is topped up.</text>
+        <rect x="420" y="358" width="400" height="26" rx="2" fill="#dfeaf2" stroke="#0a5f8f"/><text x="434" y="375">5. If the short is over 1% too small, the bot adds to it.</text>
         <rect x="420" y="390" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="407">6. Deposits settle, stable debt moves, and leavers get paid.</text>
         <rect x="420" y="422" width="400" height="26" rx="2" fill="#dfeaf2" stroke="#0a5f8f"/><text x="434" y="439">7. The short is trimmed and its margin synced.</text>
         <rect x="420" y="454" width="400" height="26" rx="2" fill="#ffffff" stroke="#8a948f"/><text x="434" y="471">8. The bot takes profit, sells for margin, and rebalances.</text>
