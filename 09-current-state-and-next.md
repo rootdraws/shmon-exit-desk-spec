@@ -25,7 +25,7 @@ release records are listed in [08-testing.md](08-testing.md).
 2. **Desk v1.9.0** and the move onto v4: both desks moved their accounts, opened the two new pools and parked the
    headroom again.
 3. **The deposit cap:** 84M shMON (about $2M) on both shMON vaults, set through the admin Safe.
-4. **The monitor** unpauses a vault after 30 minutes at or under 50%, the bot's unwind stop.
+4. **The monitor** unpauses a vault after 30 minutes at or under 52.5%, the bot's unwind stop.
 5. **The emergency sale** (Root 2026-11-18: "if you are pressed to the wall, you should avail yourself of every
    shMON/wMON opportunity available"): controller v1.15.0 and desk v1.10.0. Over 65% the bot sells MON as a taker
    within 2% of the oracle, and borrow-to-fill runs in one transaction ([03-exit-desk.md](03-exit-desk.md)).

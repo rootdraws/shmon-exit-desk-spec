@@ -35,7 +35,7 @@
       <text x="436" y="68" font-weight="600">0. First, the bot finishes any Hyperliquid margin transfer.</text>
       <text x="436" y="88" font-weight="600">Then it reads the vault's mode.</text>
       <text x="436" y="106" fill="#5f6b69">•</text><text x="448" y="106" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Halted:</tspan> The admin Safe stopped it. The bot does nothing.</text>
-      <text x="436" y="124" fill="#5f6b69">•</text><text x="448" y="124" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Paused:</tspan> The bot only repays and sells to cut risk.</text>
+      <text x="436" y="124" fill="#5f6b69">•</text><text x="448" y="124" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Paused:</tspan> The bot repays, sells and adds deposits as collateral.</text>
       <text x="436" y="142" fill="#5f6b69">•</text><text x="448" y="142" fill="#5f6b69"><tspan font-weight="600" fill="#17201f">Stale data:</tspan> The bot stops growth, new shorts and payouts.</text>
       <text x="448" y="160" fill="#5f6b69">–</text><text x="460" y="160" fill="#5f6b69">A block 60 s old or a price 90 min old is stale.</text>
       <text x="448" y="178" fill="#5f6b69">–</text><text x="460" y="178" fill="#5f6b69">A Hyperliquid outage also counts as stale.</text>
@@ -57,7 +57,7 @@
       <rect x="420" y="584" width="400" height="208" rx="3" fill="#ffffff" stroke="#17201f"/>
       <text x="436" y="608" font-weight="600">Pause and prices</text>
       <text x="436" y="628" fill="#5f6b69">•</text><text x="448" y="628" fill="#5f6b69">When paused, the bot still repays, sells, hedges and settles.</text>
-      <text x="436" y="646" fill="#5f6b69">•</text><text x="448" y="646" fill="#5f6b69">Paused, it cannot supply, borrow USDC or pay leavers.</text>
+      <text x="436" y="646" fill="#5f6b69">•</text><text x="448" y="646" fill="#5f6b69">Paused, it takes deposits but cannot borrow or pay leavers.</text>
       <text x="436" y="664" fill="#5f6b69">•</text><text x="448" y="664" fill="#5f6b69">The monitor pauses the vault at 66.5%.</text>
       <text x="436" y="682" fill="#5f6b69">•</text><text x="448" y="682" fill="#5f6b69">It unpauses after 30 min at or under 52.5%.</text>
       <text x="436" y="700" fill="#5f6b69">•</text><text x="448" y="700" fill="#5f6b69">A manual pause stays until someone lifts it.</text>
