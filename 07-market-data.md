@@ -99,11 +99,11 @@ digester's buy flow at $82,178 an hour, with 10% fills at $8,218 an hour
 **Selling WMON as a taker within 2% (the emergency sale).** Each pool was measured alone on a copy of Monad at block
 123451592, with MON at $0.01407. About $27,000 of MON sells within 2% of the oracle across all WMON/USDC pools:
 * Uniswap v3 0.3%: 1,041,000 MON for $14,358.
-* Uniswap v4 0.05%, the desk's pool: 774,000 MON for $10,668.
+* Uniswap v4 0.05%, where the emergency sale sells: 774,000 MON for $10,668.
 * PancakeSwap v3 0.05%: 132,000 MON for $1,820.
 * Every other pool took under $30. The Hanji book had almost no bids, and the Kuru book refused the test sales.
 
-One emergency transaction sells through the v4 pool, then Uniswap v3, so it can clear about $25,000 at that depth.
+Each emergency sale goes to whichever of those two pools pays more. Together they took about $25,000 within 2% at that depth.
 
 **Borrowing USDC and USDT0 (what the vaults can raise against shMON).** Room before each lender's rate kink, live
 2026-11-19:
@@ -111,7 +111,7 @@ One emergency transaction sells through the v4 pool, then Uniswap v3, so it can 
 | Lender | USDC room | USDT0 room | Note |
 |---|---|---|---|
 | Neverland | 118,279 | 19,273 | 85.8% and 89.1% used, kink 90% |
-| Our Euler cluster | 0 | 0 | caps 4.5M borrow each since 2026-11-17, no lenders yet (`cash()` 0 on both) |
+| Our Euler cluster | 0 | 0 | borrow caps of 4.5M each, but no lenders yet (`cash()` 0 on both, read 2026-11-20) |
 
 **Moving USDC to USDT0 and back** (Curve, live quotes of 2026-11-09, `docs/Alpha_Structures_Rebalancing_Policy.md:278`):
 USDC to USDT0 pays a premium of +0.083% at $10k and +0.045% at $160k; USDT0 to USDC costs 0.10% at $10k and 0.19% at
