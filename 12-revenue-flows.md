@@ -40,6 +40,9 @@ rise. Because it also charges the climb back after a dip, that comes to about 21
 
 ![Revenue flows at $1M per vault, live net carry, 150,000 MON of pool buys per 20 hours](figures/revenue-flows.svg)
 
+**Calculator:** [`calculator/revenue-calculator.html`](calculator/revenue-calculator.html). Download it and open it in a
+browser to change any input and see every flow update. Its defaults give the table below.
+
 | Receiver | From | $ a year |
 |---|---|---|
 | Admin Safe, AlphaGrowth | performance fees: 8,579 from Delta One, 23,869 from Delta Neutral | 32,448 |
@@ -104,4 +107,4 @@ refreshes every minute. Nothing on it can be edited.
 
 Yearly figures are the last 30 days × 365 ÷ 30.
 
-[^fees]: Read on chain 2026-11-18 and 2026-11-19: `getPerformanceFee()` returns 1000 bps to the admin Safe `0xC94d…9CfD` on both settings proxies, which run 1.16.0 (`StrategyControllerSettings.sol:195-240`); the exit fee in `WithdrawalHandler.sol:281-283`; the digester pays each fill's gain to its vault (`MonadRouter.sol:200`); `interestFee()` 1000 and `feeReceiver()` `0x4f89…Fd3C` on the USDC, WMON and USDT0 vaults, `protocolFeeShare()` 0; EulerSwap's protocol fee reads 0 for the pools. Rates: shMonad's `convertToAssets` 30 days apart (1.6429 to 1.6542), Hyperliquid MON funding, Euler's curve at its 90% kink, Neverland live. Instant-exit fee 0.55% typical (`evidence/data/shmonad-30d.md`). The live page: alphastructures `api/admin/index.html` and `api/src/adminRevenue.ts`. The calculator with every input: https://claude.ai/artifact/BzqBnCLXMaoxTBc7vD9nrD (private).
+[^fees]: Fees and receivers read on chain, 2026-11-18 and 2026-11-19. Code: `StrategyControllerSettings.sol`, `WithdrawalHandler.sol`, `MonadRouter.sol`.

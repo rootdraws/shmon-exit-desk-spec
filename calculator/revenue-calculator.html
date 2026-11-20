@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>shMON Revenue Flows</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #f6f5f1; --fg: #17201f; --muted: #5f6b69; --line: #c9cfcb; --panel: #ffffff;
+    --carry: #0a5f8f; --fee: #8a5a0a; --pool: #0a7f6a; --loan: #7a4a8f; --route: #4a6a1a; --yours: #8a2b2b; --yours-soft: #f3e1e1;
+    --warn: #a8320f;
+    --font-text: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #141918; --fg: #e6ebe9; --muted: #9aa6a2; --line: #34403d; --panel: #1d2423;
+      --carry: #7cc0e6; --fee: #e0b267; --pool: #4fc9ad; --loan: #c39be0; --route: #a8d06a; --yours: #e08a8a; --yours-soft: #3a2323; --warn: #f08a6a; color-scheme: dark; }
+  }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-text); font-size: 14px; line-height: 1.45; padding: 28px 16px 48px; }
+  main { max-width: 1240px; margin: 0 auto; display: grid; gap: 18px; }
+  h1 { font-size: 1.6rem; font-weight: 600; margin: 0; }
+  .layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 18px; align-items: start; }
+  @media (max-width: 860px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 16px; display: grid; gap: 12px; min-width: 0; align-content: start; }
+  h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0; font-weight: 600; }
+  fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 9px; }
+  legend { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; padding: 0; margin-bottom: 6px; }
+  label { display: grid; grid-template-columns: minmax(0, 1fr) 112px; align-items: center; gap: 8px; font-size: 0.86rem; }
+  input, select { font: 600 0.9rem var(--font-mono); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 3px; padding: 5px 7px; width: 100%; min-width: 0; text-align: right; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+  .tile { border: 1px solid var(--line); border-radius: 3px; padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+  .tile.yours { background: var(--yours-soft); border-color: var(--yours); }
+  .tile .k { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .tile .v { font: 600 1.35rem var(--font-mono); }
+  .tile.yours .v { color: var(--yours); }
+  .chip { display: inline-block; font-size: 0.75rem; font-weight: 600; color: var(--warn); border: 1px solid var(--warn); border-radius: 999px; padding: 1px 8px; }
+  .scroll { overflow-x: auto; }
+  svg { display: block; width: 100%; min-width: 760px; height: auto; font-family: var(--font-text); }
+  .node rect { fill: var(--panel); stroke: var(--fg); stroke-width: 1; }
+  .node.mine rect { fill: var(--yours-soft); stroke: var(--yours); stroke-width: 2; }
+  .node text { fill: var(--fg); font-size: 12px; }
+  .node text.v { fill: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+  .band { fill-opacity: 0.38; }
+  .b-carry { fill: var(--carry); } .b-fee { fill: var(--fee); } .b-pool { fill: var(--pool); } .b-loan { fill: var(--loan); } .b-route { fill: var(--route); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 7px 6px; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+  th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+  td.n, th.n { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+  tr.mine td { color: var(--yours); font-weight: 600; }
+  .wrap { overflow-x: auto; }
+  .key { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.8rem; color: var(--muted); }
+  .key span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+  .k-carry::before { background: var(--carry); } .k-fee::before { background: var(--fee); } .k-pool::before { background: var(--pool); } .k-loan::before { background: var(--loan); } .k-route::before { background: var(--route); }
+</style>
+</head>
+<body>
+<main>
+  <h1>shMON Revenue Flows</h1>
+  <div class="layout">
+    <section aria-label="Inputs">
+      <fieldset>
+        <legend>Vaults</legend>
+        <label for="tvl1">Delta One TVL, $<input id="tvl1" type="number" min="0" step="100000" value="1000000"></label>
+        <label for="tvl0">Delta Neutral TVL, $<input id="tvl0" type="number" min="0" step="100000" value="1000000"></label>
+        <label for="carry1">Net carry, Delta One, %<input id="carry1" type="number" step="0.1" value="3.7"></label>
+        <label for="carry0">Net carry, Delta Neutral, %<input id="carry0" type="number" step="0.1" value="16.7"></label>
+        <label for="wd">Withdrawn per month, % of TVL<input id="wd" type="number" min="0" step="1" value="10"></label>
+        <label for="ltv">Target LTV, %<input id="ltv" type="number" min="0" max="90" step="1" value="43"></label>
+        <label for="esh">Loan share on Euler, %<input id="esh" type="number" min="0" max="100" step="5" value="60"></label>
+        <label for="erate">Euler USDC borrow rate, %<input id="erate" type="number" min="0" step="0.1" value="9.6"></label>
+      </fieldset>
+      <fieldset>
+        <legend>EulerSwap pools</legend>
+        <label for="vol">shMON bought per 20 h, MON<input id="vol" type="number" min="0" step="10000" value="150000"></label>
+        <label for="vsh">Bought by Delta One's pool, %<input id="vsh" type="number" min="0" max="100" step="5" value="50"></label>
+        <label for="sup">WMON lending, MON<input id="sup" type="number" min="0" step="10000" value="170000"></label>
+        <label for="hold">Unstake time, hours<input id="hold" type="number" min="1" step="1" value="20"></label>
+        <label for="px">MON price, $<input id="px" type="number" min="0" step="0.0001" value="0.0146"></label>
+      </fieldset>
+      <fieldset>
+        <legend>Fees on chain</legend>
+        <label for="perf">Performance fee, %<input id="perf" type="number" min="0" max="50" step="1" value="10"></label>
+        <label for="rule">Charged on<select id="rule"><option value="all" selected>every gain</option><option value="hwm">new highs only</option></select></label>
+        <label for="exit">Exit fee, %<input id="exit" type="number" min="0" step="0.05" value="0.30"></label>
+        <label for="disc">Pool discount, %<input id="disc" type="number" min="0" step="0.05" value="0.30"></label>
+        <label for="efee">Euler interest fee, %<input id="efee" type="number" min="0" max="50" step="1" value="10"></label>
+      </fieldset>
+      <fieldset>
+        <legend>Routing savings</legend>
+        <label for="inst">shMonad instant exit fee, %<input id="inst" type="number" min="0" step="0.01" value="0.55"></label>
+        <label for="rcost">Our route's cost, %<input id="rcost" type="number" min="0" step="0.01" value="0.10"></label>
+      </fieldset>
+    </section>
+
+    <div style="display:grid; gap:18px; min-width:0">
+      <section aria-label="Per year">
+        <h2>Per year</h2>
+        <div class="tiles">
+          <div class="tile yours"><span class="k">AlphaGrowth</span><span class="v" id="t-ag"></span></div>
+          <div class="tile"><span class="k">Vault holders</span><span class="v" id="t-hold"></span></div>
+          <div class="tile"><span class="k">WMON lenders</span><span class="v" id="t-wsup"></span></div>
+          <div class="tile"><span class="k">WMON vault use</span><span class="v" id="t-use"></span><span id="t-cap"></span></div>
+        </div>
+      </section>
+      <section aria-label="Flow chart">
+        <h2>Where the money goes, $ per year</h2>
+        <div class="key"><span class="k-carry">Carry</span><span class="k-fee">Exit fees</span><span class="k-pool">EulerSwap pool</span><span class="k-loan">Interest on Euler</span><span class="k-route">Routing savings</span></div>
+        <div class="scroll"><svg id="flow" role="img" aria-label="Yearly money flows from each source through the vaults and the Euler cluster to holders, the admin Safe, lenders and AlphaGrowth."></svg></div>
+      </section>
+      <section aria-label="Table">
+        <h2>Who gets what</h2>
+        <div class="wrap">
+          <table>
+            <thead><tr><th>Receiver</th><th>From</th><th class="n">$ per year</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+<script>
+  const $ = id => document.getElementById(id);
+  const val = (id, d) => { const v = parseFloat($(id).value); return isFinite(v) ? v : d; };
+  const usd = v => '$' + Math.round(v).toLocaleString('en-US');
+  const NS = 'http://www.w3.org/2000/svg';
+
+  function wmonRate(u) { // the WMON vault's curve: 20% at 0 use, 30% at the 90% kink, 50% at 100%
+    u = Math.min(Math.max(u, 0), 1);
+    return u <= 0.9 ? 0.20 + 0.10 * u / 0.9 : 0.30 + 0.20 * (u - 0.9) / 0.1;
+  }
+
+  function model() {
+    const tvl = [val('tvl1', 0), val('tvl0', 0)];
+    const carry = [val('carry1', 0) / 100, val('carry0', 0) / 100], wd = val('wd', 0) / 100, ltv = Math.min(val('ltv', 43), 90) / 100;
+    const esh = val('esh', 50) / 100, erate = val('erate', 8.5) / 100;
+    const px = val('px', 0.0146), volMon = val('vol', 0), vsh = val('vsh', 50) / 100;
+    const sup = val('sup', 0), hold = Math.max(val('hold', 20), 1);
+    const perf = val('perf', 10) / 100, exitF = val('exit', 0.3) / 100, disc = val('disc', 0.3) / 100, efee = val('efee', 10) / 100;
+
+    const cycles = 8760 / 20;
+    const borrowed = volMon * (1 - disc);
+    const use = sup > 0 ? borrowed / sup : Infinity;
+    const rate = wmonRate(use);
+    const interestPerTurn = Math.log(1 + rate) * hold / 8760;
+    const poolGrossUsd = volMon * cycles * disc * px;
+    const wmonInterestUsd = borrowed * cycles * interestPerTurn * px;
+    const poolNetUsd = Math.max(poolGrossUsd - wmonInterestUsd, 0);
+    const poolNet = [poolNetUsd * vsh, poolNetUsd * (1 - vsh)];
+
+    const carryUsd = tvl.map((t, i) => t * carry[i]);
+    // shMON sold per $1 withdrawn = the loan's share less the margin that comes home (book shape from policy/base.ts)
+    const mu = (0.2857 + 0.0005) * 1.05, inst = val('inst', 0.55) / 100, rcost = val('rcost', 0.10) / 100;
+    const soldPer = [1, 0].map(d => { const C = (1 + mu * d) / (1 - ltv + mu); return Math.max(ltv * C - mu * (C - d), 0); });
+    const routeUsd = tvl.map((t, i) => t * wd * 12 * soldPer[i] * Math.max(inst - rcost, 0));
+    const exitUsd = tvl.map(t => t * wd * 12 * exitF);
+    const eulerLoan = (tvl[0] + tvl[1]) * ltv / (1 - ltv) * esh;
+    const usdcInterestUsd = eulerLoan * erate;
+
+    const gain = [0, 1].map(i => carryUsd[i] + exitUsd[i] + poolNet[i] + routeUsd[i]);
+    // every gain: the fee also lands on the climb back after each negative-funding dip; a replay of Hyperliquid MON
+    // funding, 2025-10-08 to 2026-11-18, charged 2.12x (Delta One) and 1.40x (Delta Neutral) on carry under this rule
+    const churn = $('rule').value === 'all' ? [2.118, 1.396] : [1, 1];
+    const perfUsd = gain.map((g, i) => Math.max(g + carryUsd[i] * (churn[i] - 1), 0) * perf);
+    const holders = gain.map((g, i) => g - perfUsd[i]);
+    const wmonToSuppliers = wmonInterestUsd * (1 - efee), wmonToAg = wmonInterestUsd * efee;
+    const usdcToSuppliers = usdcInterestUsd * (1 - efee), usdcToAg = usdcInterestUsd * efee;
+
+    return { use, rate, borrowed, sup, carryUsd, exitUsd, poolNet, poolGrossUsd, wmonInterestUsd, usdcInterestUsd,
+      perfUsd, holders, wmonToSuppliers, wmonToAg, usdcToSuppliers, usdcToAg, gain, routeUsd };
+  }
+
+  function flows(m) {
+    const f = [];
+    const add = (a, b, v, c) => { if (v > 0.5) f.push({ a, b, v, c }); };
+    add('carry1', 'v1', m.carryUsd[0], 'carry'); add('exit1', 'v1', m.exitUsd[0], 'fee');
+    add('pool', 'v1', m.poolNet[0], 'pool'); add('pool', 'v0', m.poolNet[1], 'pool'); add('pool', 'eu', m.wmonInterestUsd, 'pool');
+    add('exit0', 'v0', m.exitUsd[1], 'fee'); add('carry0', 'v0', m.carryUsd[1], 'carry');
+    add('route', 'v1', m.routeUsd[0], 'route'); add('route', 'v0', m.routeUsd[1], 'route');
+    add('loan', 'eu', m.usdcInterestUsd, 'loan');
+    const split = (mid, total, outs) => {
+      const ins = f.filter(x => x.b === mid);
+      ins.forEach(x => outs.forEach(([to, amt]) => add(mid + ':' + x.a, to, total > 0 ? amt * x.v / total : 0, x.c)));
+    };
+    split('v1', m.gain[0], [['h1', m.holders[0]], ['safe', m.perfUsd[0]]]);
+    split('v0', m.gain[1], [['h0', m.holders[1]], ['safe', m.perfUsd[1]]]);
+    add('eu:pool', 'wsup', m.wmonToSuppliers, 'pool'); add('eu:pool', 'ag', m.wmonToAg, 'pool');
+    add('eu:loan', 'usup', m.usdcToSuppliers, 'loan'); add('eu:loan', 'ag', m.usdcToAg, 'loan');
+    return f.map(x => ({ ...x, from: x.a.split(':')[0] }));
+  }
+
+  const NODES = {
+    0: [['carry1', 'Carry, Delta One'], ['exit1', 'Exit fees, Delta One'], ['pool', 'EulerSwap pool discount'], ['exit0', 'Exit fees, Delta Neutral'], ['carry0', 'Carry, Delta Neutral'], ['route', 'Routing savings'], ['loan', 'Vault loans on Euler']],
+    1: [['v1', 'Delta One vault'], ['v0', 'Delta Neutral vault'], ['eu', 'Euler cluster']],
+    2: [['h1', 'Holders, Delta One'], ['safe', 'Admin Safe, AlphaGrowth'], ['h0', 'Holders, Delta Neutral'], ['wsup', 'WMON lenders'], ['usup', 'USDC lenders on Euler'], ['ag', 'AlphaGrowth Euler Safe']]
+  };
+
+  function draw(m) {
+    const fl = flows(m);
+    const svg = $('flow'); svg.replaceChildren();
+    const W = 900, nodeW = 190, colX = [0, (W - nodeW) / 2, W - nodeW], gap = 14, minH = 40, pad = 4;
+    const inSum = id => fl.filter(x => x.b === id).reduce((s, x) => s + x.v, 0);
+    const outSum = id => fl.filter(x => x.from === id).reduce((s, x) => s + x.v, 0);
+    const maxCol = Math.max(...[0, 1, 2].map(c => NODES[c].reduce((s, [id]) => s + Math.max(inSum(id), outSum(id)), 0)), 1);
+    const scale = 360 / maxCol;
+    const thick = v => Math.max(v * scale, 1.5);
+    const pos = {};
+    let H = 0;
+    [0, 1, 2].forEach(c => {
+      let y = 0;
+      NODES[c].forEach(([id, name]) => {
+        const spanIn = fl.filter(x => x.b === id).reduce((s, x) => s + thick(x.v), 0);
+        const spanOut = fl.filter(x => x.from === id).reduce((s, x) => s + thick(x.v), 0);
+        const h = Math.max(minH, Math.max(spanIn, spanOut) + 2 * pad);
+        pos[id] = { x: colX[c], y, h, name, spanIn, spanOut, inY: 0, outY: 0, total: Math.max(inSum(id), outSum(id)) };
+        y += h + gap;
+      });
+      H = Math.max(H, y - gap);
+    });
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const bands = document.createElementNS(NS, 'g'); svg.appendChild(bands);
+    fl.forEach(x => {
+      const s = pos[x.from], t = pos[x.b], th = thick(x.v);
+      const sy = s.y + (s.h - s.spanOut) / 2 + s.outY; s.outY += th;
+      const ty = t.y + (t.h - t.spanIn) / 2 + t.inY; t.inY += th;
+      const x0 = s.x + nodeW, x1 = t.x, mx = (x0 + x1) / 2;
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', `M${x0},${sy} C${mx},${sy} ${mx},${ty} ${x1},${ty} L${x1},${ty + th} C${mx},${ty + th} ${mx},${sy + th} ${x0},${sy + th} Z`);
+      p.setAttribute('class', 'band b-' + x.c);
+      const tt = document.createElementNS(NS, 'title'); tt.textContent = `${pos[x.from].name} to ${t.name}: ${usd(x.v)}`; p.appendChild(tt);
+      bands.appendChild(p);
+    });
+    Object.entries(pos).forEach(([id, n]) => {
+      const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'node' + (id === 'safe' || id === 'ag' ? ' mine' : ''));
+      const r = document.createElementNS(NS, 'rect');
+      Object.entries({ x: n.x, y: n.y, width: nodeW, height: n.h, rx: 3 }).forEach(([k, v]) => r.setAttribute(k, v));
+      const t1 = document.createElementNS(NS, 'text'); t1.setAttribute('x', n.x + 10); t1.setAttribute('y', n.y + n.h / 2 - 3); t1.setAttribute('font-weight', '600'); t1.textContent = n.name;
+      const t2 = document.createElementNS(NS, 'text'); t2.setAttribute('class', 'v'); t2.setAttribute('x', n.x + 10); t2.setAttribute('y', n.y + n.h / 2 + 12); t2.textContent = usd(n.total);
+      g.append(r, t1, t2); svg.appendChild(g);
+    });
+  }
+
+  function render() {
+    const m = model();
+    $('t-ag').textContent = usd(m.perfUsd[0] + m.perfUsd[1] + m.wmonToAg + m.usdcToAg);
+    $('t-hold').textContent = usd(m.holders[0] + m.holders[1]);
+    $('t-wsup').textContent = usd(m.wmonToSuppliers);
+    $('t-use').textContent = isFinite(m.use) ? (m.use * 100).toFixed(0) + '%' : 'n/a';
+    $('t-cap').innerHTML = m.use > 1 ? '<span class="chip">over capacity</span>' : '';
+    const rows = [
+      ['Admin Safe, AlphaGrowth', 'performance fee, Delta One', m.perfUsd[0], true],
+      ['Admin Safe, AlphaGrowth', 'performance fee, Delta Neutral', m.perfUsd[1], true],
+      ['AlphaGrowth Euler Safe', 'Euler interest fee on WMON and USDC loans', m.wmonToAg + m.usdcToAg, true],
+      ['WMON lenders', "desks' WMON interest, after the Euler fee", m.wmonToSuppliers, false],
+      ['Holders, Delta One', 'carry, exit fees, pool margin, routing savings, after the performance fee', m.holders[0], false],
+      ['Holders, Delta Neutral', 'carry, exit fees, pool margin, routing savings, after the performance fee', m.holders[1], false],
+      ['USDC lenders on Euler', 'vault loan interest, after the Euler fee', m.usdcToSuppliers, false],
+    ];
+    $('rows').replaceChildren(...rows.map(([a, b, v, mine]) => {
+      const tr = document.createElement('tr'); if (mine) tr.className = 'mine';
+      tr.innerHTML = `<td>${a}</td><td>${b}</td><td class="n">${usd(v)}</td>`; return tr;
+    }));
+    draw(m);
+  }
+  document.querySelectorAll('input, select').forEach(i => i.addEventListener('input', render));
+  render();
+</script>
+</body>
+</html>
