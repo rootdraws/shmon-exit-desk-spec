@@ -19,7 +19,7 @@ ushMON and liquidate it.
 
 Assets are counted in shMON: the shMON held, plus the MON still unstaking and the WMON held, divided by shMonad's rate.
 
-## Two desks, one vault
+## How both desks share it
 
 - Each desk's unstakes and returned WMON are kept on its own ledger, so one desk never takes the other's WMON.
 - Shares can move, for example when a liquidator seizes them. The WMON and pending unstakes behind those shares move
