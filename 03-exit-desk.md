@@ -23,7 +23,7 @@ it.[^digester]
 |---|---|---|
 | Hook | [0x94Df2bffA788BBd918179f4CCB5A22DbAD7e1040](https://monadscan.com/address/0x94Df2bffA788BBd918179f4CCB5A22DbAD7e1040) | OpenZeppelin `LimitOrderHook` (uniswap-hooks 1.3.0) |
 | Pool | poolId `0x3957bb3c02c319231713c06853de9bfc8e7d1aaa276873cd65fc028efc0b1314` | WMON/USDC, 0.01% fee, tick spacing 1, PoolManager `0x188d586Ddcf52439676Ca21A244753fA19F9Ea8e` |
-| Router v2 | [0xE1fe1Ea6677Ea56eEFD381045AAcf86D541C3776](https://monadscan.com/address/0xE1fe1Ea6677Ea56eEFD381045AAcf86D541C3776) | Owned by the keeper key. Fills orders with the gain to the vault, and runs the shMON arbitrage with the gain to the desk. |
+| Router | [0xE1fe1Ea6677Ea56eEFD381045AAcf86D541C3776](https://monadscan.com/address/0xE1fe1Ea6677Ea56eEFD381045AAcf86D541C3776) | Owned by the keeper key. Fills orders with the gain to the vault, and runs the shMON arbitrage with the gain to the desk. |
 | Keeper wallet | 0xEE51d642304f8F0b272Fc79cf851CE76ee24c3A7 | Runs in the `monad-digester` container, and fills only for a gain of $0.01 or more. |
 
 ## What else the desk does
@@ -32,8 +32,8 @@ it.[^digester]
   [05-eulerswap.md](05-eulerswap.md).
 - **Leavers first.** While the vault has an unpaid withdrawal batch, the pool quotes nothing. The desk's borrowing room
   serves the vault's own leavers first.
-- **One ushMON for both desks.** Both desks park in one ushMON, version 4 since 2026-11-18. Each desk's unstakes and
-  returned WMON stay on its own ledger, so one desk never takes the other's WMON. See [04-ushmon.md](04-ushmon.md).
+- **One ushMON for both desks.** Both desks park in one ushMON. Each desk's unstakes and returned WMON stay on its own
+  ledger, so one desk never takes the other's WMON. See [04-ushmon.md](04-ushmon.md).
 - **Emergency sale.** While the loan is at or over 65%, the desk's WMON sale may fill up to 2% under the oracle, instead
   of 1%. The controller can hand the desk shMON, have it borrow and sell WMON, and repay the loan, all in one transaction.
 - **During a pause.** The desk still parks, unstakes, borrows and places orders. It stops selling shMON into bids and
@@ -74,7 +74,7 @@ and out.[^lines]
 
 | Group | Functions | Who calls them |
 |---|---|---|
-| Setup | `initialize` and its version steps, `moveEulerAccount` (only with no debt or parked shMON), `setPool`, `setV4Pool`, `setHanjiBook`, `rescueTokens` | admin Safe |
+| Setup | `initialize`, `moveEulerAccount` (only with no debt or parked shMON), `setPool`, `setV4Pool`, `setHanjiBook`, `rescueTokens` | admin Safe |
 | Money in and out | `deposit`, `returnToController` | controller, bot |
 | shMonad unstake | `requestUnstake`, `completeUnstake` | bot |
 | Resting orders, each checked against the oracle | place and close on Uniswap v3, Uniswap v4, Hanji and the digester | bot |
@@ -84,16 +84,6 @@ and out.[^lines]
 | Emergency sale in one call | `fillFromController` | controller |
 | EulerSwap pool | `deployMmPool`, `getFee`, `leaversWaiting`, `afterSwap` | admin Safe, the pool |
 | Halts | A full halt stops every bot and controller call. A pause stops only `sellShmonV4` and `buyMonV4`. | guardian |
-
-Each upgrade must raise the version. The versions so far:
-* 1.1.0 adds Uniswap v4 and Hanji. 1.1.1 lets a second order on the same tick add to the first.
-* 1.4.0 adds the Euler account and the EulerSwap pool.
-* 1.5.0 moves the account to the 2026-11-09 cluster and retires the old pool.
-* 1.6.0 lets the settle skip a failed unstake collection, and adds `buyMonV4`.
-* 1.7.0 adds leavers first, at `0xBE243F5e4215720080929eeCfe77047D2Fd2a410`.
-* 1.8.0 shares one ushMON between both desks, at `0xDF9515a5d2f68B12a4fAFc44e518B13751A1c3B2`.
-* 1.9.0 keeps the desk working during a pause and allows the 2% sale at 65%, at `0x959FA2e2ab953B1C2cCE71c036Aafbf584409c16`.
-* 1.10.0 adds `fillFromController`, at `0x74eCd223208D812098487D4090d964005370BDc7`. Both desks run it since 2026-11-19.
 
 ## The desk's steps
 
