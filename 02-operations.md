@@ -39,7 +39,7 @@ The bot takes one step every 30 seconds. Each row is one rule, read from the two
 | Controlled unwind | 60%, sells to 59%, stops at 52.5% | Repays, supplies idle shMON, then sells. Each step trims the short by up to a quarter, so the vault keeps its delta. | `planner.ts`, `planner/unwind.ts` |
 | Profit band | over 58%, sells to 56% | Sells shMON when there is no profit to take and the unwind found nothing to do. | `planner.ts` |
 | Breaker | pause at 66.5%, unpause 30 min at 52.5% | The monitor pauses the vault. Taker sales keep running, and deposits still come in as collateral with no borrowing. | monitor `checkStrategy.ts` |
-| Short size | (C + idle + desk shMON − d·E) / price | Opens or trims when off by 1% of equity and $10 or more. | `policy/base.ts`, `planner/hedge.ts` |
+| Short size | (C + idle + desk shMON − d·E) / price | Opens or trims when off by 1% of equity and $10 or more. An open rests as a maker order one tick over mid and moves with mid each tick. A trim sells at market. | `policy/base.ts`, `planner/hedge.ts`, `actions/venue.ts` |
 | Margin | 28.57% + 0.05%, × 1.05; top up under 80% | Tops up from idle cash, a loan to 45%, or a shMON sale. | `planner/growth.ts` |
 | Rebound reopen | +4% half, +8% or 48 h all | Reopens the short after a pay-down. | `planner/unwind.ts` |
 | Cost gate | loop ≥ $10, drag ≤ 0.35%, payback ≤ 10 d | Skips an uneconomic loop, except the first build. | `policy/costGate.ts` |
