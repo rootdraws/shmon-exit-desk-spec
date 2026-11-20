@@ -31,8 +31,8 @@ When someone sells shMON to the pool:
 
 - **Price.** The pool's base price sits 2% above shMonad's rate. On every sale the desk charges a fee that brings the
   price down to the rate less 0.30%, so a seller always gets that price.
-- **Price reset.** shMON's rate rises every day with staking yield. When it comes within 1% of the base price, the pool
-  resets the base to 2% above the rate again.
+- **Price reset.** shMON's rate rises every day with staking yield. After a sale, if the seller's price has come within
+  1% of the base price, the pool resets the base to 2% above the rate again.
 - **Buys only.** The pool refuses WMON in.
 - **Leavers first.** While the vault has an unpaid withdrawal batch, the pool quotes nothing, so the desk's borrowing
   room goes to the vault's own leavers.
