@@ -49,7 +49,8 @@ pool holds up to 6.5M. To match it, at $0.0146 per MON:
   must already be parked, or the pool stops buying.
 - **Shared ushMON.** Shares are priced over one pot, so a desk holding shMON earns a little of the yield the other
   desk's unstaking MON forgoes, about 0.03% a day on the unstaking part.
-- **Liquidators wait a day.** A seized share pays out only after its unstake finishes. At 93/95, a 3% one-day fall in
-  shMonad's rate makes a desk liquidatable, and the lender first loses at 5%. See [11-ltv-study.md](11-ltv-study.md).
+- **Liquidators wait a day.** If shMonad's rate drops about 2%, for example from slashing, a desk's loan passes 95% of
+  its ushMON and anyone can liquidate it. The liquidator's ushMON pays out only when the unstake finishes, a day later.
+  At a 5% drop, lenders start to lose money: 0.9% of the loan in the fork test. See [11-ltv-study.md](11-ltv-study.md).
 - **One RPC.** The bots and the oracle read Monad through one Alchemy key, with no backup.
 - **Governance.** The deployer key governs the Euler cluster, not a Safe. `deploy.sh handover` exists for the move.
