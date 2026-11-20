@@ -1,51 +1,50 @@
 # 9. Current state and what is next
 
-As of 2026-11-19 15:11Z, block 123,614,706. The reads are in the last section of `evidence/live-reads.md`, and the
-release records are listed in [08-testing.md](08-testing.md).
+Read on chain and on the server on 2026-11-20 at 05:22Z, block 123,782,520.
 
 ## Live today
 
-| Component | State |
+| Part | State |
 |---|---|
-| Strategy vaults `shmon-neverland-usdc-hl` and `-d0` | Deployed at the addresses in [02-operations.md](02-operations.md). Both hold zero shares and zero assets. Both controllers run v1.15.0, upgraded by the admin Safe on 2026-11-19. The 10% performance fee is charged on every gain ([12-revenue-flows.md](12-revenue-flows.md)). |
-| Exit desks | v1.10.0 on both (`0x74eCd223208D812098487D4090d964005370BDc7`), upgraded by the admin Safe on 2026-11-19. Each holds ushMON v4 as its only Euler collateral, and the cluster's WMON vault is its only lender. `leaversWaiting()` is false on both. |
-| Delta One desk | 48.38 shMON parked as headroom. No loan. |
-| Delta Neutral desk | 611.93 shMON parked: the 48.38 headroom and 563.55 its pool bought at 10:05Z (block 123,554,268). It owes 929.83 WMON for that buy. The bot started unstaking the 563.55 shMON at 15:19Z, for 930.97 MON at epoch 1744. |
-| ushMON v4 | `0xa753E24B0986567EDAd75f784664Ec11336f8C5e`, one vault for both desks. It holds 660.31 shMON, every share held by the desks. Both ledgers are empty. Source verified on Monadscan. |
-| EulerSwap pools | `0x56aEAB6F7a33573CdEF9B59a8d330F0e1b2128A8` (Delta One) and `0x19241Ff986e1dFE848A8C2a8AC2C21C0E7cFe8a8` (Delta Neutral), opened 2026-11-18 on the v4 vault. They buy shMON at shMonad's rate less 0.3% and refuse WMON in. |
-| Euler cluster | Four vaults live, governed by the deployer key. The WMON vault lends 93/95 against ushMON v4. Its 929.88 WMON float is lent out to the Delta Neutral desk, leaving 0.26 WMON. The USDC and USDT0 vaults have no lenders. Caps: USDC and USDT0 5M supply and 4.5M borrow; WMON 727M supply and 654M borrow. |
-| ushMON v1, v2 and v3 | Empty and retired from the cluster (WMON vault LTV 0). v1 and v2 went on 2026-11-17, and v3 (`0x37e07473F1F62CB071Db57440e242b320614A0ce`) on 2026-11-18. |
-| Audit issues | All 11 closed on 2026-11-16 with a reply on each ([04-ushmon.md](04-ushmon.md)). v4 keeps every v2 rule. |
-| Server | 3.211.84.65 (`monad.structures.gg`) runs 12 containers: the two shMON bots, oracle, monitor, digester keeper, funding feed, API, site, Caddy, research refresh, RPC meter and MongoDB. The bots run image `unstake-20261119`, since 2026-11-19 15:19Z. `admin.structures.gg` serves the live revenue page behind a password. |
+| Strategy vaults | Both are deployed and empty, with zero shares. Each takes up to 84M shMON, about $2M. They run Vault 1.12.0, controller 1.16.0 and settings 1.16.0. Addresses are in [02-operations.md](02-operations.md). |
+| Exit desks | Both run 1.10.0. Each borrows only from the cluster's WMON vault, against its ushMON. No leavers are waiting. |
+| Delta One desk | It has 48.37 shMON parked as its collateral cushion, and no loan. |
+| Delta Neutral desk | It has 611.85 shMON parked: its 48.37 cushion and 563.48 its pool bought. It owes about 930.4 WMON for that buy. The shMON is unstaking for 930.97 MON, due at epoch 1744; shMonad is at epoch 1742. |
+| ushMON | One vault for both desks, `0xa753E24B0986567EDAd75f784664Ec11336f8C5e`, holding 660.22 shMON. Only the desks hold shares. |
+| EulerSwap pools | Delta One `0x56aE…28A8` and Delta Neutral `0x1924…e8a8`. Each buys shMON at shMonad's rate less 0.30% and refuses WMON. |
+| Euler cluster | Four vaults, governed by the deployer key. The WMON vault's 930.7 WMON is almost all lent to the Delta Neutral desk, so 0.26 WMON is free. The USDC and USDT0 vaults have no lenders. |
+| Server | `3.211.84.65` runs 12 containers for `monad.structures.gg`. The two bots run image `bandsale-20261120`. |
 
-## Shipped on 2026-11-18 and 2026-11-19
+## Shipped from 2026-11-18 to 2026-11-20
 
-1. **ushMON v4:** the WMON a finished unstake returns follows the shares,
-   so a liquidator can redeem what it seized ([04-ushmon.md](04-ushmon.md)).
-2. **Desk v1.9.0** and the move onto v4: both desks moved their accounts, opened the two new pools and parked the
-   headroom again.
-3. **The deposit cap:** 84M shMON (about $2M) on both shMON vaults, set through the admin Safe.
-4. **The monitor** unpauses a vault after 30 minutes at or under 52.5%, the bot's unwind stop.
-5. **The emergency sale:** controller v1.15.0 and desk v1.10.0. Over 65% the bot sells MON as a taker
-   within 2% of the oracle, and borrow-to-fill runs in one transaction ([03-exit-desk.md](03-exit-desk.md)).
+- **ushMON v4.** The WMON behind a share moves with it, so a liquidator can redeem what it seizes.
+- **The emergency sale.** At a 65% loan the bot sells WMON within 2% of the oracle, borrowing and selling in one
+  transaction.
+- **The deposit cap.** 84M shMON on each vault.
+- **New loan lines.** The short's profit repays the loan over 55%, the unwind starts at 60% and stops at 52.5%, and
+  margin may be borrowed up to 55%. Euler's lines match, scaled to its 80% liquidation line.
+- **Deposits during a pause.** A paused vault still takes deposits and adds them to the lender as collateral. Borrowing
+  stays blocked.
+- **Maker orders on Hyperliquid.** The bot grows the short with a resting order one tick above mid.
+- **The 58% band sale is gone.** It sold shMON ahead of the 60% unwind.
 
 ## Open decisions
 
-| Step | State |
-|---|---|
-| Headroom at scale | 80 MON per desk covers about 1,100 MON of pool buys a day at the 93% borrow LTV (7.2% of a day's sales). At the target of 50k to 150k MON every 20 hours, the desks need 3,600 to 10,800 MON parked. Whether that comes from the vaults' own shMON or new MON is still open. |
-| Lenders | The whole 929.88 WMON float is lent out, so the two pools can pay out only 0.26 WMON until the loan is repaid. Taking the public flow (about 160,000 MON a day lately) needs WMON lenders of that order. The curve charges borrowers 20% at zero use and 30% at the 90% kink, and lenders get 90% of what is paid. |
+- **The desks' collateral cushion at scale.** 80 MON per desk covers about 1,100 MON of pool buys a day. At the target
+  of 50k to 150k MON every 20 hours, the desks need 3,600 to 10,800 MON parked. Whether that comes from the vaults' own
+  shMON or new MON is still open.
+- **WMON lenders.** The pools can buy only as much as lenders supply. The full instant-exit flow, about 120,000 to
+  310,000 MON a day, needs WMON supply of that size, about $1,800 to $4,500.
 
 ## Known risks
 
-- **shMonad freezes.** If shMonad closes on a stake deficit, parked shMON cannot become WMON. The WMON loan then runs
-  until shMonad reopens (audit M1, accepted as a dependency).
-- **Collateral headroom.** A pool sale borrows 99.7% against collateral lent at 93%, so about 7.2% of a day's buys must
-  already be parked.
-- **One vault, two desks.** Shares are priced pro rata over one pot. A desk holding shMON earns a little of the yield
-  the other desk's unstaking MON does not, about 3 bps a day on the unstaking part.
-- **Liquidators wait a day.** A seized share pays out only after its unstake matures (audit L3). At 93/95 a 3% one-day
-  fall in shMonad's rate makes the desk liquidatable, and the lender's first loss comes at 5%
-  ([11-ltv-study.md](11-ltv-study.md)).
-- **Upstream RPC.** The fork runs and the bot depend on the Monad RPC.
-- **Governance.** The cluster is governed by the deployer key, not yet a Safe. `deploy.sh handover` exists for the move.
+- **shMonad freezes.** If shMonad stops unstaking, parked shMON cannot become WMON, and the WMON loan runs until it
+  reopens.
+- **The cushion.** A pool sale borrows 99.7% of its value against collateral lent at 93%. About 7.2% of a day's buys
+  must already be parked, or the pool stops buying.
+- **Shared ushMON.** Shares are priced over one pot, so a desk holding shMON earns a little of the yield the other
+  desk's unstaking MON forgoes, about 0.03% a day on the unstaking part.
+- **Liquidators wait a day.** A seized share pays out only after its unstake finishes. At 93/95, a 3% one-day fall in
+  shMonad's rate makes a desk liquidatable, and the lender first loses at 5%. See [11-ltv-study.md](11-ltv-study.md).
+- **One RPC.** The bots and the oracle read Monad through one Alchemy key, with no backup.
+- **Governance.** The deployer key governs the Euler cluster, not a Safe. `deploy.sh handover` exists for the move.
