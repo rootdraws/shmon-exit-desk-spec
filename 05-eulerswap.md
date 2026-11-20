@@ -49,26 +49,21 @@ On a fork, a seller of 60.48 shMON worth 99.99 MON was quoted 99.69 WMON, 0.30% 
 | Curve | flat | Every sale gets the same price, whatever its size. |
 | Most it can pay out | 100,000,000 WMON | A ceiling far above any real sale. |
 
-## What capital the pool needs
+## What the pool needs to keep buying
 
-The pool can only pay what all of these allow:
+The pool pays sellers with WMON it borrows from lenders. Two things limit how much it can buy:
 
-- **The desk's own WMON** in the WMON vault, used first.
-- **The WMON vault's cash:** what lenders have supplied and nobody has borrowed yet.
-- **The WMON vault's borrow cap,** less what is already borrowed.
-- **The desk's loan limit:** the WMON vault lends up to 93% of the desk's ushMON, and liquidates at 95%.
-
-The loan limit means the desk must hold some shMON in ushMON before it buys. A sale adds collateral worth 100 and a loan
-worth 99.7, but the vault lends only 93 against 100. So the desk must already hold about 7.2% of a day's buys as parked
-shMON, or the borrow fails. Each desk parks 80 MON worth of shMON for this.
+- **Lenders' WMON.** The pool can only pay out WMON that lenders have put in and nobody has borrowed yet.
+- **A cushion of the desk's own shMON.** Each sale borrows 99.7% of the shMON's value, but the lender lends only 93%.
+  The desk covers the gap with its own shMON, about 7.2% of what it buys. Each desk keeps 80 MON of shMON for this.
 
 To buy $100k of shMON in one unstake cycle:
 
 | Need | Amount | Why |
 |---|---|---|
 | WMON borrowed | $99.7k | The pool pays 99.7% of the shMON's value. |
-| WMON lenders have supplied | about $111k | At 90% use the WMON vault stays at its rate kink, 30% a year. At 100% use it charges 50%. |
-| shMON parked by the desk | about $7.2k | The 7.2% the loan limit needs. |
+| WMON from lenders | about $111k | A little more than the loan, so borrowing stays at 30% a year instead of jumping to 50%. |
+| shMON cushion | about $7.2k | The desk's own shMON, 7.2% of what it buys. |
 
 Each need grows in a straight line with the target.
 
